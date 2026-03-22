@@ -112,7 +112,9 @@ export default function Home() {
   const heroRef = useRef(null);
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true });
-  const { scrollY } = useScroll();
+  const { scrollY } = useScroll({
+    layoutEffect: false
+  });
 
   return (
     <div className="relative min-h-screen">

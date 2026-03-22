@@ -18,7 +18,9 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const location = useLocation();
-  const { scrollY } = useScroll();
+  const { scrollY } = useScroll({
+    layoutEffect: false
+  });
 
   // Transform blur based on scroll
   const blurValue = useTransform(scrollY, [0, 80], [12, 24]);

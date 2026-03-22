@@ -79,7 +79,7 @@ export default function Root() {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          className="relative"
+          className="relative min-h-screen"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -30 }}
