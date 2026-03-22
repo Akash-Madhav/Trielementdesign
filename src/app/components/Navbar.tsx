@@ -1,22 +1,27 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Menu, X } from 'lucide-react';
+import { GlassPanel } from './GlassPanel';
+import BrandWordmark from '../../imports/BrandWordmark';
 
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Services', path: '/services' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'Team', path: '/team' },
-  { name: 'Partnerships', path: '/partnerships' },
+  { name: 'Project Locations', path: '/project-locations' },
   { name: 'Contact', path: '/contact' },
 ];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const location = useLocation();
+  const { scrollY } = useScroll();
+
+  // Transform blur based on scroll
+  const blurValue = useTransform(scrollY, [0, 80], [12, 24]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,148 +39,153 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-4 left-4 right-4 md:top-6 md:left-8 md:right-8 z-50 transition-all duration-400 rounded-2xl overflow-hidden
-          shadow-[0_8px_32px_0_rgba(200,151,43,0.12)]
-          before:absolute before:inset-0 before:backdrop-blur-xl before:bg-gradient-to-br 
-          before:from-[rgba(255,255,255,0.95)] before:via-[rgba(255,255,255,0.9)] before:to-[rgba(255,255,255,0.85)]
-          before:-z-10 before:rounded-2xl
-          after:absolute after:inset-0 after:bg-gradient-to-b 
-          after:from-[rgba(255,255,255,0.4)] after:to-transparent 
-          after:rounded-2xl after:pointer-events-none
-          border border-[rgba(200,151,43,0.2)]
-          ${scrolled ? 'py-3' : 'py-5'}`}
+        className="fixed top-3 sm:top-4 md:top-6 left-3 sm:left-4 md:left-6 right-3 sm:right-4 md:right-6 z-50 transition-all duration-300"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="max-w-[1440px] mx-auto px-6 md:px-[60px] relative z-10">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to="/" className="relative group">
-              <span className="text-2xl font-['Cormorant_Garamond'] font-semibold text-[#0A0A0C] tracking-wider flex items-center gap-1">
-                TRI - EL
-                <span className="inline-flex flex-col gap-[2px] mx-[1px]">
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
+        <div
+          className={`rounded-xl sm:rounded-2xl border transition-all duration-300 ${scrolled ? 'py-2 sm:py-3' : 'py-3 sm:py-4 md:py-5'}`}
+          style={{
+            background: scrolled ? 'var(--glass-fill)' : 'var(--glass-thin-fill)',
+            backdropFilter: scrolled ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(12px) saturate(1.8) brightness(1.05)',
+            WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(1.8) brightness(1.05)' : 'blur(12px) saturate(1.8) brightness(1.05)',
+            borderColor: scrolled ? 'var(--glass-border)' : 'rgba(255, 255, 255, 0.6)',
+            boxShadow: scrolled
+              ? '0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)'
+              : '0 4px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.7)',
+          }}
+        >
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+            <div className="flex items-center justify-between">
+              {/* Logo */}
+              <Link to="/" className="relative group">
+                <span className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] tracking-wider">
+                  <BrandWordmark showStudio={false} className="text-2xl" />
                 </span>
-                MENT
-              </span>
-            </Link>
+              </Link>
 
-            {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="relative group"
-                >
-                  <span
-                    className={`text-sm font-['Inter'] transition-colors ${
-                      location.pathname === link.path
-                        ? 'text-[#C8972B]'
-                        : 'text-[#0A0A0C] hover:text-[#C8972B]'
-                    }`}
+              {/* Desktop Nav Links */}
+              <div className="hidden lg:flex items-center gap-2">
+                {navLinks.map((link) => (
+                  <div
+                    key={link.path}
+                    className="relative"
+                    onMouseEnter={() => setHoveredLink(link.path)}
+                    onMouseLeave={() => setHoveredLink(null)}
                   >
-                    {link.name}
-                  </span>
-                  <motion.div
-                    className="absolute -bottom-1 left-0 h-[2px] bg-[#C8972B]"
-                    initial={{ width: 0 }}
-                    animate={{
-                      width: location.pathname === link.path ? '100%' : 0,
-                    }}
-                    whileHover={{ width: '100%' }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
-                  />
-                </Link>
-              ))}
+                    <Link to={link.path} className="relative z-10 px-4 py-2 block">
+                      <span
+                        className={`text-sm font-[var(--font-body)] transition-colors ${
+                          location.pathname === link.path
+                            ? 'text-[var(--color-accent-signal)]'
+                            : 'text-[var(--color-ink)]'
+                        }`}
+                      >
+                        {link.name}
+                      </span>
+                    </Link>
+                    
+                    {/* Glass pill on hover */}
+                    <AnimatePresence>
+                      {(hoveredLink === link.path || location.pathname === link.path) && (
+                        <motion.div
+                          className="absolute inset-0"
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.8, opacity: 0 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 400,
+                            damping: 30,
+                          }}
+                          style={{
+                            background: 'var(--glass-thin-fill)',
+                            backdropFilter: 'blur(8px) saturate(1.5)',
+                            WebkitBackdropFilter: 'blur(8px) saturate(1.5)',
+                            borderRadius: '100px',
+                            border: '1px solid rgba(255, 255, 255, 0.5)',
+                          }}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA Button - Heavy Glass */}
+              <Link
+                to="/contact"
+                className="hidden lg:block relative overflow-hidden"
+                style={{
+                  background: 'rgba(196, 97, 58, 0.12)',
+                  backdropFilter: 'blur(40px) saturate(1.8) brightness(1.05)',
+                  WebkitBackdropFilter: 'blur(40px) saturate(1.8) brightness(1.05)',
+                  border: '1px solid rgba(196, 97, 58, 0.4)',
+                  borderRadius: '100px',
+                  padding: '10px 24px',
+                  boxShadow: '0 4px 12px rgba(196, 97, 58, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
+                }}
+              >
+                <span className="relative z-10 text-sm font-[var(--font-body)] text-[var(--color-ink)]">
+                  Request a Quote
+                </span>
+              </Link>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden text-[var(--color-ink)]"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
             </div>
-
-            {/* CTA Button */}
-            <Link
-              to="/contact"
-              className="hidden lg:block px-6 py-2.5 border border-[#C8972B] text-[#C8972B] rounded-full
-                       hover:bg-[#C8972B] hover:text-white transition-all duration-300 text-sm font-['Inter']
-                       shadow-[0_4px_16px_rgba(200,151,43,0.15)] hover:shadow-[0_6px_24px_rgba(200,151,43,0.25)]"
-            >
-              Request a Quote
-            </Link>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden text-[#0A0A0C] p-2"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Heavy Glass Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             className="fixed inset-0 z-40 lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              background: 'var(--glass-heavy-fill)',
+              backdropFilter: 'blur(40px) saturate(1.8) brightness(1.05)',
+              WebkitBackdropFilter: 'blur(40px) saturate(1.8) brightness(1.05)',
+              paddingTop: scrolled ? '80px' : '96px',
+            }}
           >
-            <motion.div
-              className="absolute inset-0 bg-white"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.95 }}
-              exit={{ opacity: 0 }}
-            />
-            <motion.div
-              className="absolute right-4 top-4 bottom-4 w-full sm:w-80 
-                backdrop-blur-xl bg-gradient-to-br from-[rgba(255,255,255,0.95)] via-[rgba(255,255,255,0.9)] to-[rgba(255,255,255,0.85)]
-                p-8 pt-24 border border-[rgba(200,151,43,0.2)] rounded-2xl
-                shadow-[0_8px_32px_0_rgba(200,151,43,0.15)]"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-            >
-              <div className="flex flex-col gap-6">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.path}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.08 }}
-                  >
-                    <Link
-                      to={link.path}
-                      className={`text-xl font-['Inter'] block ${
-                        location.pathname === link.path
-                          ? 'text-[#C8972B]'
-                          : 'text-[#0A0A0C] hover:text-[#C8972B]'
-                      } transition-colors`}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
+            <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
+              {navLinks.map((link, index) => (
                 <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.08 }}
+                  key={link.path}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.1 + index * 0.05,
+                    duration: 0.4,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                 >
                   <Link
-                    to="/contact"
-                    className="inline-block mt-4 px-6 py-3 bg-[#C8972B] text-white rounded-full
-                             font-['Inter'] hover:bg-[#d4a535] transition-all
-                             shadow-[0_4px_16px_rgba(200,151,43,0.25)]"
+                    to={link.path}
+                    className={`text-2xl font-[var(--font-display)] transition-colors ${
+                      location.pathname === link.path
+                        ? 'text-[var(--color-accent-signal)]'
+                        : 'text-[var(--color-ink)] hover:text-[var(--color-accent-signal)]'
+                    }`}
                   >
-                    Request a Quote
+                    {link.name}
                   </Link>
                 </motion.div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

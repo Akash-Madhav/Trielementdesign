@@ -17,15 +17,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom cursor pointer style */
+/* Default cursor */
 body {
-  cursor: none;
-}
-
-@media (max-width: 768px) {
-  body {
-    cursor: auto;
-  }
+  cursor: default;
 }
 
 /* Scroll snap for philosophy sections */

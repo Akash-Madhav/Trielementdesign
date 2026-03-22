@@ -1,60 +1,60 @@
 import { motion } from 'motion/react';
+import BrandWordmark from '../../imports/BrandWordmark';
 
 export function PageLoader() {
   return (
     <motion.div
-      className="fixed inset-0 z-[100] bg-white flex items-center justify-center"
+      className="fixed inset-0 z-[9999] bg-white flex items-center justify-center"
       initial={{ opacity: 1 }}
-      animate={{ opacity: 0 }}
-      transition={{ duration: 0.6, delay: 0.5 }}
-      onAnimationComplete={(definition: any) => {
-        if (definition.opacity === 0) {
-          const loader = document.getElementById('page-loader');
-          if (loader) loader.style.display = 'none';
-        }
-      }}
-      id="page-loader"
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="text-center">
+        {/* Animated Logo */}
         <motion.div
+          className="mb-8 flex justify-center"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.2 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="text-center"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="text-6xl font-['Cormorant_Garamond'] text-[#C8972B] tracking-[0.3em] mb-4 flex items-center justify-center gap-2">
-            TRI - EL
-            <span className="inline-flex flex-col gap-[3px] mx-[2px]">
-              <span className="w-[16px] h-[3px] bg-[#C8972B] rounded-full"></span>
-              <span className="w-[16px] h-[3px] bg-[#C8972B] rounded-full"></span>
-              <span className="w-[16px] h-[3px] bg-[#C8972B] rounded-full"></span>
-            </span>
-            MENT
-          </h1>
-          <motion.div
-            className="flex gap-2 justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <motion.div
-              className="w-2 h-2 rounded-full bg-[#C8972B]"
-              animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 1, repeat: Infinity, delay: 0 }}
-            />
-            <motion.div
-              className="w-2 h-2 rounded-full bg-[#C8972B]"
-              animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-            />
-            <motion.div
-              className="w-2 h-2 rounded-full bg-[#C8972B]"
-              animate={{ scale: [1, 1.5, 1] }}
-              transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
-            />
-          </motion.div>
+          <BrandWordmark showStudio={false} className="text-4xl" />
         </motion.div>
+
+        {/* Loading Animation */}
+        <motion.div
+          className="flex justify-center gap-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          {[0, 1, 2].map((index) => (
+            <motion.div
+              key={index}
+              className="w-2 h-2 bg-[var(--color-accent-signal)] rounded-full"
+              animate={{
+                scale: [1, 1.5, 1],
+                opacity: [0.4, 1, 0.4],
+              }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                delay: index * 0.2,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </motion.div>
+
+        {/* Tagline */}
+        <motion.p
+          className="text-[var(--color-ink)] opacity-40 text-xs tracking-[0.2em] uppercase mt-8 font-[var(--font-body)]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 0.5 }}
+        >
+          Design. Integrate. Sustain.
+        </motion.p>
       </div>
     </motion.div>
   );

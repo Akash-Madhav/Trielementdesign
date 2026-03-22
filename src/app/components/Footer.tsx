@@ -1,83 +1,84 @@
 import { Link } from 'react-router';
-import { Facebook, Youtube, Linkedin, Instagram } from 'lucide-react';
-import { motion } from 'motion/react';
-
-const navLinks = [
-  { name: 'About', path: '/about' },
-  { name: 'Services', path: '/services' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'Team', path: '/team' },
-  { name: 'Partnerships', path: '/partnerships' },
-  { name: 'Contact', path: '/contact' },
-];
-
-const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-];
+import BrandWordmark from '../../imports/BrandWordmark';
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    Company: [
+      { name: 'About', path: '/about' },
+      { name: 'Services', path: '/services' },
+      { name: 'Project Locations', path: '/project-locations' },
+      { name: 'Contact', path: '/contact' },
+    ],
+    Services: [
+      { name: 'MEP Engineering', path: '/services' },
+      { name: 'Sustainability', path: '/services' },
+      { name: 'BIM Coordination', path: '/services' },
+      { name: 'Peer Review', path: '/services' },
+    ],
+    Connect: [
+      { name: 'Contact', path: '/contact' },
+      { name: 'Careers', path: '/contact' },
+      { name: 'LinkedIn', path: '#' },
+    ],
+  };
+
   return (
-    <footer className="bg-[#F8F8FA] border-t border-[rgba(0,0,0,0.08)] py-12">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-[120px]">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Logo & Tagline */}
-          <div>
-            <Link to="/" className="inline-block">
-              <h3 className="text-2xl font-['Cormorant_Garamond'] font-semibold text-[#0A0A0C] tracking-wider mb-2 flex items-center gap-1">
-                TRI - EL
-                <span className="inline-flex flex-col gap-[2px] mx-[1px]">
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
-                  <span className="w-[10px] h-[2px] bg-[#0A0A0C] rounded-full"></span>
-                </span>
-                MENT
-              </h3>
+    <footer className="bg-[var(--color-canvas)] border-t border-[var(--color-accent-structural)]">
+      <div className="container mx-auto px-6 md:px-12 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+          {/* Brand Column */}
+          <div className="lg:col-span-2">
+            <Link to="/" className="inline-block mb-6">
+              <BrandWordmark showStudio={false} className="text-2xl" />
             </Link>
-            <p className="text-[#6B6B7A] text-sm font-['Inter'] max-w-xs">
-              Design. Integrate. Sustain.
+            <p className="text-[var(--color-ink)] opacity-65 text-sm leading-relaxed max-w-[300px] font-[var(--font-body)]">
+              Precision engineering consultancy specializing in MEP design, sustainability integration, and BIM coordination for world-class architecture.
             </p>
           </div>
 
-          {/* Nav Links */}
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="text-[#6B6B7A] hover:text-[#C8972B] transition-colors text-sm font-['Inter']"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* Social Icons */}
-          <div className="flex gap-4 md:justify-end">
-            {socialLinks.map(({ icon: Icon, href, label }) => (
-              <motion.a
-                key={label}
-                href={href}
-                aria-label={label}
-                className="w-10 h-10 rounded-full border border-[rgba(0,0,0,0.1)] 
-                         flex items-center justify-center text-[#6B6B7A] 
-                         hover:text-[#C8972B] hover:border-[#C8972B] transition-all"
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Icon size={18} />
-              </motion.a>
-            ))}
-          </div>
+          {/* Link Columns */}
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h3 className="text-[var(--color-ink)] font-[var(--font-body)] text-sm tracking-[0.1em] uppercase mb-4">
+                {category}
+              </h3>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      to={link.path}
+                      className="text-[var(--color-ink)] opacity-65 hover:opacity-100 hover:text-[var(--color-accent-signal)] transition-all text-sm font-[var(--font-body)]"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Strip */}
-        <div className="pt-8 border-t border-[rgba(0,0,0,0.08)]">
-          <p className="text-[#6B6B7A] text-xs font-['Inter'] text-center md:text-left">
-            © TRI-ELEMENT Engineering 2005–2026. All Rights Reserved.
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-[var(--color-accent-structural)] flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[var(--color-ink)] opacity-50 text-xs font-[var(--font-body)]">
+            © {currentYear} <BrandWordmark showStudio={false} className="text-xs" /> Engineering. All rights reserved.
           </p>
+          <div className="flex gap-6">
+            <Link
+              to="#"
+              className="text-[var(--color-ink)] opacity-50 hover:opacity-100 text-xs font-[var(--font-body)]"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to="#"
+              className="text-[var(--color-ink)] opacity-50 hover:opacity-100 text-xs font-[var(--font-body)]"
+            >
+              Terms of Service
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

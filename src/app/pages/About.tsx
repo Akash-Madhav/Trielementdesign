@@ -1,233 +1,319 @@
-import { useState, useRef } from 'react';
-import { motion } from 'motion/react';
-import { ScrollReveal } from '../components/ScrollReveal';
-import { Heart, Users, Building2 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { GlassPanel } from '../components/GlassPanel';
+import { Building2, Users, Globe2, Award } from 'lucide-react';
+import BrandWordmark from '../../imports/BrandWordmark';
 
-const commitments = [
-  {
-    title: 'Service',
-    icon: Heart,
-    description: 'We treat every client\'s challenge as our own. Our teams go beyond deliverables to provide consultative, proactive service that anticipates needs before they arise.',
-  },
-  {
-    title: 'Quality',
-    icon: Building2,
-    description: 'Precision in every detail. Our rigorous design review processes ensure that every drawing, model, and report meets the highest standard of technical excellence.',
-  },
-  {
-    title: 'Understanding',
-    icon: Users,
-    description: 'We invest in deeply understanding the unique context of every project — its geography, stakeholder goals, and long-term operational vision.',
-  },
+gsap.registerPlugin(ScrollTrigger);
+
+const milestones = [
+  { year: '2008', event: 'Founded in Dubai', description: (<><BrandWordmark showStudio={false} className="text-xs inline-flex" /> begins its journey</>) },
+  { year: '2012', event: 'Expanded to India', description: 'Opened offices in Bangalore and Kochi' },
+  { year: '2015', event: 'Singapore Office', description: 'Established Southeast Asian presence' },
+  { year: '2018', event: '500th Project', description: 'Milestone achievement in project delivery' },
+  { year: '2020', event: 'Sustainability Focus', description: 'Launched green engineering initiative' },
+  { year: '2024', event: 'Global Recognition', description: 'Award-winning MEP solutions worldwide' },
 ];
 
-const csrInitiatives = [
+const values = [
   {
-    name: 'DFWAC',
-    description: 'Dubai Foundation for Women & Children',
-    icon: Heart,
+    icon: Building2,
+    title: 'Excellence',
+    description: 'We pursue the highest standards in every project, from concept to completion.',
   },
   {
-    name: 'Pain & Palliative Care',
-    description: 'Care Units, Kerala',
-    icon: Heart,
-  },
-  {
-    name: 'Labour Welfare',
-    description: 'Dubai Labour Camps',
     icon: Users,
+    title: 'Collaboration',
+    description: 'Success comes from seamless teamwork across disciplines and borders.',
+  },
+  {
+    icon: Globe2,
+    title: 'Innovation',
+    description: 'We embrace emerging technologies and pioneering engineering solutions.',
+  },
+  {
+    icon: Award,
+    title: 'Integrity',
+    description: 'Ethical practices and transparent communication guide all our relationships.',
   },
 ];
 
 export default function About() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const horizontalRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const valuesRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: React.MouseEvent, index: number) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  useEffect(() => {
+    // Configure ScrollTrigger defaults
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
     });
-  };
+    
+    // Hero entrance
+    gsap.fromTo(
+      '.about-hero-title',
+      { opacity: 0, y: 100, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power4.out', stagger: 0.15 }
+    );
+
+    // Horizontal Scroll Section
+    const horizontalSection = horizontalRef.current;
+    if (horizontalSection) {
+      const panels = gsap.utils.toArray<HTMLElement>('.horizontal-panel');
+      
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: horizontalSection,
+          pin: true,
+          scrub: 1,
+          snap: 1 / (panels.length - 1),
+          end: () => '+=' + horizontalSection.offsetWidth * 2,
+          invalidateOnRefresh: true,
+        },
+      });
+    }
+
+    // Values cards stagger
+    gsap.fromTo(
+      '.value-card',
+      {
+        opacity: 0,
+        y: 80,
+        rotateX: -20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: valuesRef.current,
+          start: 'top 70%',
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+
+    // Floating timeline dots
+    gsap.to('.timeline-dot', {
+      scale: 1.3,
+      opacity: 0.5,
+      stagger: {
+        each: 0.3,
+        repeat: -1,
+        yoyo: true,
+      },
+      ease: 'power2.inOut',
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
-    <div className="bg-white pt-24">
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-[120px] grid md:grid-cols-2 gap-12 items-center">
-          <ScrollReveal>
-            <div>
-              <p className="text-[#C8972B] text-xs tracking-[0.3em] uppercase font-['JetBrains_Mono'] mb-4">
-                EST. 2005 · DUBAI
-              </p>
-              <h1 className="text-5xl md:text-7xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-6">
-                Engineering with Purpose
-              </h1>
-              <p className="text-lg text-[#6B6B7A] font-['Inter'] leading-relaxed">
-                SEED Engineering Consultants was formed in 2005 with a vision to bridge the gap in building 
-                engineering and to positively impact the design of MEP Engineering Services worldwide.
-              </p>
-            </div>
-          </ScrollReveal>
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* Hero Section with Parallax */}
+      <section ref={heroRef} className="relative min-h-screen flex items-center px-4 sm:px-6 md:px-12 pt-24 sm:pt-28 md:pt-24">
+        <motion.div
+          className="max-w-5xl mx-auto"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
+          <motion.p
+            className="about-hero-title text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            About Us
+          </motion.p>
+          <h1 className="about-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[var(--font-display)] text-[var(--color-ink)] mb-6 sm:mb-8 leading-tight">
+            Shaping the Future of Engineering
+          </h1>
+          <p className="about-hero-title text-lg sm:text-xl md:text-2xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
+            With over a decade of experience across multiple continents, <BrandWordmark showStudio={false} className="text-xl md:text-2xl" /> delivers 
+            world-class MEP engineering solutions that transform visions into reality.
+          </p>
+        </motion.div>
 
-          <ScrollReveal delay={0.2}>
-            <div className="relative h-[400px] md:h-[500px]">
-              <motion.div
-                className="absolute inset-0 opacity-20"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 3, ease: 'easeInOut' }}
-              >
-                <svg className="w-full h-full" viewBox="0 0 400 500">
-                  <motion.path
-                    d="M50 50 L350 50 L350 450 L50 450 Z M100 100 L100 400 M150 100 L150 400 M200 100 L200 400 M250 100 L250 400 M300 100 L300 400"
-                    stroke="#C8972B"
-                    strokeWidth="1"
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, ease: 'easeInOut' }}
-                  />
-                  <motion.circle cx="200" cy="250" r="80" stroke="#C8972B" strokeWidth="2" fill="none" 
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 2, delay: 1 }}
-                  />
-                </svg>
-              </motion.div>
-            </div>
-          </ScrollReveal>
+        {/* Floating Glass Background */}
+        <div className="absolute inset-0 -z-10 pointer-events-none">
+          <motion.div
+            className="absolute top-1/4 right-[10%] w-[400px] h-[400px] rounded-full"
+            style={{
+              background: 'var(--glass-thin-fill)',
+              backdropFilter: 'blur(80px)',
+              WebkitBackdropFilter: 'blur(80px)',
+            }}
+            animate={{
+              y: [0, -50, 0],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
         </div>
       </section>
 
-      {/* Principles Quote */}
-      <section className="py-24 px-6 md:px-[120px] max-w-[1440px] mx-auto">
-        <ScrollReveal>
-          <blockquote className="text-4xl md:text-5xl font-['Cormorant_Garamond'] text-[#0A0A0C] italic mb-8 leading-tight">
-            "Sustainable & Energy-Efficient Design is not just our practice — it is our purpose."
-          </blockquote>
-          <p className="text-lg text-[#6B6B7A] font-['Inter'] max-w-3xl">
-            Our sustainability group within SEED Engineering lends management and advisory services to 
-            Green Building projects across UAE and India.
-          </p>
-        </ScrollReveal>
-      </section>
-
-      {/* The SEED Commitment */}
-      <section className="py-24 px-6 md:px-[120px] max-w-[1440px] mx-auto">
-        <ScrollReveal>
-          <h2 className="text-4xl md:text-5xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-6">
-            The SEED Commitment
-          </h2>
-          <p className="text-lg text-[#6B6B7A] font-['Inter'] mb-12 max-w-3xl">
-            Our experience across industries and sectors has led us to identify three key elements in the 
-            success of engineering in any project.
-          </p>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {commitments.map((commitment, index) => (
-            <ScrollReveal key={commitment.title} delay={index * 0.1}>
-              <motion.div
-                className="relative p-8 rounded-lg backdrop-blur-md bg-[rgba(0,0,0,0.02)] 
-                         border border-[rgba(0,0,0,0.08)] overflow-hidden"
-                onMouseMove={(e) => handleMouseMove(e, index)}
-                onMouseEnter={() => setHoveredCard(index)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{
-                  transform: hoveredCard === index
-                    ? `perspective(800px) rotateX(${(mousePosition.y - 150) / 20}deg) rotateY(${(mousePosition.x - 150) / 20}deg)`
-                    : 'perspective(800px) rotateX(0deg) rotateY(0deg)',
-                }}
-                transition={{ duration: 0.1 }}
+      {/* Horizontal Scrolling Timeline */}
+      <section ref={horizontalRef} className="relative h-screen overflow-hidden">
+        <div className="sticky top-0 h-screen flex items-center">
+          <div className="flex gap-8 px-6 md:px-12">
+            {milestones.map((milestone, index) => (
+              <div
+                key={milestone.year}
+                className="horizontal-panel flex-shrink-0 w-[90vw] md:w-[600px]"
               >
-                {hoveredCard === index && (
+                <GlassPanel variant="heavy" className="h-[500px] p-12 flex flex-col justify-center" enableRefraction={true}>
                   <motion.div
-                    className="absolute inset-0 rounded-lg"
-                    style={{
-                      background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(200,151,43,0.15), transparent 60%)`,
-                    }}
+                    className="timeline-dot w-4 h-4 rounded-full bg-[var(--color-accent-signal)] mb-6"
+                    style={{ boxShadow: '0 0 20px var(--color-accent-signal)' }}
                   />
-                )}
-                <commitment.icon className="w-12 h-12 text-[#C8972B] mb-4" />
-                <h3 className="text-2xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-4">
-                  {commitment.title}
-                </h3>
-                <p className="text-[#6B6B7A] font-['Inter'] leading-relaxed">
-                  {commitment.description}
-                </p>
-              </motion.div>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
-
-      {/* Built on Experience */}
-      <section className="py-24 px-6 md:px-[120px] max-w-[1440px] mx-auto bg-[#F8F8FA]">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <ScrollReveal>
-            <div>
-              <div className="mb-8">
-                <div className="text-7xl font-['Cormorant_Garamond'] text-[#C8972B] mb-2">60+</div>
-                <div className="text-xl text-[#6B6B7A] font-['Inter']">Design Professionals</div>
+                  <div className="text-7xl md:text-9xl font-[var(--font-display)] text-[var(--color-accent-signal)] mb-4 opacity-20">
+                    {milestone.year}
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">
+                    {milestone.event}
+                  </h3>
+                  <p className="text-xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)]">
+                    {milestone.description}
+                  </p>
+                </GlassPanel>
               </div>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.2}>
-            <div>
-              <p className="text-lg text-[#6B6B7A] font-['Inter'] leading-relaxed mb-6">
-                SEED is one of the fastest-growing engineering practices in the cities we serve, with offices 
-                across Dubai, Kochi, and Bangalore.
-              </p>
-              <p className="text-lg text-[#6B6B7A] font-['Inter'] leading-relaxed">
-                Our focus on quality in design and deliverables has lent us credibility that takes us to 
-                landmark projects in the Middle East, Africa, and the Indian sub-continent.
-              </p>
-            </div>
-          </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CSR Section */}
-      <section className="py-24 px-6 md:px-[120px] max-w-[1440px] mx-auto">
-        <ScrollReveal>
-          <h2 className="text-4xl md:text-5xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-6">
-            Beyond Projects. Beyond Profits.
-          </h2>
-          <p className="text-lg text-[#6B6B7A] font-['Inter'] mb-12 max-w-3xl">
-            We understand that businesses have responsibilities beyond their bottom line. Our role in 
-            improving the world around us is pivotal.
-          </p>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {csrInitiatives.map((initiative, index) => (
-            <ScrollReveal key={initiative.name} delay={index * 0.1}>
-              <motion.div
-                className="p-8 rounded-lg bg-[rgba(0,0,0,0.02)] border border-[rgba(0,0,0,0.05)]
-                         hover:border-[#C8972B] transition-all"
-                whileHover={{ y: -8 }}
-              >
-                <initiative.icon className="w-10 h-10 text-[#C8972B] mb-4" />
-                <h3 className="text-xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-2">
-                  {initiative.name}
-                </h3>
-                <p className="text-[#6B6B7A] font-['Inter']">{initiative.description}</p>
-              </motion.div>
-            </ScrollReveal>
-          ))}
+      {/* Mission Statement */}
+      <section className="relative py-32 px-6 md:px-12">
+        <div className="max-w-6xl mx-auto">
+          <GlassPanel variant="standard" className="p-12 md:p-20" enableRefraction={true}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <p className="text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-6">
+                Our Mission
+              </p>
+              <h2 className="text-4xl md:text-6xl font-[var(--font-display)] text-[var(--color-ink)] mb-8 leading-tight">
+                To deliver sustainable, innovative MEP solutions that exceed expectations and 
+                create lasting value for our clients and communities.
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8 mt-12">
+                <div>
+                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">Vision</h3>
+                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
+                    To be the most trusted MEP engineering partner globally, known for our 
+                    commitment to innovation, sustainability, and excellence in every project.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">Approach</h3>
+                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
+                    We combine technical expertise with collaborative partnerships, ensuring 
+                    seamless integration across all building systems while prioritizing environmental responsibility.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </GlassPanel>
         </div>
+      </section>
 
-        <ScrollReveal>
-          <p className="text-sm text-[#6B6B7A] font-['Inter'] text-center">
-            To seek our support or learn more, write to{' '}
-            <a href="mailto:contact@seedengineering.com" className="text-[#C8972B] hover:underline">
-              contact@seedengineering.com
-            </a>
-          </p>
-        </ScrollReveal>
+      {/* Core Values */}
+      <section ref={valuesRef} className="relative py-32 px-6 md:px-12">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-4">
+              Core Values
+            </p>
+            <h2 className="text-5xl md:text-7xl font-[var(--font-display)] text-[var(--color-ink)]">
+              What Drives Us
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {values.map((value, index) => {
+              const Icon = value.icon;
+              return (
+                <GlassPanel
+                  key={value.title}
+                  variant="standard"
+                  className="value-card p-8 group"
+                  enableHoverPhysics={true}
+                >
+                  <motion.div
+                    className="mb-6"
+                    whileHover={{ rotate: 15, scale: 1.2 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <Icon size={40} className="text-[var(--color-accent-signal)]" />
+                  </motion.div>
+                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] text-sm leading-relaxed">
+                    {value.description}
+                  </p>
+                </GlassPanel>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Team CTA */}
+      <section className="relative py-32 px-6 md:px-12">
+        <div className="max-w-5xl mx-auto">
+          <GlassPanel variant="heavy" className="p-12 md:p-20 text-center" enableRefraction={true}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-4xl md:text-6xl font-[var(--font-display)] text-[var(--color-ink)] mb-6">
+                Meet the People Behind Our Success
+              </h2>
+              <p className="text-xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] mb-10">
+                Our team of expert engineers and technical professionals brings decades of 
+                combined experience to every project.
+              </p>
+              <motion.a
+                href="/contact"
+                className="inline-block px-8 py-4 bg-[var(--color-accent-signal)] text-white rounded-full font-[var(--font-body)] font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get in Touch
+              </motion.a>
+            </motion.div>
+          </GlassPanel>
+        </div>
       </section>
     </div>
   );

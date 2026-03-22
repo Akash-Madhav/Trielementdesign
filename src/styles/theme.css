@@ -3,53 +3,93 @@
 :root {
   --font-size: 16px;
   
-  /* SEED Engineering Color Palette - Light Theme */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8F8FA;
-  --surface: #F0F0F5;
-  --gold: #C8972B;
-  --gold-glow: rgba(200, 151, 43, 0.15);
-  --text-primary: #0A0A0C;
-  --text-muted: #6B6B7A;
-  --divider: rgba(0, 0, 0, 0.08);
+  /* TRI-ELEMENT Liquid Glass Design System */
+  /* 01 - Canvas Colors */
+  --color-canvas: #fafaf8;
+  --color-canvas-warm: #fafaf8;
+  --color-tint: #f4f2ee;
   
-  --background: #FFFFFF;
-  --foreground: #0A0A0C;
-  --card: #F8F8FA;
-  --card-foreground: #0A0A0C;
-  --popover: #FFFFFF;
-  --popover-foreground: #0A0A0C;
-  --primary: #C8972B;
-  --primary-foreground: #FFFFFF;
-  --secondary: #F8F8FA;
-  --secondary-foreground: #0A0A0C;
-  --muted: #F0F0F5;
-  --muted-foreground: #6B6B7A;
-  --accent: #C8972B;
-  --accent-foreground: #FFFFFF;
+  /* 02 - Ink & Structural */
+  --color-ink: #111110;
+  --color-structural: rgba(200, 195, 188, 0.6);
+  --color-accent-structural: #d4d0c8;
+  
+  /* 03 - Signal Color */
+  --color-accent-signal: #c4613a;
+  
+  /* 04 - Glass Material System */
+  --glass-fill: rgba(255, 255, 255, 0.45);
+  --glass-blur: 24px;
+  --glass-saturate: 1.8;
+  --glass-brightness: 1.05;
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-border-bottom: rgba(255, 255, 255, 0.35);
+  --glass-border-right: rgba(255, 255, 255, 0.35);
+  --glass-radius: 20px;
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-shadow-outer: rgba(0, 0, 0, 0.06);
+  
+  /* Glass Variants */
+  --glass-heavy-fill: rgba(255, 255, 255, 0.6);
+  --glass-heavy-blur: 40px;
+  --glass-thin-fill: rgba(255, 255, 255, 0.25);
+  --glass-thin-blur: 12px;
+  
+  /* 05 - Typography Tokens */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  /* 06 - Image Treatment */
+  --img-filter: saturate(0.88) brightness(1.02);
+  
+  /* Legacy compatibility tokens */
+  --bg-primary: var(--color-canvas);
+  --bg-secondary: var(--color-tint);
+  --surface: var(--color-tint);
+  --gold: var(--color-accent-signal);
+  --gold-glow: rgba(196, 97, 58, 0.12);
+  --text-primary: var(--color-ink);
+  --text-muted: rgba(17, 17, 16, 0.65);
+  --divider: var(--color-accent-structural);
+  
+  --background: var(--color-canvas);
+  --foreground: var(--color-ink);
+  --card: var(--color-canvas);
+  --card-foreground: var(--color-ink);
+  --popover: var(--color-canvas);
+  --popover-foreground: var(--color-ink);
+  --primary: var(--color-accent-signal);
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-tint);
+  --secondary-foreground: var(--color-ink);
+  --muted: var(--color-tint);
+  --muted-foreground: rgba(17, 17, 16, 0.65);
+  --accent: var(--color-accent-signal);
+  --accent-foreground: #ffffff;
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.08);
-  --input: rgba(0, 0, 0, 0.1);
-  --input-background: rgba(0, 0, 0, 0.02);
-  --switch-background: #cbced4;
+  --border: var(--color-accent-structural);
+  --input: var(--color-accent-structural);
+  --input-background: var(--color-tint);
+  --switch-background: var(--color-accent-structural);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #C8972B;
+  --ring: var(--color-accent-signal);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: #F8F8FA;
-  --sidebar-foreground: #0A0A0C;
-  --sidebar-primary: #C8972B;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F0F0F5;
-  --sidebar-accent-foreground: #0A0A0C;
-  --sidebar-border: rgba(0, 0, 0, 0.08);
-  --sidebar-ring: #C8972B;
+  --sidebar: var(--color-tint);
+  --sidebar-foreground: var(--color-ink);
+  --sidebar-primary: var(--color-accent-signal);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--color-tint);
+  --sidebar-accent-foreground: var(--color-ink);
+  --sidebar-border: var(--color-accent-structural);
+  --sidebar-ring: var(--color-accent-signal);
 }
 
 .dark {
@@ -136,7 +176,53 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: var(--color-canvas);
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Animated gradient blob background - Layer 0 */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    background: 
+      radial-gradient(ellipse 800px 600px at 20% 30%, rgba(212, 208, 200, 0.15), transparent),
+      radial-gradient(ellipse 600px 800px at 80% 70%, rgba(200, 195, 188, 0.12), transparent),
+      radial-gradient(ellipse 700px 700px at 50% 50%, rgba(196, 97, 58, 0.08), transparent);
+    animation: blob-drift 20s ease-in-out infinite;
+  }
+  
+  @keyframes blob-drift {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    66% {
+      transform: translate(-20px, 20px) scale(0.95);
+    }
+  }
+  
+  /* Fine grain texture overlay - Layer top */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' /%3E%3C/svg%3E");
   }
 
   /**
