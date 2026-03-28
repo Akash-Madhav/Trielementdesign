@@ -8,7 +8,6 @@ export function Footer() {
   const footerLinks = [
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'Project Locations', path: '/project-locations' },
     { name: 'Contact', path: '/contact' },
   ];
 

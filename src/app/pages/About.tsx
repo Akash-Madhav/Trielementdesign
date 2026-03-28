@@ -9,10 +9,10 @@ import { useMagnetic } from '../hooks/useMagnetic';
 gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
-  { year: '2008', event: 'The Genesis', description: 'Trielement begins its journey in the heart of Dubai, driven by a vision of engineering excellence.' },
-  { year: '2012', event: 'Beyond Borders', description: 'Expansion into India, bringing bespoke technical expertise to Bangalore and Kochi.' },
-  { year: '2018', event: 'Global Footprint', description: '500+ projects completed across 20 countries, establishing a legacy of precision.' },
-  { year: '2024', event: 'Ethereal Future', description: 'Pioneering sustainable, light-focused engineering for the next generation of architecture.' },
+  { year: '2008', accent: '#D4AF37', event: 'The Genesis', description: 'Trielement begins its journey in the heart of Dubai, driven by a vision of engineering excellence.' },
+  { year: '2012', accent: '#4A5568', event: 'Beyond Borders', description: 'Expansion into India, bringing bespoke technical expertise to Bangalore and Kochi.' },
+  { year: '2018', accent: '#005C8E', event: 'Global Footprint', description: '500+ projects completed across 20 countries, establishing a legacy of precision.' },
+  { year: '2024', accent: '#4B5320', event: 'Ethereal Future', description: 'Pioneering sustainable, light-focused engineering for the next generation of architecture.' },
 ];
 
 const values = [
@@ -24,30 +24,43 @@ const values = [
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const heroImageRef = useRef<HTMLDivElement>(null);
+  const heroMediaRef = useRef<HTMLDivElement>(null);
   const magneticBtnRef = useMagnetic();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 350]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero Entrance
-      gsap.from('.about-reveal', {
-        y: 60,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 2,
-        ease: 'expo.out',
-        delay: 0.5
-      });
+      // Cinematic Media Reveal (consistent with Contact)
+      gsap.fromTo(
+        heroMediaRef.current,
+        { clipPath: 'inset(15% 15% 15% 15% round 100px)', opacity: 0, scale: 1.2 },
+        { 
+          clipPath: 'inset(0% 0% 0% 0% round 0px)', 
+          opacity: 1, 
+          scale: 1, 
+          duration: 2.5, 
+          ease: 'expo.inOut',
+          delay: 0.1
+        }
+      );
 
-      // Hero Narrative Pinning
-      ScrollTrigger.create({
-        trigger: ".about-hero-section",
-        start: "top top",
-        end: "+=50%",
-        pin: ".about-hero-content",
-        pinSpacing: false
+      // --- TYPOGRAPHIC STORYTELLING TIERS ---
+      
+      // Tier 1: 3D Split-Word Reveals
+      gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
+        gsap.from(el, {
+          y: 40,
+          rotateX: -30,
+          opacity: 0,
+          duration: 1.8,
+          ease: 'expo.out',
+          delay: 0.5,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 95%',
+          }
+        });
       });
 
       // Section Reveals
@@ -65,20 +78,22 @@ export default function About() {
       });
 
       // Milestone Horizontal Scroll
-      const items = gsap.utils.toArray<HTMLElement>('.milestone-item');
-      gsap.to(items, {
-        xPercent: -100 * (items.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          id: 'milestone-scroll',
-          trigger: '.milestone-section',
-          pin: true,
-          scrub: 1,
-          start: 'top top',
-          end: () => `+=${(document.querySelector('.milestone-container')?.scrollWidth || 2000)}`,
-          invalidateOnRefresh: true,
-        }
-      });
+      const milestoneContainer = document.querySelector('.milestone-container') as HTMLElement;
+      if (milestoneContainer) {
+        gsap.to(milestoneContainer, {
+          x: () => -(milestoneContainer.scrollWidth - window.innerWidth),
+          ease: 'none',
+          scrollTrigger: {
+            id: 'milestone-scroll',
+            trigger: '.milestone-section',
+            pin: true,
+            scrub: 1,
+            start: 'center center',
+            end: () => `+=${milestoneContainer.scrollWidth}`,
+            invalidateOnRefresh: true,
+          }
+        });
+      }
 
       // Milestone Year Parallax (Subtle)
       gsap.utils.toArray<HTMLElement>('.milestone-year').forEach((year) => {
@@ -90,54 +105,22 @@ export default function About() {
             start: 'left right',
             end: 'right left',
             scrub: true,
-            containerAnimation: gsap.getById('milestone-scroll') || undefined // Will need a label
-          }
-        });
-      });
-
-      // --- TYPOGRAPHIC STORYTELLING TIERS ---
-      
-      // Tier 1: 3D Split-Word Reveals
-      gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
-        gsap.from(el, {
-          y: 40,
-          rotateX: -30,
-          opacity: 0,
-          duration: 1.8,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
-          }
-        });
-      });
-
-      // Tier 2: Cinematic Blur-to-Focus
-      gsap.utils.toArray<HTMLElement>('.tier-2').forEach((el) => {
-        gsap.from(el, {
-          filter: 'blur(15px)',
-          opacity: 0,
-          y: 20,
-          duration: 2.2,
-          ease: 'expo.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
+            containerAnimation: gsap.getById('milestone-scroll') || undefined
           }
         });
       });
 
       // Tier 3: Float-in Staggers
-      gsap.utils.toArray<HTMLElement>('.tier-3-container').forEach((container) => {
-        gsap.from(container.children, {
+      gsap.utils.toArray<HTMLElement>('.tier-3').forEach((el) => {
+        gsap.from(el, {
           y: 15,
           opacity: 0,
-          stagger: 0.1,
           duration: 1,
           ease: 'power2.out',
+          delay: 0.8,
           scrollTrigger: {
-            trigger: container,
-            start: 'top 92%',
+            trigger: el,
+            start: 'top 96%',
           }
         });
       });
@@ -147,38 +130,46 @@ export default function About() {
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pt-24 md:pt-32 pb-20 md:pb-40 px-6 md:px-12 selection:bg-[#2B2B2B]/10">
+    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO --- */}
-      <section className="about-hero-section relative h-[70vh] md:h-[100vh] flex flex-col items-center justify-center text-center mb-20 md:mb-40 overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-40">
+      <section className="about-hero-section relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden bg-[#FAF9F6] px-6 md:px-12">
+        {/* Navbar Safe Zone - Media starts below Navbar [top-32] */}
+        <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
            <motion.div 
-             ref={heroImageRef}
              style={{ y: yParallax }}
-             className="w-full h-full"
+             className="w-full h-full relative"
            >
              <img 
                src="/images/about_hero.png" 
                alt="Architectural Texture" 
-               className="w-full h-full object-cover grayscale"
+               loading="lazy"
+               className="w-full h-full object-cover grayscale-0 brightness-[0.8] contrast-[1.1]"
              />
+             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
            </motion.div>
         </div>
         
-        <div className="about-hero-content relative z-10 max-w-5xl px-6">
-          <span className="about-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/50 mb-8 font-medium">
-            Our Narrative
-          </span>
-          <h1 className="about-reveal tier-1 text-[clamp(2.5rem,10vw,8rem)] italic leading-[1.05] mb-10">
-            Engineered for <br /> <i>Timelessness.</i>
-            <div className="flex justify-center mt-6 opacity-30 text-[9px] tracking-[1.2em] font-mono animate-pulse">
-              [ 25.1972° N, 55.2744° E ]
-            </div>
-          </h1>
-          <p className="about-reveal tier-2 text-lg md:text-xl text-[#2B2B2B]/60 max-w-2xl mx-auto font-[var(--font-body)] leading-relaxed">
-            Since 2008, Trielement has been the silent intelligence behind the world's most 
-            prestigious structures. We don't just design systems; we craft the atmosphere.
-          </p>
+        <div className="about-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-left">
+          <div className="overflow-hidden mb-8">
+            <span className="about-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">
+              Our Narrative
+            </span>
+          </div>
+          <div className="overflow-hidden mb-12">
+            <h1 className="about-reveal tier-1 text-[clamp(2.5rem,10vw,8.5rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
+              Engineered for <br /> <i className="font-bold">Timelessness.</i>
+              <div className="mt-8 opacity-40 text-[9px] tracking-[1.4em] font-mono animate-pulse text-[#FAF9F6]">
+                [ LUX_ENGINEERING ]
+              </div>
+            </h1>
+          </div>
+          <div className="about-reveal tier-2 border-l border-[#FAF9F6]/20 pl-8 max-w-2xl">
+            <p className="text-xl md:text-2xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+              Since 2008, Trielement has been the silent intelligence behind the world's most 
+              prestigious structures. We don't just design systems; we craft the atmosphere.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -204,23 +195,44 @@ export default function About() {
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative min-h-screen mb-16 md:mb-32 overflow-hidden border-t border-[#E5E2DB]/50 pt-20 cursor-drag">
-        <div className="max-w-[1440px] mx-auto px-6 mb-12 flex justify-between items-end">
-           <h2 className="tier-1 text-5xl md:text-7xl">Progressive <br /> <i>Legacy.</i></h2>
-           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-2 block font-medium">Scroll to Traverse</span>
+      <section className="milestone-section relative min-h-[90vh] min-h-[800px] w-full flex flex-col py-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white">
+        <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 flex flex-col md:flex-row justify-between items-end gap-6 flex-shrink-0">
+           <h2 className="tier-1 text-5xl md:text-7xl leading-tight">Progressive <br /> <i className="italic">Legacy.</i></h2>
+           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-2 block font-medium">Navigate through Time</span>
         </div>
         
-        <div className="milestone-container flex flex-nowrap h-full">
+        {/* Adaptive height container */}
+        <div className="milestone-container flex flex-nowrap h-full flex-grow items-stretch w-max pl-6 md:pl-[calc(50vw-720px+3rem)] xl:pl-[calc(50vw-680px)]">
           {milestones.map((m, i) => (
-            <div key={i} className="milestone-item flex-shrink-0 w-full md:w-[45vw] px-6 md:px-20 py-20 border-r border-[#E5E2DB]/30 last:border-r-0">
-               <span className="milestone-year text-7xl md:text-[10rem] font-[var(--font-display)] text-[#2B2B2B]/5 block mb-10">{m.year}</span>
-               <div className="max-w-md">
-                 <h3 className="text-3xl md:text-4xl italic mb-8">{m.event}</h3>
-                 <p className="text-base md:text-lg text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)]">
-                   {m.description}
-                 </p>
-               </div>
-            </div>
+             <div 
+               key={i} 
+               className="milestone-item relative flex-shrink-0 w-[85vw] md:w-[40vw] lg:w-[30vw] h-full flex flex-col justify-between p-8 md:p-12 border-r border-[#E5E2DB]/50 group"
+               style={{ backgroundColor: `${m.accent}0a` }} // Ultra-subtle tint (approx 4% opacity)
+             >
+                {/* Year Accent Line */}
+                <div className="w-12 h-1 bg-[#2B2B2B]/20 mb-6 transition-all duration-700 group-hover:w-24 group-hover:bg-[#2B2B2B]/60" />
+
+                <div className="relative z-10">
+                  <span className="milestone-year text-5xl md:text-7xl font-[var(--font-display)] text-[#2B2B2B]/10 block mb-4 transition-colors duration-700 group-hover:text-[#2B2B2B]/30">
+                    {m.year}
+                  </span>
+                  <h3 className="text-3xl md:text-4xl italic font-serif leading-tight mb-6 text-[#2B2B2B]">{m.event}</h3>
+                </div>
+
+                <div className="max-w-md border-t border-[#2B2B2B]/10 pt-6 mt-6">
+                  <p className="text-base md:text-lg text-[#2B2B2B]/70 leading-relaxed font-[var(--font-body)]">
+                    {m.description}
+                  </p>
+                </div>
+
+                {/* Aesthetic Corner Indicator */}
+                <div 
+                  className="absolute bottom-6 right-6 text-[9px] uppercase tracking-[0.2em] opacity-20"
+                  style={{ color: m.accent }}
+                >
+                  STORY_{m.year}
+                </div>
+             </div>
           ))}
         </div>
       </section>

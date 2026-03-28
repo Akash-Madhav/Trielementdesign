@@ -58,17 +58,17 @@ export default function Home() {
     if (!heroRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Cinematic Media Reveal
+      // Cinematic Media Reveal (consistent with Contact)
       gsap.fromTo(
         heroMediaRef.current,
-        { clipPath: 'inset(10% 10% 10% 10% round 40px)', opacity: 0, scale: 1.1 },
+        { clipPath: 'inset(15% 15% 15% 15% round 100px)', opacity: 0, scale: 1.2 },
         { 
           clipPath: 'inset(0% 0% 0% 0% round 0px)', 
           opacity: 1, 
           scale: 1, 
           duration: 2.5, 
           ease: 'expo.inOut',
-          delay: 0.2
+          delay: 0.1
         }
       );
 
@@ -195,11 +195,10 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
       
       {/* --- PREMIUM HERO SECTION --- */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center p-6 md:p-12 overflow-hidden">
-        {/* Cinematic Video Background Layer */}
-        <div className="absolute inset-0 z-0">
+      <section ref={heroRef} className="relative h-[100vh] min-h-[700px] flex items-center justify-center p-6 md:p-12 overflow-hidden bg-[#FAF9F6]">
+        {/* Cinematic Video Background Layer - Navbar Safe Zone [top-32] */}
+        <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
           <motion.div 
-            ref={heroMediaRef}
             style={{ y: yParallax }}
             className="w-full h-full relative"
           >
@@ -208,57 +207,54 @@ export default function Home() {
               muted 
               loop 
               playsInline 
-              className="w-full h-full object-cover brightness-[1.05] contrast-[1.1] grayscale opacity-40 mix-blend-multiply"
+              className="w-full h-full object-cover brightness-[0.75] contrast-[1.1]"
             >
               <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
             </video>
             
-            {/* Overlay Layers for Lumière Atmosphere */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F6]/20 via-transparent to-[#FAF9F6]/80" />
-            <div className="absolute inset-0 bg-[#FAF9F6]/10 mix-blend-overlay" />
+            {/* Minimal Overlay for subtle depth */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-[1]" />
           </motion.div>
         </div>
 
-        {/* Content Overlay */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6">
+        {/* Content Overlay - Centered and integrated into the image focal point, shifted down to avoid Navbar */}
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12 pt-48 pb-12">
           
-          <div className="overflow-hidden mb-8">
-            <h1 className="hero-text-reveal tier-1 text-center leading-[0.95] tracking-tight">
-              <span className="block text-[clamp(3.5rem,12vw,10rem)] font-[var(--font-display)] italic text-[#2B2B2B]">
+          <div className="overflow-hidden mb-12">
+            <h1 className="tier-1 leading-[0.85] tracking-tighter drop-shadow-[0_12px_50px_rgba(0,0,0,0.6)]">
+              <span className="block text-[clamp(3.5rem,10vw,6.5rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
                 Bespoke
               </span>
-              <span className="block text-[clamp(3.5rem,12vw,10rem)] font-[var(--font-display)] uppercase text-[#2B2B2B]">
+              <span className="block text-[clamp(4.5rem,15vw,10.25rem)] font-extrabold uppercase text-[#FAF9F6] font-[var(--font-display)]">
                 Intelligence
               </span>
-              <div className="flex justify-center mt-4 opacity-20 text-[8px] tracking-[1em] font-mono animate-pulse">
-                [ 25.1972° N, 55.2744° E ]
-              </div>
             </h1>
+            <div className="mt-8 opacity-75 text-[12px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
+              [ DESIGN_INTEGRATE_SUSTAIN ]
+            </div>
           </div>
 
-          <div className="overflow-hidden mb-16">
-            <p className="hero-text-reveal tier-2 text-lg md:text-xl text-[#2B2B2B]/70 font-[var(--font-body)] max-w-2xl mx-auto leading-relaxed">
-              Transforming complex engineering into seamless architectural poetry. 
+          <div className="overflow-hidden mb-16 max-w-3xl mx-auto">
+            <p className="tier-2 text-xl md:text-3xl text-[#FAF9F6] font-medium leading-[1.3] font-[var(--font-body)] drop-shadow-2xl border-t border-[#FAF9F6]/30 pt-12">
+              Transforming complex engineering into <br className="hidden md:block"/> seamless architectural poetry. 
               The future of spatial experience, illuminated.
             </p>
           </div>
 
-          <motion.div className="hero-text-reveal tier-3-container flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="tier-3-container flex flex-wrap gap-12 items-center justify-center">
             <div ref={exploreBtnRef}>
-              <Link to="/services" className="px-12 py-4 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-[var(--font-body)] hover:bg-[#2B2B2B]/80 transition-all duration-700 hover:scale-105 active:scale-95 block">
+              <Link to="/services" className="px-14 py-5 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[14px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-2xl">
                 Explore Our Craft
               </Link>
             </div>
-            <Link to="/project-locations" className="text-[11px] uppercase tracking-[0.25em] font-[var(--font-body)] text-[#2B2B2B] group relative overflow-hidden h-5">
-              <span>View Portfolio</span>
-              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#2B2B2B] translate-y-2 group-hover:translate-y-0 transition-transform duration-700" />
-            </Link>
-          </motion.div>
+          </div>
         </div>
 
+
         {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
-           <div className="w-[1px] h-12 bg-gradient-to-b from-[#2B2B2B]/40 to-transparent" />
+        <div className="absolute bottom-12 right-12 hidden md:flex flex-col items-center gap-4">
+           <span className="text-[8px] uppercase tracking-[0.3em] text-[#FAF9F6]/40 rotate-90 mb-8 origin-left">Scroll to Explore</span>
+           <div className="w-[1px] h-20 bg-gradient-to-b from-[#FAF9F6]/40 to-transparent" />
         </div>
       </section>
 
@@ -343,49 +339,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PROJECTS: IMMERSIVE GALLERY (TEASER) --- */}
-      <section className="py-20 md:py-40 px-6 md:px-12 overflow-hidden border-b border-[#E5E2DB]/30 bg-white/30">
-        <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
-           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-6 block font-medium uppercase">Portfolio Teaser</span>
-           <h2 className="tier-1 text-4xl md:text-7xl mb-8">Iconic Environments.</h2>
-           <p className="tier-2 text-[#2B2B2B]/60 max-w-2xl mx-auto uppercase tracking-[0.2em] text-[10px] font-medium leading-loose">
-             A curation of precision-driven architecture and sustainable engineering across the globe.
-           </p>
-        </div>
-
-         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[500px] md:h-[800px] cursor-explore">
-           <div className="md:col-span-8 relative group overflow-hidden section-reveal rounded-3xl md:rounded-[4rem]">
-              <img src="/images/home_projects_hyatt.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Park Hyatt" />
-              <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-              <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white">
-                 <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-2 opacity-60">Hospitality / Zanzibar</span>
-                 <h3 className="text-2xl md:text-3xl font-[var(--font-display)]">Park Hyatt Zanzibar</h3>
-              </div>
-           </div>
-           <div className="md:col-span-4 grid grid-rows-2 gap-6">
-              <div className="relative group overflow-hidden section-reveal rounded-3xl md:rounded-[3rem]">
-                 <img src="/images/home_projects_wasl.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="WASL Tower" />
-                 <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
-                   <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-1 opacity-60">High-rise / Dubai</span>
-                   <h3 className="text-lg md:text-xl font-[var(--font-display)]">WASL Tower</h3>
-                 </div>
-              </div>
-              <div className="relative group overflow-hidden section-reveal rounded-3xl md:rounded-[3rem]">
-                 <img src="/images/home_projects_mandarin.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Mandarin JBR" />
-                 <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
-                   <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-1 opacity-60">Luxury / Dubai</span>
-                   <h3 className="text-lg md:text-xl font-[var(--font-display)]">Mandarin JBR</h3>
-                 </div>
-              </div>
-           </div>
-        </div>
-
-        <div className="text-center mt-20 section-reveal">
-           <Link to="/project-locations" className="inline-block px-12 py-5 border border-[#2B2B2B]/20 rounded-full text-[11px] uppercase tracking-[0.2em] font-medium hover:bg-[#2B2B2B] hover:text-[#FAF9F6] transition-all duration-700">
-             Discover Global Impact
-           </Link>
-        </div>
-      </section>
 
       {/* --- CTA: AMBIENT BLOOM --- */}
       <section className="relative py-16 md:py-32 px-6 md:px-12 flex items-center justify-center text-center overflow-hidden">

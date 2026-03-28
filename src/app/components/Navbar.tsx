@@ -8,7 +8,6 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Services', path: '/services' },
-  { name: 'Project Locations', path: '/project-locations' },
   { name: 'Contact', path: '/contact' },
 ];
 
@@ -82,7 +81,7 @@ export function Navbar() {
               className="hidden lg:inline-flex items-center px-10 py-3 rounded-full border border-[#2B2B2B]/10 hover:border-[#2B2B2B] hover:bg-[#2B2B2B] hover:text-[#FAF9F6] transition-all duration-700 group relative overflow-hidden"
             >
               <span className="text-[10px] uppercase tracking-[0.3em] font-[var(--font-body)] font-medium relative z-10 transition-colors duration-700">
-                Lumiere Inquiry
+                Request a Quote
               </span>
             </Link>
 

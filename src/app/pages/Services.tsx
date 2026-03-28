@@ -41,12 +41,27 @@ const processSteps = [
 
 export default function Services() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroMediaRef = useRef<HTMLDivElement>(null);
   const inquireBtnRef = useMagnetic();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 250]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Cinematic Media Reveal (consistent with Contact)
+      gsap.fromTo(
+        heroMediaRef.current,
+        { clipPath: 'inset(15% 15% 15% 15% round 100px)', opacity: 0, scale: 1.2 },
+        { 
+          clipPath: 'inset(0% 0% 0% 0% round 0px)', 
+          opacity: 1, 
+          scale: 1, 
+          duration: 2.5, 
+          ease: 'expo.inOut',
+          delay: 0.1
+        }
+      );
+
       // Hero Entrance
       gsap.from('.services-reveal', {
         y: 60,
@@ -181,9 +196,9 @@ export default function Services() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pb-32 md:pb-64 selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
-      <section className="relative h-[80vh] md:h-[100vh] flex flex-col items-center justify-center mb-20 md:mb-40 overflow-hidden">
-        {/* Background Media Layer */}
-        <div className="absolute inset-0 z-0">
+      <section className="relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden px-6 bg-[#FAF9F6]">
+        {/* Background Media Layer - Navbar Safe Zone [top-32] */}
+        <div ref={heroMediaRef} className="absolute inset-x-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"
@@ -192,37 +207,33 @@ export default function Services() {
               src="/images/services_hero.png" 
               alt="Architectural Precision" 
               loading="lazy"
-              className="w-full h-full object-cover grayscale brightness-[1.1] contrast-[1.05] opacity-40 mix-blend-multiply"
+              className="w-full h-full object-cover grayscale-0 brightness-[0.85] contrast-[1.1]"
             />
-            {/* Cinematic Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
-            <div className="absolute inset-0 bg-[#E5E2DB]/10 mix-blend-overlay" />
+            {/* Cinematic dark bottom overlay */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           </motion.div>
         </div>
 
-        {/* Hero Content Over Media */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center">
-            <div className="overflow-hidden mb-6">
-              <span className="services-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/50 font-medium">Our Specialties</span>
+        {/* Hero Content Over Media - Aligned to bottom like Contact */}
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-left px-6">
+            <div className="overflow-hidden mb-8">
+              <span className="services-reveal tier-3 block text-[10px] uppercase tracking-[0.4em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
             </div>
-            <div className="overflow-hidden mb-10">
-              <h1 className="services-reveal tier-1 text-[clamp(3rem,10vw,8rem)] leading-[1.05] tracking-tighter">
-                The <i>Art</i> of <br /> Engineering.
-                <div className="flex justify-center mt-6 opacity-30 text-[9px] tracking-[1.2em] font-mono animate-pulse">
-                  [ 25.1972° N, 55.2744° E ]
-                </div>
+            <div className="overflow-hidden mb-12">
+              <h1 className="services-reveal tier-1 text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.95] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
+                The <i className="font-bold font-[var(--font-display)] text-[#FAF9F6]">Art</i> of <br /> Engineering.
               </h1>
             </div>
-            <div className="services-reveal tier-2 max-w-xl mx-auto">
-              <p className="text-lg md:text-xl text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)]">
-                We provide a comprehensive suite of technical services that ensure the 
-                vitality and longevity of architectural masterpieces.
-              </p>
+            
+            <div className="services-reveal tier-2 max-w-2xl border-l border-[#FAF9F6]/20 pl-8">
+               <p className="text-xl md:text-2xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+                  Precise MEP solutions, sustainable lifecycle planning, and collaborative BIM environments—bridging the gap between theory and legacy.
+               </p>
             </div>
         </div>
 
-        {/* Bottom Accent */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1440px] px-6">
+
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1440px] px-6">
            <div className="services-reveal w-full h-[1px] bg-[#E5E2DB]/50" />
         </div>
       </section>
