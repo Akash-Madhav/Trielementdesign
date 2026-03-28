@@ -1,320 +1,156 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GlassPanel } from '../components/GlassPanel';
-import { Building2, Users, Globe2, Award } from 'lucide-react';
-import BrandWordmark from '../../imports/BrandWordmark';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
-  { year: '2008', event: 'Founded in Dubai', description: (<><BrandWordmark showStudio={false} className="text-xs inline-flex" /> begins its journey</>) },
-  { year: '2012', event: 'Expanded to India', description: 'Opened offices in Bangalore and Kochi' },
-  { year: '2015', event: 'Singapore Office', description: 'Established Southeast Asian presence' },
-  { year: '2018', event: '500th Project', description: 'Milestone achievement in project delivery' },
-  { year: '2020', event: 'Sustainability Focus', description: 'Launched green engineering initiative' },
-  { year: '2024', event: 'Global Recognition', description: 'Award-winning MEP solutions worldwide' },
+  { year: '2008', event: 'The Genesis', description: 'Trielement begins its journey in the heart of Dubai, driven by a vision of engineering excellence.' },
+  { year: '2012', event: 'Beyond Borders', description: 'Expansion into India, bringing bespoke technical expertise to Bangalore and Kochi.' },
+  { year: '2018', event: 'Global Footprint', description: '500+ projects completed across 20 countries, establishing a legacy of precision.' },
+  { year: '2024', event: 'Ethereal Future', description: 'Pioneering sustainable, light-focused engineering for the next generation of architecture.' },
 ];
 
 const values = [
-  {
-    icon: Building2,
-    title: 'Excellence',
-    description: 'We pursue the highest standards in every project, from concept to completion.',
-  },
-  {
-    icon: Users,
-    title: 'Collaboration',
-    description: 'Success comes from seamless teamwork across disciplines and borders.',
-  },
-  {
-    icon: Globe2,
-    title: 'Innovation',
-    description: 'We embrace emerging technologies and pioneering engineering solutions.',
-  },
-  {
-    icon: Award,
-    title: 'Integrity',
-    description: 'Ethical practices and transparent communication guide all our relationships.',
-  },
+  { title: 'Excellence', description: 'The pursuit of the sublime in every calculation, every design, every detail.' },
+  { title: 'Integrity', description: 'A foundation of transparency and ethical clarity in all our partnerships.' },
+  { title: 'Innovation', description: 'Embracing the avant-garde of technology to solve the challenges of tomorrow.' },
+  { title: 'Sustain', description: 'Designing for longevity, ensuring our creations respect the world they inhabit.' },
 ];
 
 export default function About() {
-  const horizontalRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const valuesRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const heroImageRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const yParallax = useTransform(scrollY, [0, 1000], [0, 200]);
 
   useEffect(() => {
-    // Configure ScrollTrigger defaults
-    ScrollTrigger.config({
-      ignoreMobileResize: true,
-    });
-    
-    // Hero entrance
-    gsap.fromTo(
-      '.about-hero-title',
-      { opacity: 0, y: 100, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power4.out', stagger: 0.15 }
-    );
-
-    // Horizontal Scroll Section
-    const horizontalSection = horizontalRef.current;
-    if (horizontalSection) {
-      const panels = gsap.utils.toArray<HTMLElement>('.horizontal-panel');
-      
-      gsap.to(panels, {
-        xPercent: -100 * (panels.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: horizontalSection,
-          pin: true,
-          scrub: 1,
-          snap: 1 / (panels.length - 1),
-          end: () => '+=' + horizontalSection.offsetWidth * 2,
-          invalidateOnRefresh: true,
-        },
-      });
-    }
-
-    // Values cards stagger
-    gsap.fromTo(
-      '.value-card',
-      {
+    const ctx = gsap.context(() => {
+      // Hero Entrance
+      gsap.from('.about-reveal', {
+        y: 60,
         opacity: 0,
-        y: 80,
-        rotateX: -20,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: valuesRef.current,
-          start: 'top 70%',
-          invalidateOnRefresh: true,
-        },
-      }
-    );
+        stagger: 0.2,
+        duration: 2,
+        ease: 'expo.out',
+        delay: 0.5
+      });
 
-    // Floating timeline dots
-    gsap.to('.timeline-dot', {
-      scale: 1.3,
-      opacity: 0.5,
-      stagger: {
-        each: 0.3,
-        repeat: -1,
-        yoyo: true,
-      },
-      ease: 'power2.inOut',
-    });
+      // Section Reveals
+      gsap.utils.toArray<HTMLElement>('.section-reveal').forEach((section) => {
+        gsap.from(section, {
+          y: 40,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 85%',
+          }
+        });
+      });
+    }, containerRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center px-4 sm:px-6 md:px-12 pt-24 sm:pt-28 md:pt-24">
-        <motion.div
-          className="max-w-5xl mx-auto"
-          style={{ y: heroY, opacity: heroOpacity }}
-        >
-          <motion.p
-            className="about-hero-title text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            About Us
-          </motion.p>
-          <h1 className="about-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[var(--font-display)] text-[var(--color-ink)] mb-6 sm:mb-8 leading-tight">
-            Shaping the Future of Engineering
+    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pt-32 pb-40 px-6 md:px-12 selection:bg-[#2B2B2B]/10">
+      
+      {/* --- PREMIUM HERO --- */}
+      <section className="relative h-[80vh] flex flex-col items-center justify-center text-center mb-40 overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-40">
+           <motion.div 
+             ref={heroImageRef}
+             style={{ y: yParallax }}
+             className="w-full h-full"
+           >
+             <img 
+               src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=2000" 
+               alt="Architectural Texture" 
+               className="w-full h-full object-cover grayscale"
+             />
+           </motion.div>
+        </div>
+        
+        <div className="relative z-10 max-w-5xl px-6">
+          <span className="about-reveal block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/50 mb-8 font-medium">
+            Our Narrative
+          </span>
+          <h1 className="about-reveal text-[clamp(3rem,10vw,8rem)] italic leading-[1.05] mb-10">
+            Engineered for <br /> <i>Timelessness.</i>
           </h1>
-          <p className="about-hero-title text-lg sm:text-xl md:text-2xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
-            With over a decade of experience across multiple continents, <BrandWordmark showStudio={false} className="text-xl md:text-2xl" /> delivers 
-            world-class MEP engineering solutions that transform visions into reality.
+          <p className="about-reveal text-lg md:text-xl text-[#2B2B2B]/60 max-w-2xl mx-auto font-[var(--font-body)] leading-relaxed">
+            Since 2008, Trielement has been the silent intelligence behind the world's most 
+            prestigious structures. We don't just design systems; we craft the atmosphere.
           </p>
-        </motion.div>
-
-        {/* Floating Glass Background */}
-        <div className="absolute inset-0 -z-10 pointer-events-none">
-          <motion.div
-            className="absolute top-1/4 right-[10%] w-[400px] h-[400px] rounded-full"
-            style={{
-              background: 'var(--glass-thin-fill)',
-              backdropFilter: 'blur(80px)',
-              WebkitBackdropFilter: 'blur(80px)',
-            }}
-            animate={{
-              y: [0, -50, 0],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
         </div>
       </section>
 
-      {/* Horizontal Scrolling Timeline */}
-      <section ref={horizontalRef} className="relative h-screen overflow-hidden">
-        <div className="sticky top-0 h-screen flex items-center">
-          <div className="flex gap-8 px-6 md:px-12">
-            {milestones.map((milestone, index) => (
-              <div
-                key={milestone.year}
-                className="horizontal-panel flex-shrink-0 w-[90vw] md:w-[600px]"
-              >
-                <GlassPanel variant="heavy" className="h-[500px] p-12 flex flex-col justify-center" enableRefraction={true}>
-                  <motion.div
-                    className="timeline-dot w-4 h-4 rounded-full bg-[var(--color-accent-signal)] mb-6"
-                    style={{ boxShadow: '0 0 20px var(--color-accent-signal)' }}
-                  />
-                  <div className="text-7xl md:text-9xl font-[var(--font-display)] text-[var(--color-accent-signal)] mb-4 opacity-20">
-                    {milestone.year}
-                  </div>
-                  <h3 className="text-3xl md:text-4xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">
-                    {milestone.event}
-                  </h3>
-                  <p className="text-xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)]">
-                    {milestone.description}
-                  </p>
-                </GlassPanel>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mission Statement */}
-      <section className="relative py-32 px-6 md:px-12">
-        <div className="max-w-6xl mx-auto">
-          <GlassPanel variant="standard" className="p-12 md:p-20" enableRefraction={true}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <p className="text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-6">
-                Our Mission
+      {/* --- PHILOSOPHY / MISSION --- */}
+      <section className="section-reveal max-w-[1440px] mx-auto mb-64 flex flex-col md:flex-row gap-20 items-center">
+        <div className="w-full md:w-1/2">
+           <div className="aspect-square bg-[#F5F1EA] p-12 flex items-center justify-center">
+              <p className="font-[var(--font-display)] text-3xl md:text-4xl text-[#2B2B2B]/80 leading-relaxed italic text-center">
+                "We believe that the most advanced engineering is the one you never notice, yet always feel."
               </p>
-              <h2 className="text-4xl md:text-6xl font-[var(--font-display)] text-[var(--color-ink)] mb-8 leading-tight">
-                To deliver sustainable, innovative MEP solutions that exceed expectations and 
-                create lasting value for our clients and communities.
-              </h2>
-              <div className="grid md:grid-cols-2 gap-8 mt-12">
-                <div>
-                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">Vision</h3>
-                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
-                    To be the most trusted MEP engineering partner globally, known for our 
-                    commitment to innovation, sustainability, and excellence in every project.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">Approach</h3>
-                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
-                    We combine technical expertise with collaborative partnerships, ensuring 
-                    seamless integration across all building systems while prioritizing environmental responsibility.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </GlassPanel>
+           </div>
+        </div>
+        <div className="w-full md:w-1/2">
+           <span className="text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block">Our Ethos</span>
+           <h2 className="text-4xl md:text-6xl mb-10">The invisible foundation of luxury.</h2>
+           <p className="text-[#2B2B2B]/70 text-lg leading-relaxed max-w-xl mb-12">
+             Our mission is to bridge the gap between architectural ambition and technical feasibility. 
+             Through a lens of sustainability and precision, we ensure that every environment we touch 
+             is optimized for human comfort and planetary respect.
+           </p>
+           <div className="w-20 h-[1px] bg-[#2B2B2B]" />
         </div>
       </section>
 
-      {/* Core Values */}
-      <section ref={valuesRef} className="relative py-32 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-4">
-              Core Values
-            </p>
-            <h2 className="text-5xl md:text-7xl font-[var(--font-display)] text-[var(--color-ink)]">
-              What Drives Us
-            </h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <GlassPanel
-                  key={value.title}
-                  variant="standard"
-                  className="value-card p-8 group"
-                  enableHoverPhysics={true}
-                >
-                  <motion.div
-                    className="mb-6"
-                    whileHover={{ rotate: 15, scale: 1.2 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <Icon size={40} className="text-[var(--color-accent-signal)]" />
-                  </motion.div>
-                  <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] text-sm leading-relaxed">
-                    {value.description}
-                  </p>
-                </GlassPanel>
-              );
-            })}
-          </div>
+      {/* --- MILESTONES --- */}
+      <section className="mb-64">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-20">
+          {milestones.map((m, i) => (
+            <div key={i} className="section-reveal flex flex-col gap-6">
+               <span className="text-5xl font-[var(--font-display)] text-[#2B2B2B]/20">{m.year}</span>
+               <h3 className="text-2xl italic">{m.event}</h3>
+               <p className="text-sm text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)]">
+                 {m.description}
+               </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Team CTA */}
-      <section className="relative py-32 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <GlassPanel variant="heavy" className="p-12 md:p-20 text-center" enableRefraction={true}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-6xl font-[var(--font-display)] text-[var(--color-ink)] mb-6">
-                Meet the People Behind Our Success
-              </h2>
-              <p className="text-xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] mb-10">
-                Our team of expert engineers and technical professionals brings decades of 
-                combined experience to every project.
-              </p>
-              <motion.a
-                href="/contact"
-                className="inline-block px-8 py-4 bg-[var(--color-accent-signal)] text-white rounded-full font-[var(--font-body)] font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Get in Touch
-              </motion.a>
-            </motion.div>
-          </GlassPanel>
+      {/* --- CORE VALUES: MINIMAL BLOCKS --- */}
+      <section className="section-reveal py-40 border-t border-[#E5E2DB]/50">
+        <div className="max-w-[1440px] mx-auto text-center mb-24">
+           <h2 className="text-4xl md:text-7xl">Driven by Purpose.</h2>
+        </div>
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E5E2DB]/50 border border-[#E5E2DB]/50">
+          {values.map((v, i) => (
+            <div key={i} className="bg-[#FAF9F6] p-12 md:p-20 group hover:bg-[#F5F1EA] transition-colors duration-700">
+               <span className="text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block">Value 0{i+1}</span>
+               <h3 className="text-3xl md:text-4xl mb-6 italic">{v.title}</h3>
+               <p className="text-base text-[#2B2B2B]/60 max-w-sm leading-relaxed font-[var(--font-body)]">
+                 {v.description}
+               </p>
+            </div>
+          ))}
         </div>
       </section>
+
+      {/* --- FINAL CTA TEASER --- */}
+      <section className="section-reveal py-40 text-center">
+         <h2 className="text-3xl md:text-5xl mb-12 italic opacity-40">Ready to explore our solutions?</h2>
+         <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95">
+           Discover Services
+         </Link>
+      </section>
+
     </div>
   );
 }

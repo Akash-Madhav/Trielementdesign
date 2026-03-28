@@ -1,39 +1,56 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center"
-      >
-        <div className="mb-8">
+    <div className="min-h-screen bg-[#FAF9F6] flex items-center justify-center px-6 selection:bg-[#2B2B2B]/10">
+      <div className="text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+          className="mb-12"
+        >
           <span
-            className="font-['Cormorant_Garamond'] text-[#C8972B]"
-            style={{ fontSize: 'clamp(6rem, 20vw, 12rem)', opacity: 0.2 }}
+            className="font-[var(--font-display)] italic text-[#2B2B2B]/10 leading-none"
+            style={{ fontSize: 'clamp(8rem, 25vw, 15rem)' }}
           >
             404
           </span>
-        </div>
-        <h1 className="text-4xl md:text-5xl font-['Cormorant_Garamond'] text-[#0A0A0C] mb-4">
-          Page Not Found
-        </h1>
-        <p className="text-lg text-[#6B6B7A] font-['Inter'] mb-8 max-w-md mx-auto">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 px-8 py-3 bg-[#C8972B] text-white 
-                   rounded-sm font-['Inter'] hover:bg-[#d4a535] transition-all"
+        </motion.div>
+        
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.3, ease: "circOut" }}
+          className="text-4xl md:text-5xl font-[var(--font-display)] text-[#2B2B2B] mb-6 italic"
         >
-          <Home size={18} />
-          Back to Home
-        </Link>
-      </motion.div>
+          Lost in Space.
+        </motion.h1>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: "circOut" }}
+          className="text-lg text-[#2B2B2B]/60 font-[var(--font-body)] mb-12 max-w-sm mx-auto leading-relaxed"
+        >
+          The coordinate you're seeking doesn't exist within our technical grid. 
+          Let us return to the foundation.
+        </motion.p>
+        
+        <motion.div
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           transition={{ duration: 1, delay: 0.8 }}
+        >
+          <Link
+            to="/"
+            className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95"
+          >
+            Return Home
+          </Link>
+        </motion.div>
+      </div>
     </div>
   );
 }

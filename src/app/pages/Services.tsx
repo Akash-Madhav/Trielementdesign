@@ -1,354 +1,167 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GlassPanel } from '../components/GlassPanel';
-import { Zap, Droplets, Wind, Sun, Shield, Lightbulb } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    icon: Zap,
-    title: 'Electrical Systems',
-    description: 'Comprehensive electrical design including power distribution, lighting, and emergency systems.',
-    features: ['Power Distribution', 'Lighting Design', 'Emergency Systems', 'Energy Management'],
+    title: 'MEP Engineering',
+    category: 'Precision',
+    image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ecb?auto=format&fit=crop&q=80&w=1000',
+    description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems that breathe life into structures.',
+    features: ['HVAC Design', 'Power Systems', 'Specialized Plumbing', 'Fire Protection'],
   },
   {
-    icon: Droplets,
-    title: 'Plumbing Systems',
-    description: 'Complete plumbing solutions from water supply to drainage and specialized systems.',
-    features: ['Water Supply', 'Drainage Systems', 'Fire Protection', 'Water Treatment'],
+    title: 'Sustainability',
+    category: 'Legacy',
+    image: 'https://images.unsplash.com/photo-1466611653911-95282ee3356d?auto=format&fit=crop&q=80&w=1000',
+    description: 'Engineering for the planet. Integrated green solutions that achieve net-zero ambitions without compromise.',
+    features: ['LEED / WELL', 'Solar Intel', 'Energy Modeling', 'Lifecycle Analysis'],
   },
   {
-    icon: Wind,
-    title: 'HVAC Systems',
-    description: 'Advanced climate control systems designed for comfort and energy efficiency.',
-    features: ['Air Conditioning', 'Ventilation', 'Heat Recovery', 'IAQ Management'],
-  },
-  {
-    icon: Sun,
-    title: 'Sustainable Design',
-    description: 'Green engineering solutions that minimize environmental impact and maximize efficiency.',
-    features: ['Solar Integration', 'Energy Modeling', 'LEED Consultation', 'Net Zero Design'],
-  },
-  {
-    icon: Shield,
-    title: 'Fire Protection',
-    description: 'Life safety systems designed to protect people and property.',
-    features: ['Sprinkler Systems', 'Fire Alarms', 'Smoke Control', 'Code Compliance'],
-  },
-  {
-    icon: Lightbulb,
-    title: 'Smart Building',
-    description: 'Integrated building management systems for intelligent facility control.',
-    features: ['BMS Integration', 'IoT Sensors', 'Automation', 'Data Analytics'],
+    title: 'BIM & Digital Twin',
+    category: 'Intelligence',
+    image: 'https://images.unsplash.com/photo-1536412597336-ade7b523ecac?auto=format&fit=crop&q=80&w=1000',
+    description: 'The data-driven ghost of construction. Immersive 3D coordination that eliminates conflict before the first stone is laid.',
+    features: ['3D Coordination', 'Asset Management', 'Virtual Mockups', 'Clash Detection'],
   },
 ];
 
-const process = [
-  {
-    step: '01',
-    title: 'Discovery',
-    description: 'We begin by understanding your project goals, constraints, and vision.',
-  },
-  {
-    step: '02',
-    title: 'Design',
-    description: 'Our engineers develop innovative solutions tailored to your specific needs.',
-  },
-  {
-    step: '03',
-    title: 'Coordination',
-    description: 'Seamless integration with architectural and structural teams ensures harmony.',
-  },
-  {
-    step: '04',
-    title: 'Documentation',
-    description: 'Comprehensive drawings and specifications guide the construction phase.',
-  },
-  {
-    step: '05',
-    title: 'Support',
-    description: 'We provide ongoing technical support throughout construction and beyond.',
-  },
+const processSteps = [
+  { step: '01', title: 'Conceptualization', text: 'Defining the technical soul of the project.' },
+  { step: '02', title: 'Integration', text: 'Harmonizing systems with architectural form.' },
+  { step: '03', title: 'Validation', text: 'Rigorous analysis for performance and cost.' },
+  { step: '04', title: 'Execution', text: 'Precision delivery and field oversight.' },
 ];
 
 export default function Services() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const processRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll();
+  const yParallax = useTransform(scrollY, [0, 1000], [0, 200]);
 
   useEffect(() => {
-    // Configure ScrollTrigger defaults
-    ScrollTrigger.config({
-      ignoreMobileResize: true,
-    });
-    
-    // Service cards stagger animation
-    const cards = gsap.utils.toArray<HTMLElement>('.service-detail-card');
-    cards.forEach((card, index) => {
-      gsap.fromTo(
-        card,
-        {
-          opacity: 0,
-          x: index % 2 === 0 ? -100 : 100,
-          rotateY: index % 2 === 0 ? -30 : 30,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          rotateY: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 80%',
-            end: 'top 50%',
-            toggleActions: 'play none none reverse',
-            invalidateOnRefresh: true,
-          },
-        }
-      );
-    });
-
-    // Process Timeline Animation
-    ScrollTrigger.create({
-      trigger: processRef.current,
-      start: 'top center',
-      end: 'bottom center',
-      invalidateOnRefresh: true,
-      onEnter: () => {
-        gsap.to('.process-line', {
-          scaleY: 1,
-          duration: 1.5,
-          ease: 'power2.inOut',
-        });
-      },
-    });
-
-    gsap.fromTo(
-      '.process-step',
-      {
+    const ctx = gsap.context(() => {
+      // Hero Entrance
+      gsap.from('.services-reveal', {
+        y: 60,
         opacity: 0,
-        x: -50,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: processRef.current,
-          start: 'top 70%',
-        },
-      }
-    );
+        stagger: 0.15,
+        duration: 1.8,
+        ease: 'expo.out',
+        delay: 0.3
+      });
 
-    // Floating features
-    gsap.to('.feature-tag', {
-      y: -10,
-      stagger: {
-        each: 0.1,
-        repeat: -1,
-        yoyo: true,
-      },
-      duration: 1.5,
-      ease: 'sine.inOut',
-    });
+      // Service Blocks reveal
+      gsap.utils.toArray<HTMLElement>('.service-item').forEach((item) => {
+        gsap.from(item, {
+          y: 80,
+          opacity: 0,
+          duration: 2,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 85%',
+          }
+        });
+      });
+    }, containerRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[80vh] flex items-center px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 md:pt-0">
-        <motion.div
-          className="max-w-5xl mx-auto relative z-10"
-          style={{ opacity: heroOpacity }}
-        >
-          <p className="services-hero-content text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-6">
-            What We Do
-          </p>
-          <h1 className="services-hero-content text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-[var(--font-display)] text-[var(--color-ink)] mb-6 sm:mb-8 leading-tight">
-            Comprehensive MEP Engineering Solutions
-          </h1>
-          <p className="services-hero-content text-lg sm:text-xl md:text-2xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed max-w-3xl">
-            From concept to completion, we deliver integrated mechanical, electrical, and plumbing 
-            systems that power modern buildings.
-          </p>
-        </motion.div>
-
-        {/* Background Gradient */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full -z-10"
-          style={{
-            background: 'radial-gradient(circle, rgba(196, 97, 58, 0.1), transparent)',
-            scale: heroScale,
-          }}
-        />
-      </section>
-
-      {/* Services Grid */}
-      <section ref={servicesRef} className="relative py-32 px-6 md:px-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <GlassPanel
-                  key={service.title}
-                  variant="standard"
-                  className="service-detail-card p-10 group relative overflow-hidden"
-                  enableHoverPhysics={true}
-                >
-                  {/* Icon */}
-                  <motion.div
-                    className="mb-6 w-16 h-16 rounded-full flex items-center justify-center"
-                    style={{
-                      background: 'var(--glass-thin-fill)',
-                      backdropFilter: 'blur(8px)',
-                      WebkitBackdropFilter: 'blur(8px)',
-                    }}
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <Icon size={32} className="text-[var(--color-accent-signal)]" />
-                  </motion.div>
-
-                  {/* Content */}
-                  <h3 className="text-3xl font-[var(--font-display)] text-[var(--color-ink)] mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed mb-6">
-                    {service.description}
-                  </p>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-2">
-                    {service.features.map((feature) => (
-                      <span
-                        key={feature}
-                        className="feature-tag px-3 py-1 text-xs font-[var(--font-body)] text-[var(--color-ink)] rounded-full"
-                        style={{
-                          background: 'var(--glass-thin-fill)',
-                          backdropFilter: 'blur(8px)',
-                          WebkitBackdropFilter: 'blur(8px)',
-                          border: '1px solid rgba(255, 255, 255, 0.4)',
-                        }}
-                      >
-                        {feature}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Hover Effect */}
-                  <motion.div
-                    className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-[var(--color-accent-signal)] opacity-0 blur-3xl group-hover:opacity-15 transition-opacity duration-500"
-                  />
-                </GlassPanel>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section ref={processRef} className="relative py-32 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            className="text-center mb-20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-[var(--color-accent-signal)] text-sm tracking-[0.3em] uppercase font-[var(--font-mono)] mb-4">
-              Our Process
-            </p>
-            <h2 className="text-5xl md:text-7xl font-[var(--font-display)] text-[var(--color-ink)]">
-              How We Work
-            </h2>
-          </motion.div>
-
-          {/* Timeline */}
-          <div className="relative">
-            {/* Vertical Line */}
-            <div className="absolute left-8 top-0 w-0.5 h-full bg-[var(--color-structural)]">
-              <div
-                className="process-line w-full h-0 bg-[var(--color-accent-signal)] origin-top"
-                style={{ transformOrigin: 'top', scaleY: 0 }}
-              />
-            </div>
-
-            {/* Steps */}
-            <div className="space-y-12">
-              {process.map((item) => (
-                <GlassPanel
-                  key={item.step}
-                  variant="thin"
-                  className="process-step ml-20 p-8"
-                >
-                  <div className="flex items-start gap-6">
-                    <div className="text-5xl font-[var(--font-display)] text-[var(--color-accent-signal)] opacity-30">
-                      {item.step}
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-[var(--font-display)] text-[var(--color-ink)] mb-3">
-                        {item.title}
-                      </h3>
-                      <p className="text-[var(--color-ink)] opacity-70 font-[var(--font-body)] leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                </GlassPanel>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-32 px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <GlassPanel variant="heavy" className="p-12 md:p-20 text-center" enableRefraction={true}>
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-6xl font-[var(--font-display)] text-[var(--color-ink)] mb-6">
-                Let's Discuss Your Project
-              </h2>
-              <p className="text-xl text-[var(--color-ink)] opacity-70 font-[var(--font-body)] mb-10">
-                Whether you need MEP design, sustainability consulting, or full project support, 
-                we're here to help bring your vision to life.
+    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pt-40 pb-64 px-6 md:px-12 selection:bg-[#2B2B2B]/10">
+      
+      {/* --- PREMIUM HERO --- */}
+      <section className="max-w-[1440px] mx-auto mb-40">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-end">
+           <div>
+              <span className="services-reveal block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/50 mb-8 font-medium">Our Specialties</span>
+              <h1 className="services-reveal text-[clamp(2.5rem,8vw,7rem)] leading-[1.05] tracking-tighter mb-10">
+                The <i>Art</i> of <br /> Engineering.
+              </h1>
+           </div>
+           <div className="services-reveal max-w-md pb-10">
+              <p className="text-lg md:text-xl text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)]">
+                We provide a comprehensive suite of technical services that ensure the 
+                vitality and longevity of architectural masterpieces.
               </p>
-              <motion.a
-                href="/contact"
-                className="inline-block px-10 py-5 bg-[var(--color-accent-signal)] text-white text-lg rounded-full font-[var(--font-body)] font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Start a Conversation
-              </motion.a>
-            </motion.div>
-          </GlassPanel>
+           </div>
+        </div>
+        <div className="services-reveal w-full h-[1px] bg-[#E5E2DB]" />
+      </section>
+
+      {/* --- MAIN SERVICES: GALLERY LAYOUT --- */}
+      <section className="max-w-[1440px] mx-auto space-y-40 md:space-y-72 mb-80">
+        {services.map((s, i) => (
+           <div key={i} className="service-item grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-24 items-center">
+              <div className={`md:col-span-7 ${i % 2 === 1 ? 'md:order-2' : ''}`}>
+                 <div className="relative overflow-hidden group aspect-[16/10]">
+                    <motion.img 
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+                      src={s.image} 
+                      alt={s.title} 
+                      className="w-full h-full object-cover brightness-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                 </div>
+              </div>
+              <div className={`md:col-span-5 ${i % 2 === 1 ? 'md:order-1' : ''}`}>
+                 <span className="text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 mb-6 block">Service 0{i+1} / {s.category}</span>
+                 <h2 className="text-4xl md:text-6xl mb-10 italic">{s.title}</h2>
+                 <p className="text-lg text-[#2B2B2B]/60 mb-12 leading-relaxed max-w-sm">
+                   {s.description}
+                 </p>
+                 <div className="grid grid-cols-2 gap-4">
+                    {s.features.map(f => (
+                       <div key={f} className="flex items-center gap-3">
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#B5B0A8]" />
+                          <span className="text-[11px] uppercase tracking-wider text-[#2B2B2B]/70">{f}</span>
+                       </div>
+                    ))}
+                 </div>
+              </div>
+           </div>
+        ))}
+      </section>
+
+      {/* --- PROCESS: MINIMAL TIMELINE --- */}
+      <section className="bg-[#1A1A1A] text-[#F5F1EA] py-40 md:py-64 -mx-6 md:-mx-12 px-6 md:px-12">
+        <div className="max-w-[1440px] mx-auto">
+           <div className="mb-24 section-reveal">
+              <span className="text-[10px] uppercase tracking-[0.5em] text-[#D4CFC7]/50 mb-8 block font-medium">Our Methodology</span>
+              <h2 className="text-4xl md:text-7xl">Precision in <i>Motion</i>.</h2>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20">
+              {processSteps.map((p, i) => (
+                 <div key={i} className="section-reveal group cursor-default">
+                    <div className="text-4xl font-[var(--font-display)] mb-8 opacity-20 group-hover:opacity-100 transition-opacity duration-700">{p.step}</div>
+                    <div className="w-full h-px bg-[#D4CFC7]/20 mb-8 group-hover:bg-[#D4CFC7] transition-all duration-700 origin-left scale-x-50 group-hover:scale-x-100" />
+                    <h3 className="text-xl mb-4 italic">{p.title}</h3>
+                    <p className="text-sm text-[#F5F1EA]/60 font-[var(--font-body)] leading-relaxed">
+                       {p.text}
+                    </p>
+                 </div>
+              ))}
+           </div>
         </div>
       </section>
+
+      {/* --- FINAL CTA TEASER --- */}
+      <section className="section-reveal py-64 text-center">
+         <h2 className="text-[clamp(2.5rem,6vw,5rem)] mb-16 leading-tight">
+           Crafting the <i>Next</i> <br /> Generation of <i>Space</i>.
+         </h2>
+         <Link to="/contact" className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95">
+           Inquire Now
+         </Link>
+      </section>
+
     </div>
   );
 }
