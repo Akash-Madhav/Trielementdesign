@@ -25,21 +25,21 @@ const philosophies = [
     title: 'DESIGN',
     heading: 'From Whole to Parts.',
     body: 'Design governs the cost and performance of any project. Every engineer is empowered to consider the smallest of details — and their cascading impact at every level.',
-    image: '/images/home_design_1774695495228.png',
+    image: '/images/home_design.png',
   },
   {
     number: '02',
     title: 'INTEGRATE',
     heading: 'Technology Meets Human Experience.',
     body: 'Promoting a blend of technology, keen observation and human experience enables seamless integration of each service into the system.',
-    image: '/images/home_integrate_1774695517309.png',
+    image: '/images/home_integrate.png',
   },
   {
     number: '03',
     title: 'SUSTAIN',
     heading: 'Built for Tomorrow.',
     body: 'Transcend industry expectations by planning systems and technologies to last the test of time. Our designers foresee tomorrow\'s demands.',
-    image: '/images/home_sustain_fixed_1774696030727.png',
+    image: '/images/home_sustain.png',
   },
 ];
 
@@ -302,12 +302,13 @@ export default function Home() {
             <div key={i} className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center overflow-hidden`}>
                {/* Visual Side */}
                <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
-                 <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group">
+                 <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group rounded-3xl md:rounded-[3rem]">
                    <motion.img 
                      whileHover={{ scale: 1.05 }}
                      transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
                      src={item.image} 
                      alt={item.title} 
+                     loading="lazy"
                      className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
                    />
                    <div className="absolute top-8 left-8">
@@ -352,28 +353,28 @@ export default function Home() {
            </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px] md:h-[800px] cursor-explore">
-           <div className="md:col-span-8 relative group overflow-hidden section-reveal">
-              <img src="/images/home_projects_hyatt_1774695556179.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Park Hyatt" />
+         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[500px] md:h-[800px] cursor-explore">
+           <div className="md:col-span-8 relative group overflow-hidden section-reveal rounded-3xl md:rounded-[4rem]">
+              <img src="/images/home_projects_hyatt.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Park Hyatt" />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
-              <div className="absolute bottom-10 left-10 text-white">
-                 <span className="text-[10px] uppercase tracking-widest block mb-2 opacity-60">Hospitality / Zanzibar</span>
-                 <h3 className="text-3xl font-[var(--font-display)]">Park Hyatt Zanzibar</h3>
+              <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 text-white">
+                 <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-2 opacity-60">Hospitality / Zanzibar</span>
+                 <h3 className="text-2xl md:text-3xl font-[var(--font-display)]">Park Hyatt Zanzibar</h3>
               </div>
            </div>
            <div className="md:col-span-4 grid grid-rows-2 gap-6">
-              <div className="relative group overflow-hidden section-reveal">
-                 <img src="/images/home_projects_wasl_1774695576365.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="WASL Tower" />
-                 <div className="absolute bottom-8 left-8 text-white">
-                   <span className="text-[10px] uppercase tracking-widest block mb-1 opacity-60">High-rise / Dubai</span>
-                   <h3 className="text-xl font-[var(--font-display)]">WASL Tower</h3>
+              <div className="relative group overflow-hidden section-reveal rounded-3xl md:rounded-[3rem]">
+                 <img src="/images/home_projects_wasl.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="WASL Tower" />
+                 <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
+                   <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-1 opacity-60">High-rise / Dubai</span>
+                   <h3 className="text-lg md:text-xl font-[var(--font-display)]">WASL Tower</h3>
                  </div>
               </div>
-              <div className="relative group overflow-hidden section-reveal">
-                 <img src="/images/home_projects_mandarin_1774695606811.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Mandarin JBR" />
-                 <div className="absolute bottom-8 left-8 text-white">
-                   <span className="text-[10px] uppercase tracking-widest block mb-1 opacity-60">Luxury / Dubai</span>
-                   <h3 className="text-xl font-[var(--font-display)]">Mandarin JBR</h3>
+              <div className="relative group overflow-hidden section-reveal rounded-3xl md:rounded-[3rem]">
+                 <img src="/images/home_projects_mandarin.png" loading="lazy" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Mandarin JBR" />
+                 <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 text-white">
+                   <span className="text-[8px] md:text-[10px] uppercase tracking-widest block mb-1 opacity-60">Luxury / Dubai</span>
+                   <h3 className="text-lg md:text-xl font-[var(--font-display)]">Mandarin JBR</h3>
                  </div>
               </div>
            </div>

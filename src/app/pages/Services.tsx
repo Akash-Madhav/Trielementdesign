@@ -12,21 +12,21 @@ const services = [
   {
     title: 'MEP Engineering',
     category: 'Precision',
-    image: '/images/services_mep_1774695642299.png',
+    image: '/images/services_mep.png',
     description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems that breathe life into structures.',
     features: ['HVAC Design', 'Power Systems', 'Specialized Plumbing', 'Fire Protection'],
   },
   {
     title: 'Sustainability',
     category: 'Legacy',
-    image: '/images/services_sustain_fixed_1774696052157.png',
+    image: '/images/services_sustain.png',
     description: 'Engineering for the planet. Integrated green solutions that achieve net-zero ambitions without compromise.',
     features: ['LEED / WELL', 'Solar Intel', 'Energy Modeling', 'Lifecycle Analysis'],
   },
   {
     title: 'BIM & Digital Twin',
     category: 'Intelligence',
-    image: '/images/services_bim_1774695683569.png',
+    image: '/images/services_bim.png',
     description: 'The data-driven ghost of construction. Immersive 3D coordination that eliminates conflict before the first stone is laid.',
     features: ['3D Coordination', 'Asset Management', 'Virtual Mockups', 'Clash Detection'],
   },
@@ -189,8 +189,9 @@ export default function Services() {
             className="w-full h-full relative"
           >
             <img 
-              src="/images/services_hero_1774700717176.png" 
+              src="/images/services_hero.png" 
               alt="Architectural Precision" 
+              loading="lazy"
               className="w-full h-full object-cover grayscale brightness-[1.1] contrast-[1.05] opacity-40 mix-blend-multiply"
             />
             {/* Cinematic Overlays */}
@@ -232,12 +233,11 @@ export default function Services() {
            <div key={i} className="service-item grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-24 items-center overflow-hidden cursor-view">
               <div className={`md:col-span-7 ${i % 2 === 1 ? 'md:order-2' : ''} ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'}`}>
                  <div className="relative overflow-hidden group aspect-[16/10]">
-                    <motion.img 
-                      whileHover={{ scale: 1.08, rotate: 1 }}
-                      transition={{ duration: 1.5, ease: "easeOut" }}
+                    <img 
                       src={s.image} 
                       alt={s.title} 
-                      className="w-full h-full object-cover transition-all duration-1000"
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
                     />
                  </div>
               </div>

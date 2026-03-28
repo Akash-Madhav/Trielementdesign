@@ -1,11 +1,14 @@
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router";
 import Root from "./pages/Root";
-import Home from "./pages/HomeRedesigned";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import ProjectLocations from "./pages/ProjectLocations";
-import Contact from "./pages/Contact";
-import NotFound from "./pages/NotFound";
+
+// Lazy load pages for performance
+const Home = lazy(() => import("./pages/HomeRedesigned"));
+const About = lazy(() => import("./pages/About"));
+const Services = lazy(() => import("./pages/Services"));
+const ProjectLocations = lazy(() => import("./pages/ProjectLocations"));
+const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 export const router = createBrowserRouter([
   {

@@ -15,10 +15,11 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      'leaflet$': resolve(__dirname, 'node_modules/leaflet/src/Leaflet.js'),
     },
   },
   optimizeDeps: {
-    exclude: ['leaflet', 'react-leaflet'],
+    include: ['leaflet', 'react-leaflet'],
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
   build: {

@@ -158,7 +158,7 @@ export default function About() {
              className="w-full h-full"
            >
              <img 
-               src="/images/about_hero_1774695623275.png" 
+               src="/images/about_hero.png" 
                alt="Architectural Texture" 
                className="w-full h-full object-cover grayscale"
              />
