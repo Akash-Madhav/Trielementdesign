@@ -1,163 +1,91 @@
 import { useEffect, useState } from 'react';
-import { motion, useSpring } from 'motion/react';
+import { motion, useSpring, useMotionValue } from 'motion/react';
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorText, setCursorText] = useState('');
   const [isHovering, setIsHovering] = useState(false);
-  const [hoverType, setHoverType] = useState<'default' | 'project' | 'link'>('default');
-  const [isVisible, setIsVisible] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
 
-  const cursorX = useSpring(mousePosition.x, { damping: 30, stiffness: 200, mass: 0.5 });
-  const cursorY = useSpring(mousePosition.y, { damping: 30, stiffness: 200, mass: 0.5 });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 25, stiffness: 250 };
+  const cursorX = useSpring(mouseX, springConfig);
+  const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+    const moveCursor = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
-    const handleMouseEnter = (e: Event) => {
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       
-      // Check if target is an Element before using closest
-      if (!target || !(target instanceof Element)) return;
-      
-      if (target.closest('a, button, [role="button"]')) {
+      // Determine cursor state based on target attributes or classes
+      if (target.closest('a') || target.closest('button')) {
         setIsHovering(true);
-        if (target.closest('[data-cursor-type="project"]')) {
-          setHoverType('project');
-        } else {
-          setHoverType('link');
-        }
-      }
-    };
-
-    const handleMouseLeave = (e: Event) => {
-      const target = e.target as HTMLElement;
-      if (!target || !(target instanceof Element)) return;
-      
-      if (target.closest('a, button, [role="button"]')) {
+        setCursorText('');
+      } else if (target.closest('.cursor-explore')) {
+        setIsHovering(true);
+        setCursorText('EXPLORE');
+      } else if (target.closest('.cursor-view')) {
+        setIsHovering(true);
+        setCursorText('VIEW');
+      } else if (target.closest('.cursor-drag')) {
+        setIsHovering(true);
+        setCursorText('DRAG');
+      } else {
         setIsHovering(false);
-        setHoverType('default');
+        setCursorText('');
       }
     };
 
-    const handleMouseOut = (e: MouseEvent) => {
-      // Only hide if mouse leaves the window
-      if (e.relatedTarget === null) {
-        setIsVisible(false);
-      }
-    };
+    const handleMouseDown = () => setIsClicking(true);
+    const handleMouseUp = () => setIsClicking(false);
 
-    window.addEventListener('mousemove', updateMousePosition);
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
-    document.addEventListener('mouseout', handleMouseOut);
+    window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-      document.removeEventListener('mouseout', handleMouseOut);
+      window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isVisible]);
-
-  if (typeof window === 'undefined') return null;
+  }, []);
 
   return (
-    <>
-      {/* Main Cursor - Glass Ring */}
+    <motion.div
+      className="fixed top-0 left-0 z-[10000] pointer-events-none flex items-center justify-center mix-blend-difference hidden lg:flex"
+      style={{
+        x: cursorX,
+        y: cursorY,
+        translateX: '-50%',
+        translateY: '-50%',
+      }}
+    >
       <motion.div
-        className="fixed pointer-events-none z-[9999] hidden lg:block"
-        style={{
-          left: 0,
-          top: 0,
-          x: cursorX,
-          y: cursorY,
-        }}
+        className="bg-white rounded-full flex items-center justify-center overflow-hidden"
         animate={{
-          opacity: isVisible ? 1 : 0,
+          width: isHovering ? (cursorText ? 80 : 40) : 10,
+          height: isHovering ? (cursorText ? 80 : 40) : 10,
+          opacity: isClicking ? 0.5 : 1,
         }}
-        transition={{ duration: 0.2 }}
+        transition={{ type: 'spring', damping: 20, stiffness: 200 }}
       >
-        {hoverType === 'project' ? (
-          <motion.div
-            className="text-white px-5 py-2.5 rounded-full text-sm font-[var(--font-body)] font-medium whitespace-nowrap"
-            style={{
-              transform: 'translate(-50%, -50%)',
-              background: 'rgba(196, 97, 58, 0.95)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              boxShadow: '0 4px 12px rgba(196, 97, 58, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
-              border: '1px solid rgba(255, 255, 255, 0.6)',
-            }}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        {cursorText && (
+          <motion.span 
+            className="text-[10px] font-bold tracking-widest text-black"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
           >
-            View Project
-          </motion.div>
-        ) : (
-          <div className="relative" style={{ transform: 'translate(-50%, -50%)' }}>
-            {/* Outer Glass Ring */}
-            <motion.div
-              className="rounded-full"
-              style={{
-                background: 'var(--glass-thin-fill)',
-                backdropFilter: 'blur(8px) saturate(1.5)',
-                WebkitBackdropFilter: 'blur(8px) saturate(1.5)',
-                border: '1.5px solid rgba(255, 255, 255, 0.8)',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9)',
-              }}
-              animate={{
-                width: isHovering ? '48px' : '40px',
-                height: isHovering ? '48px' : '40px',
-              }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            />
-            
-            {/* Inner Dot */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--color-accent-signal)] rounded-full"
-              animate={{
-                width: isHovering ? '8px' : '6px',
-                height: isHovering ? '8px' : '6px',
-                opacity: isHovering ? 1 : 0.7,
-              }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            />
-          </div>
+            {cursorText}
+          </motion.span>
         )}
       </motion.div>
-
-      {/* Follower Cursor - Glass Circle */}
-      {hoverType !== 'project' && (
-        <motion.div
-          className="fixed pointer-events-none z-[9998] hidden lg:block rounded-full"
-          style={{
-            left: 0,
-            top: 0,
-            x: cursorX,
-            y: cursorY,
-            transform: 'translate(-50%, -50%)',
-            background: 'rgba(196, 97, 58, 0.08)',
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
-            border: '1px solid rgba(196, 97, 58, 0.15)',
-          }}
-          animate={{
-            width: isHovering ? '80px' : '60px',
-            height: isHovering ? '80px' : '60px',
-            opacity: isVisible ? (isHovering ? 0.4 : 0.2) : 0,
-          }}
-          transition={{
-            duration: 0.4,
-            ease: [0.16, 1, 0.3, 1],
-            delay: 0.05,
-          }}
-        />
-      )}
-    </>
+    </motion.div>
   );
 }

@@ -58,9 +58,12 @@ export default function Root() {
     };
   }, [location.pathname]); // Re-run on route change to catch new elements
 
-  // Scroll to top and refresh ScrollTrigger
+  // Scroll to top and refresh ScrollTrigger on Route Change
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    window.scrollTo(0, 0);
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0, { immediate: true });
+    }
     setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);

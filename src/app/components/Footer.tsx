@@ -13,7 +13,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#FAF9F6] pt-32 pb-16 px-6 md:px-12 border-t border-[#E5E2DB]/50">
+    <footer className="bg-[#FAF9F6] pt-16 pb-12 px-6 md:px-12 border-t border-[#E5E2DB]/50">
       <div className="max-w-[1440px] mx-auto text-center">
         {/* Brand/Logo */}
         <motion.div
@@ -24,7 +24,7 @@ export function Footer() {
            className="mb-12"
         >
           <Link to="/" className="inline-block scale-125">
-            <BrandWordmark showStudio={false} className="text-3xl md:text-4xl tracking-tighter" />
+            <BrandWordmark className="text-3xl md:text-4xl tracking-tighter" />
           </Link>
         </motion.div>
 

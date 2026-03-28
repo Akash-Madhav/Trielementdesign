@@ -3,7 +3,9 @@ import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { GlassPanel } from '../components/GlassPanel';
 import BrandWordmark from '../../imports/BrandWordmark';
+import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,21 +25,21 @@ const philosophies = [
     title: 'DESIGN',
     heading: 'From Whole to Parts.',
     body: 'Design governs the cost and performance of any project. Every engineer is empowered to consider the smallest of details — and their cascading impact at every level.',
-    image: 'https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/home_design_1774695495228.png',
   },
   {
     number: '02',
     title: 'INTEGRATE',
     heading: 'Technology Meets Human Experience.',
     body: 'Promoting a blend of technology, keen observation and human experience enables seamless integration of each service into the system.',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/home_integrate_1774695517309.png',
   },
   {
     number: '03',
     title: 'SUSTAIN',
     heading: 'Built for Tomorrow.',
     body: 'Transcend industry expectations by planning systems and technologies to last the test of time. Our designers foresee tomorrow\'s demands.',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000',
+    image: '/images/home_sustain_fixed_1774696030727.png',
   },
 ];
 
@@ -45,6 +47,10 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const heroMediaRef = useRef<HTMLDivElement>(null);
+  
+  // Magnetic refs
+  const exploreBtnRef = useMagnetic();
+  const journeyBtnRef = useMagnetic();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 300]);
 
@@ -66,12 +72,13 @@ export default function Home() {
         }
       );
 
-      // Text Stagger
+      // Narrative Text Stagger (Letter-based reveal simulation)
       gsap.from('.hero-text-reveal', {
-        y: 80,
+        y: 100,
         opacity: 0,
-        stagger: 0.15,
-        duration: 1.8,
+        rotateX: -45,
+        stagger: 0.2,
+        duration: 2,
         ease: 'expo.out',
         delay: 0.8
       });
@@ -88,6 +95,96 @@ export default function Home() {
             start: 'top 85%',
           }
         });
+      });
+
+      // Directional Reveals (Zigzag)
+      gsap.utils.toArray<HTMLElement>('.reveal-left').forEach((el) => {
+        gsap.from(el, {
+          x: -100,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+          }
+        });
+      });
+
+      gsap.utils.toArray<HTMLElement>('.reveal-right').forEach((el) => {
+        gsap.from(el, {
+          x: 100,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+          }
+        });
+      });
+
+      // --- TYPOGRAPHIC STORYTELLING TIERS ---
+      
+      // Tier 1: 3D Split-Word Reveals
+      gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
+        gsap.from(el, {
+          y: 40,
+          rotateX: -30,
+          opacity: 0,
+          duration: 1.8,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+          }
+        });
+      });
+
+      // Tier 2: Cinematic Blur-to-Focus
+      gsap.utils.toArray<HTMLElement>('.tier-2').forEach((el) => {
+        gsap.from(el, {
+          filter: 'blur(15px)',
+          opacity: 0,
+          y: 20,
+          duration: 2.2,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+          }
+        });
+      });
+
+      // Tier 3: Float-in Staggers
+      gsap.utils.toArray<HTMLElement>('.tier-3-container').forEach((container) => {
+        gsap.from(container.children, {
+          y: 15,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 92%',
+          }
+        });
+      });
+
+      // Background Highlight Shift
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+          const p = self.progress;
+          // Subtle bg shift from #FAF9F6 to a slightly warmer/deeper #F5F1EA
+          gsap.to(containerRef.current, {
+            backgroundColor: p > 0.3 && p < 0.7 ? '#F5F1EA' : '#FAF9F6',
+            duration: 1,
+            ease: 'power2.inOut'
+          });
+        }
       });
     }, containerRef);
 
@@ -113,7 +210,7 @@ export default function Home() {
               playsInline 
               className="w-full h-full object-cover brightness-[1.05] contrast-[1.1] grayscale opacity-40 mix-blend-multiply"
             >
-              <source src="https://cdn.pixabay.com/video/2016/09/21/5319-183742416_large.mp4" type="video/mp4" />
+              <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
             </video>
             
             {/* Overlay Layers for Lumière Atmosphere */}
@@ -125,33 +222,38 @@ export default function Home() {
         {/* Content Overlay */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6">
           <div className="inline-block mb-10 overflow-hidden">
-            <span className="hero-text-reveal block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/60 font-[var(--font-body)]">
+            <span className="hero-text-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/60 font-[var(--font-body)]">
                Engineering Ethereal Spaces
             </span>
           </div>
           
           <div className="overflow-hidden mb-8">
-            <h1 className="hero-text-reveal text-center leading-[0.95] tracking-tight">
+            <h1 className="hero-text-reveal tier-1 text-center leading-[0.95] tracking-tight">
               <span className="block text-[clamp(3.5rem,12vw,10rem)] font-[var(--font-display)] italic text-[#2B2B2B]">
                 Bespoke
               </span>
               <span className="block text-[clamp(3.5rem,12vw,10rem)] font-[var(--font-display)] uppercase text-[#2B2B2B]">
                 Intelligence
               </span>
+              <div className="flex justify-center mt-4 opacity-20 text-[8px] tracking-[1em] font-mono animate-pulse">
+                [ 25.1972° N, 55.2744° E ]
+              </div>
             </h1>
           </div>
 
           <div className="overflow-hidden mb-16">
-            <p className="hero-text-reveal text-lg md:text-xl text-[#2B2B2B]/70 font-[var(--font-body)] max-w-2xl mx-auto leading-relaxed">
+            <p className="hero-text-reveal tier-2 text-lg md:text-xl text-[#2B2B2B]/70 font-[var(--font-body)] max-w-2xl mx-auto leading-relaxed">
               Transforming complex engineering into seamless architectural poetry. 
               The future of spatial experience, illuminated.
             </p>
           </div>
 
-          <motion.div className="hero-text-reveal flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Link to="/services" className="px-12 py-4 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-[var(--font-body)] hover:bg-[#2B2B2B]/80 transition-all duration-700 hover:scale-105 active:scale-95">
-              Explore Our Craft
-            </Link>
+          <motion.div className="hero-text-reveal tier-3-container flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div ref={exploreBtnRef}>
+              <Link to="/services" className="px-12 py-4 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-[var(--font-body)] hover:bg-[#2B2B2B]/80 transition-all duration-700 hover:scale-105 active:scale-95 block">
+                Explore Our Craft
+              </Link>
+            </div>
             <Link to="/project-locations" className="text-[11px] uppercase tracking-[0.25em] font-[var(--font-body)] text-[#2B2B2B] group relative overflow-hidden h-5">
               <span>View Portfolio</span>
               <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#2B2B2B] translate-y-2 group-hover:translate-y-0 transition-transform duration-700" />
@@ -166,7 +268,7 @@ export default function Home() {
       </section>
 
       {/* --- PARTNER MARQUEE --- */}
-      <section className="py-20 bg-white border-y border-[#E5E2DB]/50 overflow-hidden">
+      <section className="py-12 md:py-20 bg-white border-y border-[#E5E2DB]/50 overflow-hidden">
         <motion.div
            animate={{ x: [0, -2000] }}
            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
@@ -181,11 +283,11 @@ export default function Home() {
       </section>
 
       {/* --- STATISTICS: MINIMALIST GRID --- */}
-      <section className="py-40 px-6 md:px-12">
+      <section className="py-12 md:py-24 px-6 md:px-12 border-b border-[#E5E2DB]/30">
         <div className="max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-12 sm:gap-16">
+          <div className="tier-3-container grid grid-cols-2 md:grid-cols-5 gap-12 sm:gap-16">
             {stats.map((stat, i) => (
-              <div key={i} className="section-reveal flex flex-col gap-2 items-center md:items-start">
+              <div key={i} className="flex flex-col gap-2 items-center md:items-start">
                 <span className="text-4xl md:text-5xl font-[var(--font-display)] text-[#2B2B2B]">
                    {stat.value}
                 </span>
@@ -199,12 +301,12 @@ export default function Home() {
       </section>
 
       {/* --- PHILOSOPHY: STORYTELLING LAYOUT --- */}
-      <section className="py-40 px-6 md:px-12 bg-[#F5F1EA]/30">
-        <div className="max-w-[1440px] mx-auto space-y-40 md:space-y-64">
+      <section className="py-16 md:py-32 px-6 md:px-12 bg-[#F5F1EA]/30 border-b border-[#E5E2DB]/30">
+        <div className="max-w-[1440px] mx-auto space-y-20 md:space-y-40">
           {philosophies.map((item, i) => (
-            <div key={i} className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center`}>
+            <div key={i} className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center overflow-hidden`}>
                {/* Visual Side */}
-               <div className="w-full md:w-1/2 section-reveal">
+               <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
                  <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group">
                    <motion.img 
                      whileHover={{ scale: 1.05 }}
@@ -222,19 +324,19 @@ export default function Home() {
                </div>
 
                {/* Text Side */}
-               <div className="w-full md:w-1/2 section-reveal pt-10 md:pt-0">
-                  <span className="text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/50 mb-6 block">
+               <div className={`w-full md:w-1/2 pt-10 md:pt-0 ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
+                  <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/50 mb-6 block">
                     {item.title}
                   </span>
-                  <h2 className="text-4xl md:text-6xl mb-8 leading-[1.1]">
+                  <h2 className="tier-1 text-4xl md:text-6xl mb-8 leading-[1.1]">
                     {item.heading}
                   </h2>
-                  <p className="text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
+                  <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
                     {item.body}
                   </p>
                   <motion.div 
                     whileHover={{ x: 10 }} 
-                    className="mt-12 inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] font-medium cursor-pointer group"
+                    className="tier-3 mt-12 inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] font-medium cursor-pointer group"
                   >
                     Explore Discipline
                     <div className="w-8 h-[1px] bg-[#2B2B2B] group-hover:w-12 transition-all duration-500" />
@@ -246,17 +348,18 @@ export default function Home() {
       </section>
 
       {/* --- PROJECTS: IMMERSIVE GALLERY (TEASER) --- */}
-      <section className="py-40 px-6 md:px-12 overflow-hidden">
-        <div className="max-w-[1440px] mx-auto text-center mb-24 section-reveal">
-           <h2 className="text-4xl md:text-7xl mb-8">Iconic Environments.</h2>
-           <p className="text-[#2B2B2B]/60 max-w-2xl mx-auto uppercase tracking-[0.2em] text-[10px] font-medium leading-loose">
+      <section className="py-20 md:py-40 px-6 md:px-12 overflow-hidden border-b border-[#E5E2DB]/30 bg-white/30">
+        <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
+           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-6 block font-medium uppercase">Portfolio Teaser</span>
+           <h2 className="tier-1 text-4xl md:text-7xl mb-8">Iconic Environments.</h2>
+           <p className="tier-2 text-[#2B2B2B]/60 max-w-2xl mx-auto uppercase tracking-[0.2em] text-[10px] font-medium leading-loose">
              A curation of precision-driven architecture and sustainable engineering across the globe.
            </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 h-[800px]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[600px] md:h-[800px] cursor-explore">
            <div className="md:col-span-8 relative group overflow-hidden section-reveal">
-              <img src="https://images.unsplash.com/photo-1671798746335-a30fd8b2e2e7?auto=format&fit=crop&q=80&w=1500" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Park Hyatt" />
+              <img src="/images/home_projects_hyatt_1774695556179.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Park Hyatt" />
               <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors" />
               <div className="absolute bottom-10 left-10 text-white">
                  <span className="text-[10px] uppercase tracking-widest block mb-2 opacity-60">Hospitality / Zanzibar</span>
@@ -265,14 +368,14 @@ export default function Home() {
            </div>
            <div className="md:col-span-4 grid grid-rows-2 gap-6">
               <div className="relative group overflow-hidden section-reveal">
-                 <img src="https://images.unsplash.com/photo-1735320864933-601d2cac9371?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="WASL Tower" />
+                 <img src="/images/home_projects_wasl_1774695576365.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="WASL Tower" />
                  <div className="absolute bottom-8 left-8 text-white">
                    <span className="text-[10px] uppercase tracking-widest block mb-1 opacity-60">High-rise / Dubai</span>
                    <h3 className="text-xl font-[var(--font-display)]">WASL Tower</h3>
                  </div>
               </div>
               <div className="relative group overflow-hidden section-reveal">
-                 <img src="https://images.unsplash.com/photo-1592904083165-8c001f6e8d7e?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Mandarin JBR" />
+                 <img src="/images/home_projects_mandarin_1774695606811.png" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt="Mandarin JBR" />
                  <div className="absolute bottom-8 left-8 text-white">
                    <span className="text-[10px] uppercase tracking-widest block mb-1 opacity-60">Luxury / Dubai</span>
                    <h3 className="text-xl font-[var(--font-display)]">Mandarin JBR</h3>
@@ -289,13 +392,13 @@ export default function Home() {
       </section>
 
       {/* --- CTA: AMBIENT BLOOM --- */}
-      <section className="relative py-64 px-6 md:px-12 flex items-center justify-center text-center overflow-hidden">
+      <section className="relative py-16 md:py-32 px-6 md:px-12 flex items-center justify-center text-center overflow-hidden">
         <div className="absolute inset-0 z-0 scale-110">
            <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
            <div className="w-full h-full bg-[#E5E2DB]/20 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
         </div>
         
-        <div className="relative z-10 max-w-4xl section-reveal">
+        <div className="relative z-10 max-w-4xl">
            <h2 className="text-5xl md:text-8xl mb-12">
              Ready to <i>Illuminate</i>?
            </h2>
@@ -303,8 +406,15 @@ export default function Home() {
              Let our engineering precision guide your architectural vision into reality. 
              Sustainable, intelligent, and timeless.
            </p>
-           <Link to="/contact" className="px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10">
-             Start Your Journey
+           <Link to="/contact">
+             <div ref={journeyBtnRef}>
+               <GlassPanel 
+                 variant="heavy" 
+                 className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10"
+               >
+                 Start Your Journey
+               </GlassPanel>
+             </div>
            </Link>
         </div>
       </section>

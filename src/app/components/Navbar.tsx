@@ -46,7 +46,7 @@ export function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="relative z-[110]">
-              <BrandWordmark showStudio={false} className="text-xl md:text-2xl tracking-tighter" />
+              <BrandWordmark className="text-xl md:text-2xl tracking-tighter" />
             </Link>
 
             {/* Desktop Nav Links */}

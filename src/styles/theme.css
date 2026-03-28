@@ -1,12 +1,17 @@
 /* Correcting theme colors and adding global utilities */
 
 :root {
-  /* Lumière Color Palette: High-End Minimalist */
+  /* Architectural Brand DNA: Official Palette */
+  --brand-gold: #FFA238;
+  --brand-blue: #0B4595;
+  --brand-green: #1A4F24;
+  --brand-slate: #46484D;
+  
   --color-cream: #FAF9F6;
   --color-sand: #F5F1EA;
   --color-ink: #2B2B2B;
   --color-stone: #E5E2DB;
-  --color-accent: #B5B0A8;
+  --color-accent: var(--brand-gold);
   --color-mist: rgba(250, 249, 246, 0.8);
   
   /* Typography Scale */
