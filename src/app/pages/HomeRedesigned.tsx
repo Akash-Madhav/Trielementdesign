@@ -221,11 +221,6 @@ export default function Home() {
 
         {/* Content Overlay */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6">
-          <div className="inline-block mb-10 overflow-hidden">
-            <span className="hero-text-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/60 font-[var(--font-body)]">
-               Engineering Ethereal Spaces
-            </span>
-          </div>
           
           <div className="overflow-hidden mb-8">
             <h1 className="hero-text-reveal tier-1 text-center leading-[0.95] tracking-tight">
