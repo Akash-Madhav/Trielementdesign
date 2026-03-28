@@ -134,8 +134,8 @@ export default function About() {
       
       {/* --- PREMIUM HERO --- */}
       <section className="about-hero-section relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden bg-[#FAF9F6] px-6 md:px-12">
-        {/* Navbar Safe Zone - Media starts below Navbar [top-32] */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
+        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
+        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
            <motion.div 
              style={{ y: yParallax }}
              className="w-full h-full relative"

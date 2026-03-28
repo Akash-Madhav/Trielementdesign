@@ -126,8 +126,8 @@ export default function Contact() {
 
       {/* 1. CINEMATIC HERO SECTION */}
       <section className="hero-section relative h-[90vh] min-h-[600px] flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
-        {/* Navbar Safe Zone - Media starts below Navbar */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden bg-black rounded-3xl md:rounded-none">
+        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
+        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden bg-black z-0">
           <img
             ref={heroImageRef}
             src="/images/contact_hero.png" 
@@ -136,7 +136,8 @@ export default function Contact() {
             alt="Architectural Visual"
           />
         </div>
-        <div className="absolute inset-x-0 bottom-0 top-32 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
+        {/* Dark Gradient safely mapped to bottom */}
+        <div className="absolute inset-x-0 bottom-0 top-0 md:top-32 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1440px] mx-auto w-full">
           <div className="overflow-hidden mb-6">

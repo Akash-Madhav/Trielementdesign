@@ -197,8 +197,8 @@ export default function Services() {
       
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
       <section className="relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden px-6 bg-[#FAF9F6]">
-        {/* Background Media Layer - Navbar Safe Zone [top-32] */}
-        <div ref={heroMediaRef} className="absolute inset-x-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
+        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
+        <div ref={heroMediaRef} className="absolute inset-x-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"

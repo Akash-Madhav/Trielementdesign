@@ -196,8 +196,8 @@ export default function Home() {
       
       {/* --- PREMIUM HERO SECTION --- */}
       <section ref={heroRef} className="relative h-[90vh] min-h-[700px] flex items-end p-6 md:p-12 pb-12 md:pb-20 overflow-hidden bg-[#FAF9F6]">
-        {/* Cinematic Video Background Layer - Navbar Safe Zone [top-32] */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
+        {/* Cinematic Video Background Layer - Full screen on Mobile, Navbar Safe Zone on Desktop */}
+        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"
