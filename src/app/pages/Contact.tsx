@@ -139,20 +139,20 @@ export default function Contact() {
         <div className="absolute inset-x-0 bottom-0 top-32 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1440px] mx-auto w-full">
-          <div className="overflow-hidden mb-8">
-            <span className="tier-3 block text-[10px] uppercase tracking-[0.4em] text-[#FAF9F6]/80 font-bold">Lumière Studio</span>
+          <div className="overflow-hidden mb-6">
+            <span className="tier-3 block text-[9px] uppercase tracking-[0.4em] text-[#FAF9F6]/80 font-bold">Lumière Studio</span>
           </div>
-          <div className="overflow-hidden mb-12">
-            <h1 className="tier-1 text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.9] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+          <div className="overflow-hidden mb-10">
+            <h1 className="tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] leading-[0.9] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
               <span className="inline-block font-bold">Let's Start a</span> <br />
               <i className="inline-block font-bold font-[var(--font-display)]">Dialogue.</i>
-              <div className="mt-8 opacity-60 text-[9px] tracking-[1.4em] font-mono animate-pulse">
+              <div className="mt-6 opacity-60 text-[8px] tracking-[1.4em] font-mono animate-pulse">
                 [ COLLABORATION_ACTIVE ]
               </div>
             </h1>
           </div>
-          <div className="tier-2 max-w-lg border-l border-[#FAF9F6]/30 pl-8">
-            <p className="text-xl md:text-2xl text-[#FAF9F6] font-medium leading-relaxed font-[var(--font-body)]">
+          <div className="tier-2 max-w-lg border-l border-[#FAF9F6]/30 pl-6">
+            <p className="text-lg md:text-xl text-[#FAF9F6] font-medium leading-relaxed font-[var(--font-body)]">
               Whether you're conceptualizing a landmark design or seeking world-class structural refinement, our engineers are ready to elevate your vision.
             </p>
           </div>

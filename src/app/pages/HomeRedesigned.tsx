@@ -195,7 +195,7 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
       
       {/* --- PREMIUM HERO SECTION --- */}
-      <section ref={heroRef} className="relative h-[100vh] min-h-[700px] flex items-center justify-center p-6 md:p-12 overflow-hidden bg-[#FAF9F6]">
+      <section ref={heroRef} className="relative h-[90vh] min-h-[700px] flex items-end p-6 md:p-12 pb-12 md:pb-20 overflow-hidden bg-[#FAF9F6]">
         {/* Cinematic Video Background Layer - Navbar Safe Zone [top-32] */}
         <div ref={heroMediaRef} className="absolute inset-0 top-32 w-full h-[calc(100%-8rem)] overflow-hidden rounded-3xl md:rounded-none z-0">
           <motion.div 
@@ -213,37 +213,37 @@ export default function Home() {
             </video>
             
             {/* Minimal Overlay for subtle depth */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-[1]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-[1]" />
           </motion.div>
         </div>
 
-        {/* Content Overlay - Centered and integrated into the image focal point, shifted down to avoid Navbar */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12 pt-48 pb-12">
+        {/* Content Overlay - Aligned to bottom, perfectly fitting inside the video area */}
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12">
           
-          <div className="overflow-hidden mb-12">
-            <h1 className="tier-1 leading-[0.85] tracking-tighter drop-shadow-[0_12px_50px_rgba(0,0,0,0.6)]">
-              <span className="block text-[clamp(3.5rem,10vw,6.5rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
+          <div className="overflow-hidden mb-8">
+            <h1 className="tier-1 leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+              <span className="block text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
                 Bespoke
               </span>
-              <span className="block text-[clamp(4.5rem,15vw,10.25rem)] font-extrabold uppercase text-[#FAF9F6] font-[var(--font-display)]">
+              <span className="block text-[clamp(3.3rem,11vw,7.6rem)] font-extrabold uppercase text-[#FAF9F6] font-[var(--font-display)]">
                 Intelligence
               </span>
             </h1>
-            <div className="mt-8 opacity-75 text-[12px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
+            <div className="mt-6 opacity-75 text-[10px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
               [ DESIGN_INTEGRATE_SUSTAIN ]
             </div>
           </div>
 
-          <div className="overflow-hidden mb-16 max-w-3xl mx-auto">
-            <p className="tier-2 text-xl md:text-3xl text-[#FAF9F6] font-medium leading-[1.3] font-[var(--font-body)] drop-shadow-2xl border-t border-[#FAF9F6]/30 pt-12">
+          <div className="overflow-hidden mb-12 max-w-2xl mx-auto">
+            <p className="tier-2 text-lg md:text-2xl text-[#FAF9F6] font-medium leading-[1.4] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8">
               Transforming complex engineering into <br className="hidden md:block"/> seamless architectural poetry. 
               The future of spatial experience, illuminated.
             </p>
           </div>
 
-          <div className="tier-3-container flex flex-wrap gap-12 items-center justify-center">
+          <div className="tier-3-container flex flex-wrap gap-8 items-center justify-center">
             <div ref={exploreBtnRef}>
-              <Link to="/services" className="px-14 py-5 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[14px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-2xl">
+              <Link to="/services" className="px-10 py-4 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-xl">
                 Explore Our Craft
               </Link>
             </div>

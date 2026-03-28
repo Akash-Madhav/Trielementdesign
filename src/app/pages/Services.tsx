@@ -216,17 +216,17 @@ export default function Services() {
 
         {/* Hero Content Over Media - Aligned to bottom like Contact */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto text-left px-6">
-            <div className="overflow-hidden mb-8">
-              <span className="services-reveal tier-3 block text-[10px] uppercase tracking-[0.4em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
+            <div className="overflow-hidden mb-6">
+              <span className="services-reveal tier-3 block text-[9px] uppercase tracking-[0.4em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
             </div>
-            <div className="overflow-hidden mb-12">
-              <h1 className="services-reveal tier-1 text-[clamp(2.5rem,10vw,8.5rem)] leading-[0.95] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
+            <div className="overflow-hidden mb-10">
+              <h1 className="services-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] leading-[0.95] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
                 The <i className="font-bold font-[var(--font-display)] text-[#FAF9F6]">Art</i> of <br /> Engineering.
               </h1>
             </div>
             
-            <div className="services-reveal tier-2 max-w-2xl border-l border-[#FAF9F6]/20 pl-8">
-               <p className="text-xl md:text-2xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+            <div className="services-reveal tier-2 max-w-xl border-l border-[#FAF9F6]/20 pl-6">
+               <p className="text-lg md:text-xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
                   Precise MEP solutions, sustainable lifecycle planning, and collaborative BIM environments—bridging the gap between theory and legacy.
                </p>
             </div>

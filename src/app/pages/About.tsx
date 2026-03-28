@@ -151,21 +151,21 @@ export default function About() {
         </div>
         
         <div className="about-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-left">
-          <div className="overflow-hidden mb-8">
-            <span className="about-reveal tier-3 block text-[10px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">
+          <div className="overflow-hidden mb-6">
+            <span className="about-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">
               Our Narrative
             </span>
           </div>
-          <div className="overflow-hidden mb-12">
-            <h1 className="about-reveal tier-1 text-[clamp(2.5rem,10vw,8.5rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
+          <div className="overflow-hidden mb-10">
+            <h1 className="about-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
               Engineered for <br /> <i className="font-bold">Timelessness.</i>
-              <div className="mt-8 opacity-40 text-[9px] tracking-[1.4em] font-mono animate-pulse text-[#FAF9F6]">
+              <div className="mt-6 opacity-40 text-[8px] tracking-[1.4em] font-mono animate-pulse text-[#FAF9F6]">
                 [ LUX_ENGINEERING ]
               </div>
             </h1>
           </div>
-          <div className="about-reveal tier-2 border-l border-[#FAF9F6]/20 pl-8 max-w-2xl">
-            <p className="text-xl md:text-2xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+          <div className="about-reveal tier-2 border-l border-[#FAF9F6]/20 pl-6 max-w-xl">
+            <p className="text-lg md:text-xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
               Since 2008, Trielement has been the silent intelligence behind the world's most 
               prestigious structures. We don't just design systems; we craft the atmosphere.
             </p>
