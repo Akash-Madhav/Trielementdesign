@@ -34,30 +34,31 @@ export default function Root() {
       });
     };
 
-    const handleHover = () => {
-       gsap.to(cursorRef.current, { scale: 2.5, backgroundColor: 'transparent', borderColor: 'rgba(43, 43, 43, 0.2)', duration: 0.3 });
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('a, button, select, input, textarea')) {
+        gsap.to(cursorRef.current, { scale: 2.5, backgroundColor: 'transparent', borderColor: 'rgba(43, 43, 43, 0.2)', duration: 0.3 });
+      }
     };
-    const handleUnhover = () => {
-       gsap.to(cursorRef.current, { scale: 1, backgroundColor: 'rgba(43, 43, 43, 0.1)', borderColor: 'transparent', duration: 0.3 });
+    
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('a, button, select, input, textarea')) {
+        gsap.to(cursorRef.current, { scale: 1, backgroundColor: 'rgba(43, 43, 43, 0.1)', borderColor: 'transparent', duration: 0.3 });
+      }
     };
 
     window.addEventListener('mousemove', moveCursor);
-    
-    // Add hover listeners to links and buttons
-    const interactiveElements = document.querySelectorAll('a, button, select, input, textarea');
-    interactiveElements.forEach(el => {
-       el.addEventListener('mouseenter', handleHover);
-       el.addEventListener('mouseleave', handleUnhover);
-    });
+    document.addEventListener('mouseover', handleMouseOver);
+    document.addEventListener('mouseout', handleMouseOut);
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleHover);
-        el.removeEventListener('mouseleave', handleUnhover);
-      });
+      document.removeEventListener('mouseover', handleMouseOver);
+      document.removeEventListener('mouseout', handleMouseOut);
     };
-  }, [location.pathname]); // Re-run on route change to catch new elements
+  }, []); // Run once, delegation handles dynamic DOM updates
+
 
   // Scroll to top and refresh ScrollTrigger on Route Change
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
@@ -42,43 +42,6 @@ export default function Home() {
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 300]);
 
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Detect mobile and reduced motion preferences
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const mobileQuery = window.matchMedia('(max-width: 768px)');
-
-    setPrefersReducedMotion(motionQuery.matches);
-    setIsMobile(mobileQuery.matches);
-
-    const handleMotionChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
-    const handleMobileChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-
-    motionQuery.addEventListener('change', handleMotionChange);
-    mobileQuery.addEventListener('change', handleMobileChange);
-
-    // Lazy load observer
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldLoadVideo(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (heroRef.current) observer.observe(heroRef.current);
-
-    return () => {
-      motionQuery.removeEventListener('change', handleMotionChange);
-      mobileQuery.removeEventListener('change', handleMobileChange);
-      observer.disconnect();
-    };
-  }, []);
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -224,29 +187,20 @@ export default function Home() {
       {/* --- PREMIUM HERO SECTION --- */}
       <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center px-6 md:px-12 pb-12 md:pb-20 pt-28 md:pt-32 overflow-hidden bg-[#FAF9F6]">
         {/* Cinematic Video Background Layer - Full screen experience behind floating navbar */}
-        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0 will-change-transform [backface-visibility:hidden]">
           <motion.div
             style={{ y: yParallax }}
-            className="w-full h-full relative"
+            className="w-full h-full relative will-change-transform [backface-visibility:hidden]"
           >
-            {(!isMobile && !prefersReducedMotion) ? (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/hero_poster.png"
-                className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
-              >
-                <source src="/hero_video.mp4" type="video/mp4" />
-              </video>
-            ) : (
-              <img
-                src="/hero_poster.png"
-                alt="Architectural visualization"
-                className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
-              />
-            )}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
+            >
+              <source src="/hero_video.mp4" type="video/mp4" />
+            </video>
 
             {/* Minimal Overlay for subtle depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-[1]" />
@@ -311,6 +265,7 @@ export default function Home() {
                     src={item.image}
                     alt={item.title}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
                   />
                 </div>

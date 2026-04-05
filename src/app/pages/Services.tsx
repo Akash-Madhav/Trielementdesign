@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GlassPanel } from '../components/GlassPanel';
+
 import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -166,15 +166,16 @@ export default function Services() {
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
       <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
         {/* Full screen experience behind floating navbar */}
-        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0 will-change-transform [backface-visibility:hidden]">
           <motion.div
             style={{ y: yParallax }}
-            className="w-full h-full relative"
+            className="w-full h-full relative will-change-transform [backface-visibility:hidden]"
           >
             <img
               src="/images/services_hero.png"
               alt="Architectural Precision"
-              loading="lazy"
+              loading="eager"
+              decoding="sync"
               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
             {/* Technical Blueprint Grid Overlay */}
@@ -217,6 +218,7 @@ export default function Services() {
                     src={s.image}
                     alt={s.title}
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
                   />
                 </div>
