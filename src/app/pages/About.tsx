@@ -89,7 +89,7 @@ export default function About() {
             pin: true,
             scrub: 1,
             start: 'center center',
-            end: () => `+=${milestoneContainer.scrollWidth}`,
+            end: () => `+=${milestoneContainer.scrollWidth * 1.2}`, // Added extra scroll distance for cleaner exit
             invalidateOnRefresh: true,
           }
         });
@@ -174,7 +174,7 @@ export default function About() {
       </section>
 
       {/* --- PHILOSOPHY / MISSION --- */}
-      <section className="section-reveal min-h-[100dvh] md:h-screen max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12">
+      <section className="section-reveal min-h-[100dvh] max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 pt-32 md:pt-0">
         <div className="w-full md:w-1/2">
            <GlassPanel variant="thin" className="p-12 md:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-3xl md:text-5xl text-[#2B2B2B]/80 leading-relaxed italic text-center">
@@ -195,7 +195,7 @@ export default function About() {
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative min-h-[100dvh] md:h-screen w-full flex flex-col py-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white">
+      <section className="milestone-section relative min-h-[100dvh] w-full flex flex-col pt-32 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-[1]">
         <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 flex flex-col md:flex-row justify-between items-end gap-6 flex-shrink-0">
            <h2 className="tier-1 text-5xl md:text-7xl leading-tight">Progressive <br /> <i className="italic">Legacy.</i></h2>
            <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-2 block font-medium">Navigate through Time</span>
@@ -238,7 +238,7 @@ export default function About() {
       </section>
 
       {/* --- CORE VALUES: MINIMAL BLOCKS --- */}
-      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center py-12 md:py-24 border-t border-[#E5E2DB]/50">
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center py-24 md:py-32 border-t border-[#E5E2DB]/50">
         <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
            <h2 className="tier-1 text-4xl md:text-7xl">Driven by Purpose.</h2>
         </div>
@@ -283,7 +283,7 @@ export default function About() {
       </section>
 
       {/* --- FINAL CTA TEASER --- */}
-      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center items-center py-16 md:py-32 text-center">
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center items-center py-24 md:py-32 text-center">
          <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 italic opacity-40">Ready to explore our solutions?</h2>
          <div ref={magneticBtnRef} className="inline-block">
             <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-xl">

@@ -128,7 +128,7 @@ export default function Contact() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
 
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
+      <section className="hero-section relative min-h-[100dvh] flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
           <img
@@ -165,10 +165,10 @@ export default function Contact() {
       </section>
 
       {/* 2. CONTACT CONTENT GRID */}
-      <section className="contact-grid min-h-[100dvh] md:h-screen flex items-center max-w-[1440px] mx-auto px-6 md:px-12 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
+      <section className="contact-grid relative z-[1] bg-[#FAF9F6] min-h-[100dvh] flex items-center max-w-[1440px] mx-auto px-6 md:px-12 py-32 md:py-48 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
 
         {/* LEFT: INFORMATION & OFFICES */}
-        <div className="lg:col-span-12 xl:col-span-4 space-y-32 cursor-explore">
+        <div className="lg:col-span-12 xl:col-span-4 space-y-32 cursor-explore pt-8">
           <div className="reveal-section space-y-12">
             <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer overflow-hidden">
               <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block font-medium">Direct Inquiry</span>
@@ -218,7 +218,9 @@ export default function Contact() {
               <h2 className="tier-1 text-3xl md:text-5xl font-[var(--font-display)] mb-6 italic">Brief Your Vision.</h2>
               <p className="tier-2 text-[#2B2B2B]/50 max-w-sm text-sm leading-relaxed font-light">Tell us about your project or career goals, and we'll reach out to start the dialogue.</p>
               <div className="mt-8 h-px w-20 bg-[#2B2B2B]/10" />
-            </div>            <AnimatePresence mode="wait">
+            </div>
+
+            <AnimatePresence mode="wait">
               {!success ? (
                 <motion.form
                   key="form"
@@ -246,8 +248,8 @@ export default function Contact() {
                   </div>
 
                   <div className="relative group">
-                    <select required className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light">
-                      <option value="" disabled selected>Nature of Inquiry</option>
+                    <select required defaultValue="" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light">
+                      <option value="" disabled>Nature of Inquiry</option>
                       <option value="project">Project Quotation</option>
                       <option value="career">Career Application</option>
                       <option value="general">Partnership / Other</option>
@@ -255,6 +257,7 @@ export default function Contact() {
                     <ArrowUpRight size={20} className="absolute right-0 bottom-6 text-[#2B2B2B]/20 rotate-45" />
                     <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                   </div>
+
 
                   <div className="relative group">
                     <textarea required placeholder="Briefly describe your vision..." rows={3} className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 resize-none font-[var(--font-body)] font-light" />
