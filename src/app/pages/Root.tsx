@@ -1,9 +1,9 @@
 import { Outlet, useLocation } from 'react-router';
-import { useEffect, useState, useRef, Suspense } from 'react';
+import { useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { PageLoader } from '../components/PageLoader';
+
 import { ScrollProgress } from '../components/ScrollProgress';
 import { WhatsAppButton } from '../components/WhatsAppButton';
 import { gsap } from 'gsap';
@@ -13,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Root() {
   const location = useLocation();
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const cursorRef = useRef<HTMLDivElement>(null);
   const cursorDotRef = useRef<HTMLDivElement>(null);
 
@@ -71,12 +70,7 @@ export default function Root() {
     }, 100);
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (isFirstLoad) {
-      const timer = setTimeout(() => setIsFirstLoad(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isFirstLoad]);
+
 
   return (
     <div className="relative min-h-screen bg-[#FAF9F6] font-[var(--font-body)] overflow-x-hidden selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
@@ -91,9 +85,7 @@ export default function Root() {
          className="fixed top-0 left-0 w-1 h-1 bg-[#2B2B2B] rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 hidden md:block" 
        />
 
-      <AnimatePresence mode="wait">
-        {isFirstLoad && <PageLoader key="loader" />}
-      </AnimatePresence>
+
       
       <ScrollProgress />
       <Navbar />
