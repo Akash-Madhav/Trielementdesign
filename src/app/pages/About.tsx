@@ -213,7 +213,7 @@ export default function About() {
       </section>
 
       {/* --- PHILOSOPHY / MISSION --- */}
-      <section className="section-reveal min-h-[100dvh] max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 py-24 md:py-0">
+      <section className="section-reveal max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 py-16 md:py-24">
         <div className="w-full md:w-1/2">
            <GlassPanel variant="thin" className="p-8 md:p-14 lg:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
@@ -236,7 +236,7 @@ export default function About() {
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative min-h-[100dvh] w-full flex flex-col pt-32 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-10">
+      <section className="milestone-section relative w-full flex flex-col pt-20 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-10">
         <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 md:mb-16">
            <h2 className="tier-1 text-2xl md:text-[clamp(1.8rem,4.2vw,3.5rem)] leading-tight">Mastery earned across the most demanding project types</h2>
         </div>
@@ -286,7 +286,7 @@ export default function About() {
       </section>
 
       {/* --- SUSTAINABLE PERFORMANCE: IGBC --- */}
-      <section className="section-reveal relative z-10 bg-[#FAF9F6] py-24 md:py-32 border-t border-b border-[#E5E2DB]/50">
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] py-16 md:py-20 border-t border-b border-[#E5E2DB]/50">
         <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-center">
            <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-8 block font-medium">Sustainable Performance</span>
            <div className="overflow-hidden mb-6">
@@ -301,7 +301,7 @@ export default function About() {
       </section>
 
       {/* --- CORE VALUES --- */}
-      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center py-32 md:py-44 border-t border-[#E5E2DB]/50">
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] flex flex-col justify-center py-20 md:py-24 border-t border-[#E5E2DB]/50">
         <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
            <h2 className="tier-1 text-3xl md:text-[clamp(2rem,4.5vw,4.5rem)] leading-tight max-w-4xl mx-auto">The convictions that shape every decision</h2>
         </div>
@@ -354,7 +354,7 @@ export default function About() {
       </section>
 
       {/* --- FINAL CTA TEASER --- */}
-      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center items-center py-24 md:py-32 text-center">
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] flex flex-col justify-center items-center py-20 md:py-24 text-center">
          <h2 className="text-2xl md:text-[clamp(1.5rem,3.5vw,2.5rem)] mb-8 md:mb-12 italic opacity-40">Precision that performs. <br /> Systems that endure.</h2>
          <div ref={magneticBtnRef} className="inline-block">
             <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-xl">
