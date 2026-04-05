@@ -185,9 +185,9 @@ export default function Services() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pb-32 md:pb-64 selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-end pb-24 md:pb-32 overflow-hidden px-6 bg-[#FAF9F6]">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
         {/* Full screen experience behind floating navbar */}
-        <div ref={heroMediaRef} className="absolute inset-x-0 w-full h-full overflow-hidden z-0">
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"
@@ -198,32 +198,32 @@ export default function Services() {
               loading="lazy"
               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
-            {/* Cinematic dark bottom overlay */}
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            {/* Technical Blueprint Grid Overlay */}
+            <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
+              style={{ 
+                backgroundImage: `linear-gradient(#FAF9F6 1px, transparent 1px), linear-gradient(90deg, #FAF9F6 1px, transparent 1px)`,
+                backgroundSize: '40px 40px' 
+              }} 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           </motion.div>
         </div>
 
-        {/* Hero Content Over Media - Aligned to bottom like Contact */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-left px-6">
+        <div className="services-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
             <div className="overflow-hidden mb-6">
-              <span className="services-reveal tier-3 block text-[9px] uppercase tracking-[0.4em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
+              <span className="services-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
             </div>
             <div className="overflow-hidden mb-10">
-              <h1 className="services-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] leading-[0.95] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
-                The <i className="font-bold font-[var(--font-display)] text-[#FAF9F6]">Art</i> of <br /> Engineering.
+              <h1 className="services-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
+                The <i className="font-bold">Art</i> of <br /> Engineering.
               </h1>
             </div>
             
-            <div className="services-reveal tier-2 max-w-xl border-l border-[#FAF9F6]/20 pl-6">
-               <p className="text-lg md:text-xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+            <div className="services-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
+               <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
                   Precise MEP solutions, sustainable lifecycle planning, and collaborative BIM environments—bridging the gap between theory and legacy.
                </p>
             </div>
-        </div>
-
-
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1440px] px-6">
-           <div className="services-reveal w-full h-[1px] bg-[#E5E2DB]/50" />
         </div>
       </section>
 

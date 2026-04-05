@@ -114,40 +114,52 @@ export default function Contact() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
 
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="hero-section relative min-h-[100dvh] flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
+      <section className="hero-section relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
-          <img
-            ref={heroImageRef}
-            src="/images/contact_hero.png" 
-            loading="lazy"
-            className="absolute inset-0 w-full h-[120%] object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
-            alt="Architectural Visual"
-          />
+          <motion.div 
+            style={{ y: 0 }} // Keeping static y for now as defined, wait original had parallax on image
+            className="w-full h-full relative"
+          >
+            <img
+              ref={heroImageRef}
+              src="/images/contact_hero.png" 
+              loading="lazy"
+              className="w-full h-[120%] object-cover grayscale-0 brightness-[0.7] contrast-[1.1] absolute inset-0"
+              alt="Architectural Visual"
+            />
+            {/* Technical Blueprint Grid Overlay */}
+            <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
+              style={{ 
+                backgroundImage: `linear-gradient(#FAF9F6 1px, transparent 1px), linear-gradient(90deg, #FAF9F6 1px, transparent 1px)`,
+                backgroundSize: '40px 40px' 
+              }} 
+            />
+            {/* Dark Gradient safely mapped to bottom */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          </motion.div>
         </div>
-        {/* Dark Gradient safely mapped to bottom */}
-        <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
 
-        <div className="relative z-10 max-w-[1440px] mx-auto w-full">
+        <div className="contact-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
           <div className="overflow-hidden mb-6">
-            <span className="tier-3 block text-[9px] uppercase tracking-[0.4em] text-[#FAF9F6]/80 font-bold">Lumière Studio</span>
+            <span className="tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/80 font-bold">Lumière Studio</span>
           </div>
           <div className="overflow-hidden mb-10">
-            <h1 className="tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] leading-[0.9] tracking-tighter text-[#FAF9F6] font-[var(--font-display)] drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+            <h1 className="tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
               <span className="inline-block font-bold">Let's Start a</span> <br />
-              <i className="inline-block font-bold font-[var(--font-display)]">Dialogue.</i>
+              <i className="inline-block font-bold">Dialogue.</i>
               <div className="mt-6 opacity-60 text-[8px] tracking-[1.4em] font-mono animate-pulse">
                 [ COLLABORATION_ACTIVE ]
               </div>
             </h1>
           </div>
-          <div className="tier-2 max-w-lg border-l border-[#FAF9F6]/30 pl-6">
-            <p className="text-lg md:text-xl text-[#FAF9F6] font-medium leading-relaxed font-[var(--font-body)]">
+          
+          <div className="tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
+            <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
               Whether you're conceptualizing a landmark design or seeking world-class structural refinement, our engineers are ready to elevate your vision.
             </p>
           </div>
         </div>
-
       </section>
 
       {/* 2. CONTACT CONTENT GRID */}
