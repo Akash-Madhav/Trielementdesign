@@ -341,7 +341,7 @@ export default function Home() {
 
 
       {/* --- CTA: AMBIENT BLOOM --- */}
-      <section className="relative h-screen flex items-center justify-center text-center overflow-hidden px-6 md:px-12 bg-[#FAF9F6]">
+      <section className="relative py-32 md:py-48 flex items-center justify-center text-center overflow-hidden px-6 md:px-12 bg-[#FAF9F6]">
         <div className="absolute inset-0 z-0 scale-110">
            <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
            <div className="w-full h-full bg-[#E5E2DB]/20 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />

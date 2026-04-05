@@ -20,7 +20,7 @@ export function Footer() {
            whileInView={{ opacity: 1, y: 0 }}
            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
            viewport={{ once: true }}
-           className="mb-12"
+           className="mb-8"
         >
           <Link to="/" className="inline-block scale-125">
             <BrandWordmark className="text-3xl md:text-4xl tracking-tighter" />
@@ -33,7 +33,7 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-20"
+          className="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12"
         >
           {footerLinks.map((link) => (
             <Link
@@ -52,7 +52,7 @@ export function Footer() {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
           viewport={{ once: true }}
-          className="max-w-xl mx-auto mb-32"
+          className="max-w-xl mx-auto mb-20"
         >
           <p className="font-[var(--font-display)] text-2xl md:text-3xl italic text-[#2B2B2B]/80 leading-relaxed">
             "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."

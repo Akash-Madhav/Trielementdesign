@@ -300,10 +300,7 @@ export default function Contact() {
           <h2 className="tier-2 text-[clamp(1.5rem,5vw,3.5rem)] text-[#2B2B2B] font-[var(--font-display)] leading-tight italic font-light">
             "Structural engineering is the art of molding materials we do not wholly understand into shapes we cannot precisely analyze, so as to withstand forces we cannot really assess."
           </h2>
-          <div className="tier-3-container mt-12 flex items-center justify-center gap-4 text-[#2B2B2B]/30">
-            <Minus size={24} strokeWidth={1} />
-            <span className="text-[10px] uppercase tracking-[0.4em] font-medium">A.R. Dykes</span>
-          </div>
+
         </div>
         {/* Cinematic Subtle Background Text */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none pointer-events-none opacity-[0.03] text-[22vw] font-bold tracking-tighter whitespace-nowrap font-[var(--font-display)]">
