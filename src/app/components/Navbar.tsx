@@ -32,16 +32,16 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ${
+        className={`fixed top-4 md:top-6 left-4 right-4 md:left-8 md:right-8 mx-auto z-[100] max-w-[1400px] transition-all duration-700 rounded-[8px] border border-[#E5E2DB]/30 ${
           scrolled 
-            ? 'py-4 bg-[#FAF9F6]/80 backdrop-blur-md border-b border-[#E5E2DB]' 
-            : 'py-8 bg-transparent'
+            ? 'py-3 md:py-4 bg-[#FAF9F6]/90 backdrop-blur-md shadow-lg shadow-black/5' 
+            : 'py-5 md:py-6 bg-[#FAF9F6]/40 backdrop-blur-sm'
         }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
       >
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+        <div className="w-full px-6 md:px-12">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="relative z-[110]">
