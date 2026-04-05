@@ -98,15 +98,15 @@ export default function Home() {
         }
       );
 
-      // Narrative Text Stagger (Letter-based reveal simulation)
-      gsap.from('.hero-text-reveal', {
-        y: 100,
+      // Unified Hero Entrance Sequence (triggers on load)
+      gsap.from('.hero-reveal', {
+        y: 60,
         opacity: 0,
-        rotateX: -45,
+        rotateX: -30,
         stagger: 0.2,
-        duration: 2,
+        duration: 2.2,
         ease: 'expo.out',
-        delay: 0.8
+        delay: 0.6
       });
 
       // Section Reveals
@@ -182,8 +182,8 @@ export default function Home() {
         });
       });
 
-      // Tier 3: Float-in Staggers
-      gsap.utils.toArray<HTMLElement>('.tier-3-container').forEach((container) => {
+      // Tier 3: Float-in Staggers (Only for scrollable sections)
+      gsap.utils.toArray<HTMLElement>('.tier-3-stagger').forEach((container) => {
         gsap.from(container.children, {
           y: 15,
           opacity: 0,
@@ -262,7 +262,7 @@ export default function Home() {
         <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12">
           
           <div className="overflow-hidden mb-8">
-            <h1 className="tier-1 leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+            <h1 className="hero-reveal leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
               <span className="block text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
                 Bespoke
               </span>
@@ -270,21 +270,21 @@ export default function Home() {
                 Intelligence
               </span>
             </h1>
-            <div className="mt-6 opacity-75 text-[10px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
+            <div className="hero-reveal mt-6 opacity-75 text-[10px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
               [ DESIGN_INTEGRATE_SUSTAIN ]
             </div>
           </div>
 
           <div className="overflow-hidden mb-12 max-w-2xl mx-auto">
-            <p className="tier-2 text-lg md:text-2xl text-[#FAF9F6] font-medium leading-[1.4] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8">
+            <p className="hero-reveal text-lg md:text-2xl text-[#FAF9F6] font-medium leading-[1.4] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8">
               Transforming complex engineering into <br className="hidden md:block"/> seamless architectural poetry. 
               The future of spatial experience, illuminated.
             </p>
           </div>
 
-          <div className="tier-3-container flex flex-wrap gap-8 items-center justify-center">
+          <div className="hero-reveal flex flex-wrap gap-8 items-center justify-center relative z-20">
             <div ref={exploreBtnRef}>
-              <Link to="/contact" className="px-10 py-4 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-xl">
+              <Link to="/contact" className="px-10 py-4 bg-[#FAF9F6] text-black border border-black rounded-full text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-black hover:text-[#FAF9F6] transition-all duration-700 hover:scale-105 active:scale-95 block shadow-xl">
                 Start Your Journey
               </Link>
             </div>
@@ -359,7 +359,7 @@ export default function Home() {
              <div ref={journeyBtnRef}>
                <GlassPanel 
                  variant="heavy" 
-                 className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10"
+                 className="inline-block px-16 py-6 bg-[#FAF9F6] text-black border border-black rounded-full text-[12px] hover:bg-black hover:text-[#FAF9F6] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10"
                >
                  Start Your Journey
                </GlassPanel>
