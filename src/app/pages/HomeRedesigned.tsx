@@ -12,21 +12,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 const philosophies = [
   {
-    number: '01',
     title: 'DESIGN',
     heading: 'From Whole to Parts.',
     body: 'Design governs the cost and performance of any project. Every engineer is empowered to consider the smallest of details — and their cascading impact at every level.',
     image: '/images/home_design.png',
   },
   {
-    number: '02',
     title: 'INTEGRATE',
     heading: 'Technology Meets Human Experience.',
     body: 'Promoting a blend of technology, keen observation and human experience enables seamless integration of each service into the system.',
     image: '/images/home_integrate.png',
   },
   {
-    number: '03',
     title: 'SUSTAIN',
     heading: 'Built for Tomorrow.',
     body: 'Transcend industry expectations by planning systems and technologies to last the test of time. Our designers foresee tomorrow\'s demands.',
@@ -322,11 +319,6 @@ export default function Home() {
                      loading="lazy"
                      className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
                    />
-                   <div className="absolute top-8 left-8">
-                     <span className="font-[var(--font-display)] italic text-6xl text-[#FAF9F6]/20">
-                       {item.number}
-                     </span>
-                   </div>
                  </div>
                </div>
 
@@ -341,13 +333,6 @@ export default function Home() {
                   <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
                     {item.body}
                   </p>
-                  <motion.div 
-                    whileHover={{ x: 10 }} 
-                    className="tier-3 mt-12 inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.2em] font-medium cursor-pointer group"
-                  >
-                    Explore Discipline
-                    <div className="w-8 h-[1px] bg-[#2B2B2B] group-hover:w-12 transition-all duration-500" />
-                  </motion.div>
                </div>
             </div>
           </div>

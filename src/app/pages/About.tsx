@@ -167,7 +167,7 @@ export default function About() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO --- */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-end pb-24 md:pb-32 overflow-hidden bg-[#FAF9F6] px-6 md:px-12">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
            <motion.div 
@@ -191,7 +191,7 @@ export default function About() {
            </motion.div>
         </div>
         
-        <div className="about-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-left">
+        <div className="about-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
           <div className="overflow-hidden mb-6">
             <span className="about-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">
               OUR NARRATIVE
@@ -201,18 +201,12 @@ export default function About() {
             <h1 className="about-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
               Engineered for <br /> <i className="font-bold">Timelessness.</i>
               
-              {/* Floating Coordinate Markers */}
-              <div className="absolute -top-12 -right-12 hidden lg:block opacity-30 font-mono text-[7px] tracking-[0.4em] text-[#FAF9F6]">
-                LOC_REF: 12.04 // 88.32
-                <br />
-                SCALE_FACTOR: 1.002
-              </div>
             </h1>
           </div>
-          <div className="about-reveal tier-2 border-l border-[#FAF9F6]/20 pl-6 max-w-xl">
-            <p className="text-base md:text-[clamp(1rem,1.2vw,1.25rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-              At Trielement Studio, MEP engineering is a discipline our team has spent careers mastering — across project scales ranging from 1 lakh to 50 lakh square feet. From precision-critical healthcare facilities to landmark commercial developments, we deliver systems trusted by India's foremost corporates and real estate developers.
-            </p>
+          <div className="about-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
+             <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+               Trielement Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, and plumbing systems that do not just function, but perform with a quiet, enduring conviction.
+             </p>
           </div>
         </div>
       </section>
@@ -285,16 +279,6 @@ export default function About() {
                   </p>
                 </div>
 
-                {/* Aesthetic Technical ID */}
-                <div className="absolute bottom-10 right-10 flex items-center gap-4 z-10">
-                   <div className="w-8 h-px bg-[#2B2B2B]/10" />
-                   <span 
-                     className="text-[9px] font-mono tracking-[0.4em] opacity-40 uppercase"
-                     style={{ color: m.accent }}
-                   >
-                     [{m.code}]
-                   </span>
-                </div>
              </div>
           ))}
         </div>
@@ -329,12 +313,6 @@ export default function About() {
                  style={{ backgroundColor: v.accent }}
                />
                
-               {/* Technical Blueprint Marker */}
-               <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.03] font-mono text-[8px] p-4 pointer-events-none select-none group-hover:opacity-[0.08] transition-opacity duration-700">
-                  REF_POS: {34.5 + i*10}.{i*2} <br />
-                  VAL_ID: {v.title.slice(0, 3).toUpperCase()} <br />
-                  TRK_COORD: 00{i+1}
-               </div>
 
                {/* Large Background Indicator */}
                <div 
