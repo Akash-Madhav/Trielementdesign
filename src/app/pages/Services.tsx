@@ -13,30 +13,23 @@ const services = [
     title: 'MEP Engineering',
     category: 'Precision',
     image: '/images/services_mep.png',
-    description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems that breathe life into structures.',
-    features: ['HVAC Design', 'Power Systems', 'Specialized Plumbing', 'Fire Protection'],
+    description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems tailored to highly complex facilities, with dedicated engineering expertise spanning across these critical typologies:',
+    sectors: ['Commercial and Mixed Use', 'Healthcare', 'High-Rise', 'Hospitality', 'Retail', 'Data Centers'],
   },
   {
     title: 'Sustainability',
     category: 'Legacy',
     image: '/images/services_sustain.png',
-    description: 'Engineering for the planet. Integrated green solutions that achieve net-zero ambitions without compromise.',
-    features: ['LEED / WELL', 'Solar Intel', 'Energy Modeling', 'Lifecycle Analysis'],
+    description: 'Engineering for the planet. We implement integrated green solutions and net-zero strategies, providing specialized sustainability expertise specifically for these highly demanding sectors:',
+    sectors: ['Education', 'Existing Buildings', 'Heritage', 'Cultural'],
   },
   {
     title: 'BIM & Digital Twin',
     category: 'Intelligence',
     image: '/images/services_bim.png',
-    description: 'The data-driven ghost of construction. Immersive 3D coordination that eliminates conflict before the first stone is laid.',
-    features: ['3D Coordination', 'Asset Management', 'Virtual Mockups', 'Clash Detection'],
+    description: 'The data-driven ghost of construction. We eliminate spatial conflict through immersive 3D coordination, providing rigorous digital modeling capabilities tailored for the following asset classes:',
+    sectors: ['Government', 'Residential', 'Sports and Events', 'Workplace'],
   },
-];
-
-const processSteps = [
-  { step: '01', title: 'Conceptualization', text: 'Defining the technical soul of the project.' },
-  { step: '02', title: 'Integration', text: 'Harmonizing systems with architectural form.' },
-  { step: '03', title: 'Validation', text: 'Rigorous analysis for performance and cost.' },
-  { step: '04', title: 'Execution', text: 'Precision delivery and field oversight.' },
 ];
 
 export default function Services() {
@@ -52,11 +45,11 @@ export default function Services() {
       gsap.fromTo(
         heroMediaRef.current,
         { clipPath: 'inset(15% 15% 15% 15% round 100px)', opacity: 0, scale: 1.2 },
-        { 
-          clipPath: 'inset(0% 0% 0% 0% round 0px)', 
-          opacity: 1, 
-          scale: 1, 
-          duration: 2.5, 
+        {
+          clipPath: 'inset(0% 0% 0% 0% round 0px)',
+          opacity: 1,
+          scale: 1,
+          duration: 2.5,
           ease: 'expo.inOut',
           delay: 0.1
         }
@@ -113,24 +106,10 @@ export default function Services() {
         });
       });
 
-      // Drawing Line Animation for Process
-      gsap.utils.toArray<HTMLElement>('.process-line').forEach((line) => {
-        gsap.fromTo(line, 
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            duration: 1.5,
-            ease: 'expo.inOut',
-            scrollTrigger: {
-              trigger: line,
-              start: 'top 90%',
-            }
-          }
-        );
-      });
+
 
       // --- TYPOGRAPHIC STORYTELLING TIERS ---
-      
+
       // Tier 1: 3D Split-Word Reveals
       gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
         gsap.from(el, {
@@ -182,48 +161,48 @@ export default function Services() {
   }, []);
 
   return (
-    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pb-32 md:pb-64 selection:bg-[#2B2B2B]/10 overflow-hidden">
-      
+    <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
+
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
       <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
-          <motion.div 
+          <motion.div
             style={{ y: yParallax }}
             className="w-full h-full relative"
           >
-            <img 
-              src="/images/services_hero.png" 
-              alt="Architectural Precision" 
+            <img
+              src="/images/services_hero.png"
+              alt="Architectural Precision"
               loading="lazy"
               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
             {/* Technical Blueprint Grid Overlay */}
-            <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
-              style={{ 
+            <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
+              style={{
                 backgroundImage: `linear-gradient(#FAF9F6 1px, transparent 1px), linear-gradient(90deg, #FAF9F6 1px, transparent 1px)`,
-                backgroundSize: '40px 40px' 
-              }} 
+                backgroundSize: '40px 40px'
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
           </motion.div>
         </div>
 
         <div className="services-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
-            <div className="overflow-hidden mb-6">
-              <span className="services-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
-            </div>
-            <div className="overflow-hidden mb-10">
-              <h1 className="services-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
-                The <i className="font-bold">Art</i> of <br /> Engineering.
-              </h1>
-            </div>
-            
-            <div className="services-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
-               <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-                  Precise MEP solutions, sustainable lifecycle planning, and collaborative BIM environments—bridging the gap between theory and legacy.
-               </p>
-            </div>
+          <div className="overflow-hidden mb-6">
+            <span className="services-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">Our Specialties</span>
+          </div>
+          <div className="overflow-hidden mb-10">
+            <h1 className="services-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative pb-4 md:pb-6">
+              The <i className="font-bold">Art</i> of <br /> Engineering.
+            </h1>
+          </div>
+
+          <div className="services-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
+            <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+              Precise MEP solutions, sustainable lifecycle planning, and collaborative BIM environments—bridging the gap between theory and legacy.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -233,68 +212,44 @@ export default function Services() {
           <div className="max-w-[1440px] mx-auto w-full">
             <div className="service-item grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-24 items-center overflow-hidden cursor-view">
               <div className={`md:col-span-7 ${i % 2 === 1 ? 'md:order-2' : ''} ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'}`}>
-                 <div className="relative overflow-hidden group aspect-[16/10] rounded-[2rem] md:rounded-[3rem] shadow-2xl">
-                    <img 
-                      src={s.image} 
-                      alt={s.title} 
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
-                    />
-                 </div>
+                <div className="relative overflow-hidden group aspect-[16/10] rounded-[2rem] md:rounded-[3rem] shadow-2xl">
+                  <img
+                    src={s.image}
+                    alt={s.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105"
+                  />
+                </div>
               </div>
               <div className={`md:col-span-5 ${i % 2 === 1 ? 'md:order-1' : ''} ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
-                 <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 mb-6 block">Service 0{i+1} / {s.category}</span>
-                 <h2 className="tier-1 text-4xl md:text-6xl mb-10 italic leading-tight">{s.title}</h2>
-                 <p className="tier-2 text-lg text-[#2B2B2B]/60 mb-12 leading-relaxed max-w-sm">
-                    {s.description}
-                 </p>
-                 <div className="tier-3-container grid grid-cols-2 gap-4">
-                    {s.features.map(f => (
-                       <div key={f} className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#B5B0A8]" />
-                          <span className="text-[11px] uppercase tracking-wider text-[#2B2B2B]/70">{f}</span>
-                       </div>
-                    ))}
-                 </div>
+                <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 mb-6 block">Service {s.category}</span>
+                <h2 className="tier-1 text-4xl md:text-6xl mb-10 italic leading-tight">{s.title}</h2>
+                <p className="tier-2 text-lg text-[#2B2B2B]/60 mb-12 leading-relaxed max-w-sm">
+                  {s.description}
+                </p>
+                <div className="tier-3-container grid grid-cols-2 gap-y-4 gap-x-6">
+                  {s.sectors.map(sector => (
+                    <div key={sector} className="flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#B5B0A8]" />
+                      <span className="text-[11px] uppercase tracking-wider text-[#2B2B2B]/70">{sector}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
       ))}
-
-      {/* --- PROCESS: MINIMAL TIMELINE --- */}
-      <section className="methodology-section bg-[#1A1A1A] text-[#F5F1EA] min-h-[100dvh] md:h-screen flex flex-col justify-center py-16 md:py-32 -mx-6 md:-mx-12 px-6 md:px-12">
-        <div className="max-w-[1440px] mx-auto">
-           <div className="mb-24 section-reveal">
-              <span className="text-[10px] uppercase tracking-[0.5em] text-[#D4CFC7]/50 mb-8 block font-medium">Our Methodology</span>
-              <h2 className="text-4xl md:text-7xl">Precision in <i>Motion</i>.</h2>
-           </div>
-           
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20">
-              {processSteps.map((p, i) => (
-                 <div key={i} className="section-reveal group cursor-default">
-                    <div className="text-4xl font-[var(--font-display)] mb-8 opacity-20 group-hover:opacity-100 transition-opacity duration-700">{p.step}</div>
-                    <div className="w-full h-px bg-[#D4CFC7]/20 mb-8 group-hover:bg-[#D4CFC7] transition-all duration-700 origin-left scale-x-50 group-hover:scale-x-100" />
-                    <h3 className="text-xl mb-4 italic">{p.title}</h3>
-                    <p className="text-sm text-[#F5F1EA]/60 font-[var(--font-body)] leading-relaxed">
-                       {p.text}
-                    </p>
-                 </div>
-              ))}
-           </div>
-        </div>
-      </section>
-
       {/* --- FINAL CTA TEASER --- */}
-      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center py-20 md:py-32 text-center bg-white/10">
-         <h2 className="text-[clamp(2.5rem,6vw,5rem)] mb-16 leading-tight">
-           Crafting the <i>Next</i> <br /> Generation of <i>Space</i>.
-         </h2>
-         <div ref={inquireBtnRef} className="inline-block">
-            <Link to="/contact" className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-2xl">
-              Inquire Now
-            </Link>
-         </div>
+      <section className="section-reveal py-32 md:py-48 flex flex-col justify-center text-center bg-white/10">
+        <h2 className="text-[clamp(2.5rem,6vw,5rem)] mb-12 leading-tight">
+          Crafting the <i>Next</i> <br /> Generation of <i>Space</i>.
+        </h2>
+        <div ref={inquireBtnRef} className="inline-block">
+          <Link to="/contact" className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-2xl">
+            Inquire Now
+          </Link>
+        </div>
       </section>
 
     </div>
