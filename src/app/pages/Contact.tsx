@@ -1,3 +1,4 @@
+/// <reference path="../../vite-env.d.ts" />
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap } from 'gsap';
@@ -5,6 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, MapPin, Phone, ArrowUpRight, Minus } from 'lucide-react';
 import { useMagnetic } from '../hooks/useMagnetic';
 import BrandName from '../components/BrandName';
+import { useForm } from 'react-hook-form';
+import useWeb3Forms from '@web3forms/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,12 +18,39 @@ const offices = [
 ];
 
 export default function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroImageRef = useRef<HTMLImageElement>(null);
   const heroMediaRef = useRef<HTMLDivElement>(null);
   const magneticButtonRef = useMagnetic();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const { submit } = useWeb3Forms({
+    access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE",
+    settings: {
+      from_name: "Trielement Studio",
+      subject: "New Project Inquiry",
+    },
+    onSuccess: (msg) => {
+      setSuccess(true);
+      setError(null);
+      reset();
+    },
+    onError: (msg) => {
+      setSuccess(false);
+      setError(msg || "Transmission failure. Please try again.");
+    },
+  });
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -102,36 +132,7 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
 
-    const formData = new FormData(e.currentTarget);
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: json,
-      });
-      const result = await response.json();
-      if (result.success) {
-        setSuccess(true);
-      } else {
-        alert("Submission failed. Please try again.");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("An error occurred. Please check your connection.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
@@ -172,7 +173,6 @@ export default function Contact() {
               <span className="inline-block font-bold">Let's Start a</span> <br />
               <i className="inline-block font-bold">Dialogue.</i>
               <div className="mt-6 opacity-60 text-[8px] tracking-[1.4em] font-mono animate-pulse">
-                [ COLLABORATION_ACTIVE ]
               </div>
             </h1>
           </div>
@@ -186,7 +186,7 @@ export default function Contact() {
       </section>
 
       {/* 2. CONTACT CONTENT GRID */}
-      <section className="contact-grid relative z-[1] bg-[#FAF9F6] min-h-[100dvh] flex items-center max-w-[1440px] mx-auto px-6 md:px-12 py-32 md:py-48 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
+      <section className="contact-grid relative z-[1] bg-[#FAF9F6] min-h-[100dvh] flex items-center max-w-[1440px] mx-auto px-6 md:px-12 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
 
         {/* LEFT: INFORMATION & OFFICES */}
         <div className="lg:col-span-12 xl:col-span-4 space-y-32 cursor-explore pt-8">
@@ -230,7 +230,7 @@ export default function Contact() {
 
         {/* RIGHT: INQUIRY FORM */}
         <div className="lg:col-span-12 xl:col-span-8 flex flex-col justify-center cursor-view">
-          <div className="reveal-section bg-[#F5F1EA] p-8 md:p-20 rounded-[4rem] relative overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.03)] selection:bg-[#2B2B2B]/20">
+          <div className="reveal-section bg-[#F5F1EA] p-8 md:p-16 rounded-[4rem] relative overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.03)] selection:bg-[#2B2B2B]/20">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-white/40 blur-[120px] -z-10 animate-pulse" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#B5B0A8]/10 blur-[80px] -z-10" />
@@ -245,36 +245,53 @@ export default function Contact() {
               {!success ? (
                 <motion.form
                   key="form"
-                  onSubmit={handleSubmit}
+                  onSubmit={handleSubmit(submit)}
                   className="space-y-16"
                   exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
                   transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                 >
                   <div className="flex items-center gap-2 mb-10 opacity-20 text-[7px] tracking-[1.5em] font-mono animate-pulse">
-                    <div className="w-1 h-1 bg-[#2B2B2B] rounded-full" />
-                    [ CONNECTION_LINK_ESTABLISHED ]
+                    <div className="w-1 h-1 bg-[#2B2B2B] rounded-full" >
+                    </div>
                   </div>
 
-                  <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
-                  <input type="hidden" name="from_name" value="Trielement Studio Contact" />
-                  <input type="hidden" name="subject" value="New Project Inquiry from Trielement Studio" />
-                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+                  <input type="checkbox" {...register("botcheck")} className="hidden" style={{ display: 'none' }} />
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
                     <div className="group relative">
-                      <input required type="text" name="name" placeholder="Full Name" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-base md:text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
+                      <input 
+                        {...register("name", { required: "Name is required" })}
+                        type="text" 
+                        placeholder="Full Name" 
+                        className={`w-full bg-transparent border-b ${errors.name ? 'border-red-500/50' : 'border-[#2B2B2B]/10'} py-5 text-base md:text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light`} 
+                      />
                       <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                       <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ CAPTURING_NAME ]</div>
                     </div>
                     <div className="group relative">
-                      <input required type="email" name="email" placeholder="Email Address" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
+                      <input 
+                        {...register("email", { 
+                          required: "Email is required",
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Invalid email address"
+                          }
+                        })}
+                        type="email" 
+                        placeholder="Email Address" 
+                        className={`w-full bg-transparent border-b ${errors.email ? 'border-red-500/50' : 'border-[#2B2B2B]/10'} py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light`} 
+                      />
                       <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                       <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ SYNCING_COMM_CHANNEL ]</div>
                     </div>
                   </div>
 
                   <div className="relative group">
-                    <select required name="inquiry_type" defaultValue="" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light">
+                    <select 
+                      {...register("inquiry_type", { required: "Please select an inquiry type" })}
+                      defaultValue="" 
+                      className={`w-full bg-transparent border-b ${errors.inquiry_type ? 'border-red-500/50' : 'border-[#2B2B2B]/10'} py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light`}
+                    >
                       <option value="" disabled>Nature of Inquiry</option>
                       <option value="project">Project Quotation</option>
                       <option value="career">Career Application</option>
@@ -286,7 +303,12 @@ export default function Contact() {
 
 
                   <div className="relative group">
-                    <textarea required name="message" placeholder="Briefly describe your vision..." rows={3} className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 resize-none font-[var(--font-body)] font-light" />
+                    <textarea 
+                      {...register("message", { required: "Message is required" })}
+                      placeholder="Briefly describe your vision..." 
+                      rows={3} 
+                      className={`w-full bg-transparent border-b ${errors.message ? 'border-red-500/50' : 'border-[#2B2B2B]/10'} py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 resize-none font-[var(--font-body)] font-light`} 
+                    />
                     <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                     <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ STREAMING_INPUT_DATA ]</div>
                   </div>
@@ -302,11 +324,29 @@ export default function Contact() {
                         <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
                       </button>
                     </div>
-                    {isSubmitting && (
-                      <div className="text-[7px] tracking-[0.8em] font-mono text-[#2B2B2B]/30 animate-pulse">
-                        [ ENCRYPTING_PACKETS_010011 ]
-                      </div>
-                    )}
+
+                    <AnimatePresence>
+                      {error && (
+                        <motion.div
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 10 }}
+                          className="text-[10px] uppercase tracking-[0.3em] text-red-500 font-mono font-medium max-w-[200px]"
+                        >
+                          [ ERROR: {error} ]
+                        </motion.div>
+                      )}
+                      {isSubmitting && !error && (
+                        <motion.div 
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className="text-[7px] tracking-[0.8em] font-mono text-[#2B2B2B]/30 animate-pulse"
+                        >
+                          [ ENCRYPTING_PACKETS_010011 ]
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </motion.form>
               ) : (
@@ -325,7 +365,7 @@ export default function Contact() {
                   <p className="text-lg text-[#2B2B2B]/60 max-w-sm mx-auto mb-12 leading-relaxed font-light">
                     Your vision has reached our engineering core. We shall review and initiate the dialogue within 48 hours.
                   </p>
-                  <button onClick={() => setSuccess(false)} className="text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/30 hover:text-[#2B2B2B] transition-all hover:tracking-[0.7em] font-medium">Send Another Briefing</button>
+                  <button onClick={() => { setSuccess(false); setError(null); }} className="text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/30 hover:text-[#2B2B2B] transition-all hover:tracking-[0.7em] font-medium">Send Another Briefing</button>
                 </motion.div>
               )}
             </AnimatePresence>
