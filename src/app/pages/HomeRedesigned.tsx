@@ -4,7 +4,6 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GlassPanel } from '../components/GlassPanel';
-import BrandWordmark from '../../imports/BrandWordmark';
 import BrandName from '../components/BrandName';
 import { useMagnetic } from '../hooks/useMagnetic';
 
@@ -223,7 +222,7 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
 
       {/* --- PREMIUM HERO SECTION --- */}
-      <section ref={heroRef} className="relative h-screen flex items-end p-6 md:p-12 pb-12 md:pb-24 overflow-hidden bg-[#FAF9F6]">
+      <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center px-6 md:px-12 pb-12 md:pb-20 pt-28 md:pt-32 overflow-hidden bg-[#FAF9F6]">
         {/* Cinematic Video Background Layer - Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
           <motion.div
@@ -254,10 +253,10 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Content Overlay - Aligned to bottom, perfectly fitting inside the video area */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12">
+        {/* Content Overlay - Centered inside the video area */}
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12 mt-16 md:mt-28">
 
-          <div className="overflow-hidden mb-8">
+          <div className="overflow-hidden mb-6 md:mb-8">
             <h1 className="hero-reveal leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
               <span className="block text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
                 Bespoke

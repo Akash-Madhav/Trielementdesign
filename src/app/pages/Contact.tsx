@@ -102,13 +102,35 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: json,
+      });
+      const result = await response.json();
+      if (result.success) {
+        setSuccess(true);
+      } else {
+        alert("Submission failed. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("An error occurred. Please check your connection.");
+    } finally {
       setIsSubmitting(false);
-      setSuccess(true);
-    }, 2000);
+    }
   };
 
   return (
@@ -143,7 +165,7 @@ export default function Contact() {
 
         <div className="contact-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
           <div className="overflow-hidden mb-6">
-            <span className="tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/80 font-bold">Lumière Studio</span>
+            <span className="tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/80 font-bold"><BrandName /> Studio</span>
           </div>
           <div className="overflow-hidden mb-10">
             <h1 className="tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
@@ -233,21 +255,26 @@ export default function Contact() {
                     [ CONNECTION_LINK_ESTABLISHED ]
                   </div>
 
+                  <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+                  <input type="hidden" name="from_name" value="Trielement Studio Contact" />
+                  <input type="hidden" name="subject" value="New Project Inquiry from Trielement Studio" />
+                  <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
                     <div className="group relative">
-                      <input required type="text" placeholder="Full Name" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-base md:text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
+                      <input required type="text" name="name" placeholder="Full Name" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-base md:text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
                       <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                       <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ CAPTURING_NAME ]</div>
                     </div>
                     <div className="group relative">
-                      <input required type="email" placeholder="Email Address" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
+                      <input required type="email" name="email" placeholder="Email Address" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 font-[var(--font-body)] font-light" />
                       <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                       <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ SYNCING_COMM_CHANNEL ]</div>
                     </div>
                   </div>
 
                   <div className="relative group">
-                    <select required defaultValue="" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light">
+                    <select required name="inquiry_type" defaultValue="" className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all text-[#2B2B2B]/40 appearance-none font-[var(--font-body)] font-light">
                       <option value="" disabled>Nature of Inquiry</option>
                       <option value="project">Project Quotation</option>
                       <option value="career">Career Application</option>
@@ -259,7 +286,7 @@ export default function Contact() {
 
 
                   <div className="relative group">
-                    <textarea required placeholder="Briefly describe your vision..." rows={3} className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 resize-none font-[var(--font-body)] font-light" />
+                    <textarea required name="message" placeholder="Briefly describe your vision..." rows={3} className="w-full bg-transparent border-b border-[#2B2B2B]/10 py-5 text-lg focus:border-[#2B2B2B] outline-none transition-all placeholder:text-[#2B2B2B]/20 resize-none font-[var(--font-body)] font-light" />
                     <div className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#2B2B2B] transition-all duration-700 group-focus-within:w-full" />
                     <div className="absolute -top-4 right-0 opacity-0 group-focus-within:opacity-100 transition-opacity text-[6px] tracking-widest font-mono text-[#2B2B2B]/30">[ STREAMING_INPUT_DATA ]</div>
                   </div>

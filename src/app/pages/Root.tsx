@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { PageLoader } from '../components/PageLoader';
 import { ScrollProgress } from '../components/ScrollProgress';
+import { WhatsAppButton } from '../components/WhatsAppButton';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -95,6 +96,7 @@ export default function Root() {
       
       <ScrollProgress />
       <Navbar />
+      <WhatsAppButton />
       
       <AnimatePresence mode="wait">
         <motion.main
