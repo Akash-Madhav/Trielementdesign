@@ -96,16 +96,19 @@ export default function Contact() {
         });
       });
 
-      // Global Content Reveal (Backup)
-      gsap.from('.reveal-section', {
-        y: 40,
-        opacity: 0,
-        duration: 1.5,
-        ease: 'expo.out',
-        scrollTrigger: {
-          trigger: '.contact-grid',
-          start: 'top 85%',
-        }
+      // --- NATIVE-FEEL SNAP INTEGRATION ---
+      const sections = gsap.utils.toArray<HTMLElement>('section');
+      sections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          snap: {
+            snapTo: 1,
+            duration: { min: 0.5, max: 0.8 },
+            delay: 0.1,
+            ease: 'power2.inOut'
+          }
+        });
       });
     }, containerRef);
 
@@ -125,19 +128,19 @@ export default function Contact() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
 
       {/* 1. CINEMATIC HERO SECTION */}
-      <section className="hero-section relative h-[90vh] min-h-[600px] flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
-        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden bg-black z-0">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-end overflow-hidden px-6 md:px-12 py-20 bg-[#FAF9F6]">
+        {/* Full screen experience behind floating navbar */}
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden bg-black z-0">
           <img
             ref={heroImageRef}
             src="/images/contact_hero.png" 
             loading="lazy"
-            className="absolute inset-0 w-full h-[120%] object-cover grayscale-0 brightness-[0.8] contrast-[1.1]"
+            className="absolute inset-0 w-full h-[120%] object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             alt="Architectural Visual"
           />
         </div>
         {/* Dark Gradient safely mapped to bottom */}
-        <div className="absolute inset-x-0 bottom-0 top-0 md:top-32 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 z-10 pointer-events-none" />
 
         <div className="relative z-10 max-w-[1440px] mx-auto w-full">
           <div className="overflow-hidden mb-6">
@@ -162,7 +165,7 @@ export default function Contact() {
       </section>
 
       {/* 2. CONTACT CONTENT GRID */}
-      <section className="contact-grid max-w-[1440px] mx-auto px-6 md:px-12 py-32 md:py-48 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
+      <section className="contact-grid min-h-[100dvh] md:h-screen flex items-center max-w-[1440px] mx-auto px-6 md:px-12 py-12 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-20 md:gap-32">
 
         {/* LEFT: INFORMATION & OFFICES */}
         <div className="lg:col-span-12 xl:col-span-4 space-y-32 cursor-explore">
@@ -302,7 +305,7 @@ export default function Contact() {
       </section>
 
       {/* 3. ATMOSPHERIC QUOTE SECTION */}
-      <section className="reveal-section relative h-[70vh] flex items-center justify-center overflow-hidden bg-white/30 backdrop-blur-3xl border-t border-[#E5E2DB]">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-white/30 backdrop-blur-3xl border-t border-[#E5E2DB]">
         <div className="max-w-5xl px-6 text-center">
           <span className="tier-3 block text-[10px] uppercase tracking-[1em] text-[#2B2B2B]/20 mb-12 font-medium">Manifesto</span>
           <h2 className="tier-2 text-[clamp(1.5rem,5vw,3.5rem)] text-[#2B2B2B] font-[var(--font-display)] leading-tight italic font-light">

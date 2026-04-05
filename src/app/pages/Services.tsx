@@ -176,16 +176,19 @@ export default function Services() {
         });
       });
 
-      // Subtle Background Shift
-      ScrollTrigger.create({
-        trigger: ".methodology-section",
-        start: "top center",
-        onToggle: self => {
-          gsap.to(containerRef.current, {
-            backgroundColor: self.isActive ? '#F5F1EA' : '#FAF9F6',
-            duration: 1
-          });
-        }
+      // --- NATIVE-FEEL SNAP INTEGRATION ---
+      const sections = gsap.utils.toArray<HTMLElement>('section');
+      sections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          snap: {
+            snapTo: 1,
+            duration: { min: 0.5, max: 0.8 },
+            delay: 0.1,
+            ease: 'power2.inOut'
+          }
+        });
       });
     }, containerRef);
 
@@ -196,9 +199,9 @@ export default function Services() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen pb-32 md:pb-64 selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
-      <section className="relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden px-6 bg-[#FAF9F6]">
-        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
-        <div ref={heroMediaRef} className="absolute inset-x-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-end pb-24 md:pb-32 overflow-hidden px-6 bg-[#FAF9F6]">
+        {/* Full screen experience behind floating navbar */}
+        <div ref={heroMediaRef} className="absolute inset-x-0 w-full h-full overflow-hidden z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"
@@ -207,7 +210,7 @@ export default function Services() {
               src="/images/services_hero.png" 
               alt="Architectural Precision" 
               loading="lazy"
-              className="w-full h-full object-cover grayscale-0 brightness-[0.85] contrast-[1.1]"
+              className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
             {/* Cinematic dark bottom overlay */}
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -238,12 +241,13 @@ export default function Services() {
         </div>
       </section>
 
-      {/* --- MAIN SERVICES: GALLERY LAYOUT --- */}
-      <section className="max-w-[1440px] mx-auto space-y-24 md:space-y-48 mb-20 md:mb-40">
-        {services.map((s, i) => (
-           <div key={i} className="service-item grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-24 items-center overflow-hidden cursor-view">
+      {/* --- MAIN SERVICES: FULL-SCREEN GALLERY --- */}
+      {services.map((s, i) => (
+        <section key={i} className="min-h-[100dvh] md:h-screen flex items-center px-6 md:px-12 border-b border-[#E5E2DB]/30 bg-white/30">
+          <div className="max-w-[1440px] mx-auto w-full">
+            <div className="service-item grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-24 items-center overflow-hidden cursor-view">
               <div className={`md:col-span-7 ${i % 2 === 1 ? 'md:order-2' : ''} ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'}`}>
-                 <div className="relative overflow-hidden group aspect-[16/10]">
+                 <div className="relative overflow-hidden group aspect-[16/10] rounded-[2rem] md:rounded-[3rem] shadow-2xl">
                     <img 
                       src={s.image} 
                       alt={s.title} 
@@ -254,7 +258,7 @@ export default function Services() {
               </div>
               <div className={`md:col-span-5 ${i % 2 === 1 ? 'md:order-1' : ''} ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
                  <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/40 mb-6 block">Service 0{i+1} / {s.category}</span>
-                 <h2 className="tier-1 text-4xl md:text-6xl mb-10 italic">{s.title}</h2>
+                 <h2 className="tier-1 text-4xl md:text-6xl mb-10 italic leading-tight">{s.title}</h2>
                  <p className="tier-2 text-lg text-[#2B2B2B]/60 mb-12 leading-relaxed max-w-sm">
                     {s.description}
                  </p>
@@ -267,12 +271,13 @@ export default function Services() {
                     ))}
                  </div>
               </div>
-           </div>
-        ))}
-      </section>
+            </div>
+          </div>
+        </section>
+      ))}
 
       {/* --- PROCESS: MINIMAL TIMELINE --- */}
-      <section className="methodology-section bg-[#1A1A1A] text-[#F5F1EA] py-16 md:py-32 -mx-6 md:-mx-12 px-6 md:px-12">
+      <section className="methodology-section bg-[#1A1A1A] text-[#F5F1EA] min-h-[100dvh] md:h-screen flex flex-col justify-center py-16 md:py-32 -mx-6 md:-mx-12 px-6 md:px-12">
         <div className="max-w-[1440px] mx-auto">
            <div className="mb-24 section-reveal">
               <span className="text-[10px] uppercase tracking-[0.5em] text-[#D4CFC7]/50 mb-8 block font-medium">Our Methodology</span>
@@ -295,12 +300,12 @@ export default function Services() {
       </section>
 
       {/* --- FINAL CTA TEASER --- */}
-      <section className="section-reveal py-20 md:py-32 text-center">
+      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center py-20 md:py-32 text-center bg-white/10">
          <h2 className="text-[clamp(2.5rem,6vw,5rem)] mb-16 leading-tight">
            Crafting the <i>Next</i> <br /> Generation of <i>Space</i>.
          </h2>
          <div ref={inquireBtnRef} className="inline-block">
-            <Link to="/contact" className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95">
+            <Link to="/contact" className="inline-block px-16 py-6 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[12px] uppercase tracking-[0.3em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-2xl">
               Inquire Now
             </Link>
          </div>

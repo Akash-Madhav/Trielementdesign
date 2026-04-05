@@ -186,6 +186,22 @@ export default function Home() {
           });
         }
       });
+
+      // --- NATIVE-FEEL SNAP INTEGRATION ---
+      // Adds snap points for each h-screen section using GSAP for high compatibility
+      const sections = gsap.utils.toArray<HTMLElement>('section');
+      sections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          snap: {
+            snapTo: 1,
+            duration: { min: 0.5, max: 0.8 },
+            delay: 0.1,
+            ease: 'power2.inOut'
+          }
+        });
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -195,9 +211,9 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
       
       {/* --- PREMIUM HERO SECTION --- */}
-      <section ref={heroRef} className="relative h-[90vh] min-h-[700px] flex items-end p-6 md:p-12 pb-12 md:pb-20 overflow-hidden bg-[#FAF9F6]">
-        {/* Cinematic Video Background Layer - Full screen on Mobile, Navbar Safe Zone on Desktop */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
+      <section ref={heroRef} className="relative h-screen flex items-end p-6 md:p-12 pb-12 md:pb-24 overflow-hidden bg-[#FAF9F6]">
+        {/* Cinematic Video Background Layer - Full screen experience behind floating navbar */}
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
           <motion.div 
             style={{ y: yParallax }}
             className="w-full h-full relative"
@@ -207,7 +223,7 @@ export default function Home() {
               muted 
               loop 
               playsInline 
-              className="w-full h-full object-cover brightness-[0.75] contrast-[1.1]"
+              className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
             >
               <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
             </video>
@@ -258,44 +274,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PARTNER MARQUEE --- */}
-      <section className="py-12 md:py-20 bg-white border-y border-[#E5E2DB]/50 overflow-hidden">
-        <motion.div
-           animate={{ x: [0, -2000] }}
-           transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-           className="flex gap-20 whitespace-nowrap items-center px-10"
-        >
-          {[...partners, ...partners, ...partners].map((partner, i) => (
-             <span key={i} className="text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/30 font-[var(--font-body)]">
-               {partner}
-             </span>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* --- STATISTICS: MINIMALIST GRID --- */}
-      <section className="py-12 md:py-24 px-6 md:px-12 border-b border-[#E5E2DB]/30">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="tier-3-container grid grid-cols-2 md:grid-cols-5 gap-12 sm:gap-16">
-            {stats.map((stat, i) => (
-              <div key={i} className="flex flex-col gap-2 items-center md:items-start">
-                <span className="text-4xl md:text-5xl font-[var(--font-display)] text-[#2B2B2B]">
-                   {stat.value}
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/50 font-[var(--font-body)]">
-                   {stat.label}
-                </span>
-              </div>
+      {/* --- PARTNER & STATISTICS: GLOBAL IMPACT --- */}
+      <section className="h-screen flex flex-col justify-center bg-white border-y border-[#E5E2DB]/50 overflow-hidden">
+        <div className="py-12 md:py-20 border-b border-[#E5E2DB]/10">
+          <motion.div
+            animate={{ x: [0, -2000] }}
+            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
+            className="flex gap-20 whitespace-nowrap items-center px-10"
+          >
+            {[...partners, ...partners, ...partners].map((partner, i) => (
+              <span key={i} className="text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/30 font-[var(--font-body)]">
+                {partner}
+              </span>
             ))}
+          </motion.div>
+        </div>
+
+        <div className="flex-grow flex items-center py-12 md:py-24 px-6 md:px-12">
+          <div className="max-w-[1440px] mx-auto w-full">
+            <div className="tier-3-container grid grid-cols-2 md:grid-cols-5 gap-12 sm:gap-16">
+              {stats.map((stat, i) => (
+                <div key={i} className="flex flex-col gap-2 items-center md:items-start">
+                  <span className="text-4xl md:text-5xl font-[var(--font-display)] text-[#2B2B2B]">
+                    {stat.value}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/50 font-[var(--font-body)]">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* --- PHILOSOPHY: STORYTELLING LAYOUT --- */}
-      <section className="py-16 md:py-32 px-6 md:px-12 bg-[#F5F1EA]/30 border-b border-[#E5E2DB]/30">
-        <div className="max-w-[1440px] mx-auto space-y-20 md:space-y-40">
-          {philosophies.map((item, i) => (
-            <div key={i} className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center overflow-hidden`}>
+      {philosophies.map((item, i) => (
+        <section key={i} className="h-screen flex items-center py-16 md:py-32 px-6 md:px-12 bg-[#F5F1EA]/50 border-b border-[#E5E2DB]/30 overflow-hidden">
+          <div className="max-w-[1440px] mx-auto w-full">
+            <div className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center`}>
                {/* Visual Side */}
                <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
                  <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group rounded-3xl md:rounded-[3rem]">
@@ -335,13 +352,13 @@ export default function Home() {
                   </motion.div>
                </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      ))}
 
 
       {/* --- CTA: AMBIENT BLOOM --- */}
-      <section className="relative py-16 md:py-32 px-6 md:px-12 flex items-center justify-center text-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center text-center overflow-hidden px-6 md:px-12 bg-[#FAF9F6]">
         <div className="absolute inset-0 z-0 scale-110">
            <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
            <div className="w-full h-full bg-[#E5E2DB]/20 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />

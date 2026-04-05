@@ -110,17 +110,17 @@ export default function About() {
         });
       });
 
-      // Tier 3: Float-in Staggers
-      gsap.utils.toArray<HTMLElement>('.tier-3').forEach((el) => {
-        gsap.from(el, {
-          y: 15,
-          opacity: 0,
-          duration: 1,
-          ease: 'power2.out',
-          delay: 0.8,
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 96%',
+      // --- NATIVE-FEEL SNAP INTEGRATION ---
+      const sections = gsap.utils.toArray<HTMLElement>('section:not(.milestone-section)');
+      sections.forEach((section) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top top',
+          snap: {
+            snapTo: 1,
+            duration: { min: 0.5, max: 0.8 },
+            delay: 0.1,
+            ease: 'power2.inOut'
           }
         });
       });
@@ -133,9 +133,9 @@ export default function About() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO --- */}
-      <section className="about-hero-section relative h-[90vh] min-h-[600px] flex items-end pb-24 md:pb-32 overflow-hidden bg-[#FAF9F6] px-6 md:px-12">
-        {/* Full screen on Mobile, Navbar Safe Zone on Desktop */}
-        <div ref={heroMediaRef} className="absolute inset-0 top-0 md:top-32 w-full h-full md:h-[calc(100%-8rem)] overflow-hidden z-0">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-end pb-24 md:pb-32 overflow-hidden bg-[#FAF9F6] px-6 md:px-12">
+        {/* Full screen experience behind floating navbar */}
+        <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
            <motion.div 
              style={{ y: yParallax }}
              className="w-full h-full relative"
@@ -144,7 +144,7 @@ export default function About() {
                src="/images/about_hero.png" 
                alt="Architectural Texture" 
                loading="lazy"
-               className="w-full h-full object-cover grayscale-0 brightness-[0.8] contrast-[1.1]"
+               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
              />
              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
            </motion.div>
@@ -174,9 +174,9 @@ export default function About() {
       </section>
 
       {/* --- PHILOSOPHY / MISSION --- */}
-      <section className="section-reveal max-w-[1440px] mx-auto mb-20 md:mb-40 flex flex-col md:flex-row gap-12 md:gap-20 items-center">
+      <section className="section-reveal min-h-[100dvh] md:h-screen max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12">
         <div className="w-full md:w-1/2">
-           <GlassPanel variant="thin" className="p-12 md:p-20 flex items-center justify-center">
+           <GlassPanel variant="thin" className="p-12 md:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-3xl md:text-5xl text-[#2B2B2B]/80 leading-relaxed italic text-center">
                 "We believe that the most advanced engineering is the one you never notice, yet always feel."
               </p>
@@ -195,7 +195,7 @@ export default function About() {
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative min-h-[90vh] min-h-[800px] w-full flex flex-col py-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white">
+      <section className="milestone-section relative min-h-[100dvh] md:h-screen w-full flex flex-col py-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white">
         <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 flex flex-col md:flex-row justify-between items-end gap-6 flex-shrink-0">
            <h2 className="tier-1 text-5xl md:text-7xl leading-tight">Progressive <br /> <i className="italic">Legacy.</i></h2>
            <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-2 block font-medium">Navigate through Time</span>
@@ -238,14 +238,14 @@ export default function About() {
       </section>
 
       {/* --- CORE VALUES: MINIMAL BLOCKS --- */}
-      <section className="section-reveal py-12 md:py-24 border-t border-[#E5E2DB]/50">
+      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center py-12 md:py-24 border-t border-[#E5E2DB]/50">
         <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
            <h2 className="tier-1 text-4xl md:text-7xl">Driven by Purpose.</h2>
         </div>
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E5E2DB]/50 border border-[#E5E2DB]/50">
           {values.map((v, i) => (
             <div key={i} className="relative bg-[#FAF9F6] p-12 md:p-20 group transition-all duration-700 overflow-hidden">
-               {/* Persistent Aesthetic Background Tint */}
+               {/* Persistent Aesthetic Background Hint */}
                <div 
                  className="absolute inset-0 opacity-[0.05] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none" 
                  style={{ backgroundColor: v.accent }}
@@ -283,10 +283,10 @@ export default function About() {
       </section>
 
       {/* --- FINAL CTA TEASER --- */}
-      <section className="section-reveal py-16 md:py-32 text-center">
+      <section className="section-reveal min-h-[100dvh] md:h-screen flex flex-col justify-center items-center py-16 md:py-32 text-center">
          <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 italic opacity-40">Ready to explore our solutions?</h2>
          <div ref={magneticBtnRef} className="inline-block">
-            <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95">
+            <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-xl">
               Discover Services
             </Link>
          </div>
