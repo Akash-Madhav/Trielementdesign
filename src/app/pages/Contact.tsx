@@ -61,7 +61,7 @@ export default function Contact() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 95%',
+            start: 'top 92%',
           }
         });
       });
@@ -76,7 +76,7 @@ export default function Contact() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 95%',
+            start: 'top 92%',
           }
         });
       });
@@ -91,25 +91,11 @@ export default function Contact() {
           ease: 'power2.out',
           scrollTrigger: {
             trigger: container,
-            start: 'top 96%',
+            start: 'top 92%',
           }
         });
       });
 
-      // --- NATIVE-FEEL SNAP INTEGRATION ---
-      const sections = gsap.utils.toArray<HTMLElement>('section');
-      sections.forEach((section) => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top top',
-          snap: {
-            snapTo: 1,
-            duration: { min: 0.5, max: 0.8 },
-            delay: 0.1,
-            ease: 'power2.inOut'
-          }
-        });
-      });
     }, containerRef);
 
     return () => ctx.revert();

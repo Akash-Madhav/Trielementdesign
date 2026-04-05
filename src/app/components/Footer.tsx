@@ -55,7 +55,7 @@ export function Footer() {
           className="max-w-xl mx-auto mb-32"
         >
           <p className="font-[var(--font-display)] text-2xl md:text-3xl italic text-[#2B2B2B]/80 leading-relaxed">
-            "Every section should feel intentional, calm, and architecturally inspired."
+            "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."
           </p>
         </motion.div>
 

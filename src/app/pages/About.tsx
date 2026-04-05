@@ -9,17 +9,65 @@ import { useMagnetic } from '../hooks/useMagnetic';
 gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
-  { year: '2008', accent: '#D4AF37', event: 'The Genesis', description: 'Trielement begins its journey in the heart of Dubai, driven by a vision of engineering excellence.' },
-  { year: '2012', accent: '#4A5568', event: 'Beyond Borders', description: 'Expansion into India, bringing bespoke technical expertise to Bangalore and Kochi.' },
-  { year: '2018', accent: '#005C8E', event: 'Global Footprint', description: '500+ projects completed across 20 countries, establishing a legacy of precision.' },
-  { year: '2024', accent: '#4B5320', event: 'Ethereal Future', description: 'Pioneering sustainable, light-focused engineering for the next generation of architecture.' },
+  { 
+    year: 'MECHANICAL', 
+    accent: '#D4AF37', 
+    tags: 'HVAC · THERMAL · ENERGY',
+    code: 'UNIT_MECH_01',
+    event: 'Critical Environment Climate Control', 
+    description: 'Precision HVAC design for hospitals, high-rise towers, and large-format commercial spaces — where thermal performance directly defines the quality of every working hour inside the building.' 
+  },
+  { 
+    year: 'ELECTRICAL', 
+    accent: '#4B5568', 
+    tags: 'POWER · LIGHTING · SOLAR',
+    code: 'SYS_ELEC_04',
+    event: 'Power & Lighting Across Landmark Projects', 
+    description: 'Intelligent lighting, solar PV integration, and HV/LV distribution — electrical systems engineered for resilience, efficiency, and the long operational life of every building we touch.' 
+  },
+  { 
+    year: 'PLUMBING', 
+    accent: '#005C8E', 
+    tags: 'WATER · DRAINAGE · FIRE',
+    code: 'FLOW_PLMB_09',
+    event: 'Water Systems for Complex Structures', 
+    description: 'Potable water, drainage, and fire suppression systems designed with healthcare-grade compliance — built to serve the building reliably across its entire lifespan, not just handover day.' 
+  },
+  { 
+    year: 'BIM · COORDINATION', 
+    accent: '#4B5320', 
+    tags: 'REVIT · NAVISWORKS · 4D',
+    code: 'DATA_BIM_02',
+    event: 'Zero-Conflict MEP Coordination', 
+    description: 'Every project is fully coordinated in a shared BIM model across footprints from 1 lakh to 50 lakh square feet. Clashes are resolved before construction begins — not discovered on site.' 
+  },
 ];
 
 const values = [
-  { title: 'Excellence', accent: '#D4AF37', description: 'The pursuit of the sublime in every calculation, every design, every detail.' },
-  { title: 'Integrity', accent: '#4A5568', description: 'A foundation of transparency and ethical clarity in all our partnerships.' },
-  { title: 'Innovation', accent: '#005C8E', description: 'Embracing the avant-garde of technology to solve the challenges of tomorrow.' },
-  { title: 'Sustain', accent: '#4B5320', description: 'Designing for longevity, ensuring our creations respect the world they inhabit.' },
+  { 
+    title: 'Precision over output', 
+    subLabel: 'CRAFT · DETAIL · RIGOUR',
+    accent: '#D4AF37', 
+    description: 'We measure our work not by how fast it leaves the studio, but by how well it performs inside the building. Every specification, every coordination drawing, every site decision is held to a standard that does not bend under schedule pressure.' 
+  },
+  { 
+    title: 'Transparency in complexity', 
+    subLabel: 'CLARITY · TRUST · OPENNESS',
+    accent: '#4B5568', 
+    description: 'MEP engineering is inherently complex. We make it legible — to architects, contractors, and clients. When a system has a constraint, we surface it early. When a decision has a consequence, we name it. Our clients are never surprised by what is behind their walls.' 
+  },
+  { 
+    title: 'Stewardship of resources', 
+    subLabel: 'SUSTAIN · EFFICIENCY · LONGEVITY',
+    accent: '#005C8E', 
+    description: 'Every system we specify is evaluated through the lens of its operational life and environmental footprint. Resource efficiency is never considered a secondary goal — it is treated as a non-negotiable design input that defines the long-term stewardship of the building.' 
+  },
+  { 
+    title: 'Ambition without compromise', 
+    subLabel: 'COURAGE · VISION · RESOLVE',
+    accent: '#4B5320', 
+    description: 'The most demanding clients — India\'s leading corporates and real estate developers — choose engineers who push the brief, not ones who simply fulfil it. We treat every project as an opportunity to do something genuinely better than what came before it.' 
+  },
 ];
 
 export default function About() {
@@ -72,7 +120,7 @@ export default function About() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 92%',
           }
         });
       });
@@ -88,8 +136,8 @@ export default function About() {
             trigger: '.milestone-section',
             pin: true,
             scrub: 1,
-            start: 'center center',
-            end: () => `+=${milestoneContainer.scrollWidth * 1.2}`, // Added extra scroll distance for cleaner exit
+            start: 'top top',
+            end: () => `+=${milestoneContainer.scrollWidth * 1.25}`,
             invalidateOnRefresh: true,
           }
         });
@@ -110,20 +158,6 @@ export default function About() {
         });
       });
 
-      // --- NATIVE-FEEL SNAP INTEGRATION ---
-      const sections = gsap.utils.toArray<HTMLElement>('section:not(.milestone-section)');
-      sections.forEach((section) => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top top',
-          snap: {
-            snapTo: 1,
-            duration: { min: 0.5, max: 0.8 },
-            delay: 0.1,
-            ease: 'power2.inOut'
-          }
-        });
-      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -146,6 +180,13 @@ export default function About() {
                loading="lazy"
                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
              />
+             {/* Technical Blueprint Grid Overlay */}
+             <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
+               style={{ 
+                 backgroundImage: `linear-gradient(#FAF9F6 1px, transparent 1px), linear-gradient(90deg, #FAF9F6 1px, transparent 1px)`,
+                 backgroundSize: '40px 40px' 
+               }} 
+             />
              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
            </motion.div>
         </div>
@@ -153,52 +194,56 @@ export default function About() {
         <div className="about-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-left">
           <div className="overflow-hidden mb-6">
             <span className="about-reveal tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/60 font-bold">
-              Our Narrative
+              OUR NARRATIVE
             </span>
           </div>
           <div className="overflow-hidden mb-10">
-            <h1 className="about-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl">
+            <h1 className="about-reveal tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">
               Engineered for <br /> <i className="font-bold">Timelessness.</i>
-              <div className="mt-6 opacity-40 text-[8px] tracking-[1.4em] font-mono animate-pulse text-[#FAF9F6]">
-                [ LUX_ENGINEERING ]
+              
+              {/* Floating Coordinate Markers */}
+              <div className="absolute -top-12 -right-12 hidden lg:block opacity-30 font-mono text-[7px] tracking-[0.4em] text-[#FAF9F6]">
+                LOC_REF: 12.04 // 88.32
+                <br />
+                SCALE_FACTOR: 1.002
               </div>
             </h1>
           </div>
           <div className="about-reveal tier-2 border-l border-[#FAF9F6]/20 pl-6 max-w-xl">
-            <p className="text-lg md:text-xl text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-              Since 2008, Trielement has been the silent intelligence behind the world's most 
-              prestigious structures. We don't just design systems; we craft the atmosphere.
+            <p className="text-base md:text-[clamp(1rem,1.2vw,1.25rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
+              At Trielement Studio, MEP engineering is a discipline our team has spent careers mastering — across project scales ranging from 1 lakh to 50 lakh square feet. From precision-critical healthcare facilities to landmark commercial developments, we deliver systems trusted by India's foremost corporates and real estate developers.
             </p>
           </div>
         </div>
       </section>
 
       {/* --- PHILOSOPHY / MISSION --- */}
-      <section className="section-reveal min-h-[100dvh] max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 pt-32 md:pt-0">
+      <section className="section-reveal min-h-[100dvh] max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 py-24 md:py-0">
         <div className="w-full md:w-1/2">
-           <GlassPanel variant="thin" className="p-12 md:p-20 flex items-center justify-center rounded-[3rem]">
-              <p className="font-[var(--font-display)] text-3xl md:text-5xl text-[#2B2B2B]/80 leading-relaxed italic text-center">
-                "We believe that the most advanced engineering is the one you never notice, yet always feel."
+           <GlassPanel variant="thin" className="p-8 md:p-14 lg:p-20 flex items-center justify-center rounded-[3rem]">
+              <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
+                "We believe that the most advanced engineering is the one you never notice — yet always feel."
+                <br />
+                <span className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block mt-6 md:mt-10">— TRIELEMENT DESIGN PHILOSOPHY</span>
               </p>
            </GlassPanel>
         </div>
-        <div className="w-full md:w-1/2">
-           <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block">Our Ethos</span>
-           <h2 className="tier-1 text-4xl md:text-6xl mb-10">The invisible foundation of luxury.</h2>
-           <p className="tier-2 text-[#2B2B2B]/70 text-lg leading-relaxed max-w-xl mb-12">
-             Our mission is to bridge the gap between architectural ambition and technical feasibility. 
-             Through a lens of sustainability and precision, we ensure that every environment we touch 
-             is optimized for human comfort and planetary respect.
+        <div className="w-full md:w-1/2 flex flex-col justify-center">
+           <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-4 md:mb-6 block">Philosophy & Ethos</span>
+           <h2 className="tier-1 text-3xl md:text-[clamp(2rem,4vw,3.5rem)] mb-6 md:mb-10 leading-[1.1]">Where architectural ambition meets engineering conviction</h2>
+           <p className="tier-2 text-[#2B2B2B]/70 text-base md:text-lg leading-relaxed max-w-xl mb-8 md:mb-12">
+             Our engineers arrive at every project not to specify what fits the schedule, but to understand the building — its purpose, its occupants, its long-term obligations — and design mechanical, electrical, and plumbing systems genuinely worthy of that vision.
+             <br /><br />
+             Shaped by working alongside India's top real estate firms and corporate clients, our team operates at a standard defined not by what is acceptable, but by what is exceptional.
            </p>
-           <div className="w-20 h-[1px] bg-[#2B2B2B]" />
+           <div className="w-20 h-[1px] bg-[#2B2B2B]/20" />
         </div>
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative min-h-[100dvh] w-full flex flex-col pt-32 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-[1]">
-        <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 flex flex-col md:flex-row justify-between items-end gap-6 flex-shrink-0">
-           <h2 className="tier-1 text-5xl md:text-7xl leading-tight">Progressive <br /> <i className="italic">Legacy.</i></h2>
-           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-2 block font-medium">Navigate through Time</span>
+      <section className="milestone-section relative min-h-[100dvh] w-full flex flex-col pt-32 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-10">
+        <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 md:mb-16">
+           <h2 className="tier-1 text-2xl md:text-[clamp(1.8rem,4.2vw,3.5rem)] leading-tight">Mastery earned across the most demanding project types</h2>
         </div>
         
         {/* Adaptive height container */}
@@ -206,74 +251,121 @@ export default function About() {
           {milestones.map((m, i) => (
              <div 
                key={i} 
-               className="milestone-item relative flex-shrink-0 w-[85vw] md:w-[40vw] lg:w-[30vw] h-full flex flex-col justify-between p-8 md:p-12 border-r border-[#E5E2DB]/50 group"
-               style={{ backgroundColor: `${m.accent}0a` }} // Ultra-subtle tint (approx 4% opacity)
+               className="milestone-item relative flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] h-full flex flex-col justify-between p-8 md:p-12 border-r border-[#E5E2DB]/30 group overflow-hidden"
+               style={{ backgroundColor: `${m.accent}02` }}
              >
+                {/* Subtle Radial Gradient Background */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none"
+                  style={{ background: `radial-gradient(circle at 70% 30%, ${m.accent}15, transparent 70%)` }}
+                />
                 {/* Year Accent Line */}
-                <div className="w-12 h-1 bg-[#2B2B2B]/20 mb-6 transition-all duration-700 group-hover:w-24 group-hover:bg-[#2B2B2B]/60" />
+                <div className="relative z-10 w-12 h-[1px] bg-[#2B2B2B]/20 mb-6 transition-all duration-700 group-hover:w-24 group-hover:bg-[#2B2B2B]/60" />
 
                 <div className="relative z-10">
-                  <span className="milestone-year text-5xl md:text-7xl font-[var(--font-display)] text-[#2B2B2B]/10 block mb-4 transition-colors duration-700 group-hover:text-[#2B2B2B]/30">
-                    {m.year}
+                  {/* Architectural Background Label */}
+                  <div className="absolute -top-12 -left-4 pointer-events-none select-none overflow-hidden">
+                    <span className="milestone-year text-[12vw] font-[var(--font-display)] leading-none text-[#2B2B2B]/[0.02] uppercase tracking-tighter block transition-all duration-1000 group-hover:text-[#2B2B2B]/[0.05] group-hover:-translate-y-4">
+                      {m.year.split(' ')[0]}
+                    </span>
+                  </div>
+
+                  {/* Domain Tag */}
+                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#2B2B2B]/40 mb-2 block uppercase leading-none">
+                    {m.tags}
                   </span>
-                  <h3 className="text-3xl md:text-4xl italic font-serif leading-tight mb-6 text-[#2B2B2B]">{m.event}</h3>
+                  <h3 className="text-2xl md:text-[clamp(1.5rem,3vw,2.5rem)] italic font-serif leading-tight mb-6 text-[#2B2B2B] group-hover:translate-x-2 transition-transform duration-700 max-w-sm">
+                    {m.event}
+                  </h3>
                 </div>
 
-                <div className="max-w-md border-t border-[#2B2B2B]/10 pt-6 mt-6">
-                  <p className="text-base md:text-lg text-[#2B2B2B]/70 leading-relaxed font-[var(--font-body)]">
+                <div className="max-w-md border-t border-[#2B2B2B]/10 pt-8 mt-6 relative z-10">
+                  <p className="text-sm md:text-base text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)] font-light italic">
                     {m.description}
                   </p>
                 </div>
 
-                {/* Aesthetic Corner Indicator */}
-                <div 
-                  className="absolute bottom-6 right-6 text-[9px] uppercase tracking-[0.2em] opacity-20"
-                  style={{ color: m.accent }}
-                >
-                  STORY_{m.year}
+                {/* Aesthetic Technical ID */}
+                <div className="absolute bottom-10 right-10 flex items-center gap-4 z-10">
+                   <div className="w-8 h-px bg-[#2B2B2B]/10" />
+                   <span 
+                     className="text-[9px] font-mono tracking-[0.4em] opacity-40 uppercase"
+                     style={{ color: m.accent }}
+                   >
+                     [{m.code}]
+                   </span>
                 </div>
              </div>
           ))}
         </div>
       </section>
 
-      {/* --- CORE VALUES: MINIMAL BLOCKS --- */}
-      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center py-24 md:py-32 border-t border-[#E5E2DB]/50">
-        <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
-           <h2 className="tier-1 text-4xl md:text-7xl">Driven by Purpose.</h2>
+      {/* --- SUSTAINABLE PERFORMANCE: IGBC --- */}
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] py-24 md:py-32 border-t border-b border-[#E5E2DB]/50">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 text-center">
+           <span className="tier-3 text-[10px] uppercase tracking-[0.5em] text-[#2B2B2B]/40 mb-8 block font-medium">Sustainable Performance</span>
+           <div className="overflow-hidden mb-6">
+             <h2 className="tier-1 text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] italic font-serif text-[#2B2B2B]/80 leading-relaxed max-w-4xl mx-auto">
+               "Our work holds IGBC certification — across <br className="hidden md:block" /> Gold, Silver, and Platinum."
+             </h2>
+           </div>
+           <p className="tier-2 text-[9px] font-mono tracking-[0.4em] text-[#2B2B2B]/40 uppercase">
+             The rating is the result. The engineering is the reason.
+           </p>
         </div>
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-px bg-[#E5E2DB]/50 border border-[#E5E2DB]/50">
+      </section>
+
+      {/* --- CORE VALUES --- */}
+      <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center py-32 md:py-44 border-t border-[#E5E2DB]/50">
+        <div className="max-w-[1440px] mx-auto text-center mb-16 md:mb-24">
+           <h2 className="tier-1 text-3xl md:text-[clamp(2rem,4.5vw,4.5rem)] leading-tight max-w-4xl mx-auto">The convictions that shape every decision</h2>
+        </div>
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 grid-rows-[repeat(2,minmax(0,1fr))] h-full gap-px bg-[#E5E2DB]/50 border border-[#E5E2DB]/50">
           {values.map((v, i) => (
-            <div key={i} className="relative bg-[#FAF9F6] p-12 md:p-20 group transition-all duration-700 overflow-hidden">
-               {/* Persistent Aesthetic Background Hint */}
+            <div key={i} className="relative bg-[#FAF9F6] p-10 md:p-14 lg:p-20 group transition-all duration-700 overflow-hidden border-[#E5E2DB]/50">
+               {/* Accent Glow Background */}
                <div 
-                 className="absolute inset-0 opacity-[0.05] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none" 
+                 className="absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-1000 pointer-events-none" 
                  style={{ backgroundColor: v.accent }}
                />
                
+               {/* Technical Blueprint Marker */}
+               <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.03] font-mono text-[8px] p-4 pointer-events-none select-none group-hover:opacity-[0.08] transition-opacity duration-700">
+                  REF_POS: {34.5 + i*10}.{i*2} <br />
+                  VAL_ID: {v.title.slice(0, 3).toUpperCase()} <br />
+                  TRK_COORD: 00{i+1}
+               </div>
+
                {/* Large Background Indicator */}
                <div 
-                 className="absolute -bottom-10 -right-10 text-[12rem] font-[var(--font-display)] opacity-[0.03] select-none pointer-events-none group-hover:opacity-[0.06] transition-opacity duration-700"
+                 className="absolute -bottom-10 -right-10 text-[15rem] font-[var(--font-display)] opacity-[0.02] select-none pointer-events-none group-hover:opacity-[0.05] group-hover:-translate-y-4 transition-all duration-1000"
                  style={{ color: v.accent }}
                >
                  0{i+1}
                </div>
                
                <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-6">
-                    <span 
-                      className="text-[10px] uppercase tracking-[0.3em] font-bold block"
-                      style={{ color: v.accent }}
-                    >
-                      Value 0{i+1}
-                    </span>
+                  <div className="flex justify-between items-start mb-10">
+                    <div className="flex flex-col gap-2">
+                       <span 
+                         className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block"
+                       >
+                         {v.subLabel}
+                       </span>
+                       <span 
+                         className="text-[9px] uppercase tracking-[0.2em] font-bold block"
+                         style={{ color: v.accent }}
+                       >
+                         CONVICTION 0{i+1}
+                       </span>
+                    </div>
                     <div 
                       className="w-2 h-2 rounded-full transform scale-100 group-hover:scale-150 transition-transform duration-700 shadow-lg"
                       style={{ backgroundColor: v.accent }}
                     />
                   </div>
-                  <h3 className="text-3xl md:text-4xl mb-6 italic group-hover:translate-x-2 transition-transform duration-700">{v.title}</h3>
-                  <p className="text-base text-[#2B2B2B]/60 max-w-sm leading-relaxed font-[var(--font-body)]">
+                  <h3 className="text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] mb-6 italic group-hover:translate-x-2 transition-transform duration-700 font-serif text-[#2B2B2B]">{v.title}</h3>
+                  <p className="text-sm md:text-base text-[#2B2B2B]/60 max-w-sm leading-relaxed font-[var(--font-body)] font-light">
                     {v.description}
                   </p>
                </div>
@@ -284,7 +376,7 @@ export default function About() {
 
       {/* --- FINAL CTA TEASER --- */}
       <section className="section-reveal relative z-10 bg-[#FAF9F6] min-h-[100dvh] flex flex-col justify-center items-center py-24 md:py-32 text-center">
-         <h2 className="text-3xl md:text-5xl mb-8 md:mb-12 italic opacity-40">Ready to explore our solutions?</h2>
+         <h2 className="text-2xl md:text-[clamp(1.5rem,3.5vw,2.5rem)] mb-8 md:mb-12 italic opacity-40">Precision that performs. <br /> Systems that endure.</h2>
          <div ref={magneticBtnRef} className="inline-block">
             <Link to="/services" className="inline-block px-12 py-5 bg-[#2B2B2B] text-[#FAF9F6] rounded-full text-[11px] uppercase tracking-[0.2em] font-medium transition-all duration-700 hover:scale-105 active:scale-95 shadow-xl">
               Discover Services

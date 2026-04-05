@@ -121,7 +121,7 @@ export default function Home() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 85%',
+            start: 'top 90%',
           }
         });
       });
@@ -135,7 +135,7 @@ export default function Home() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 85%',
+            start: 'top 92%',
           }
         });
       });
@@ -148,7 +148,7 @@ export default function Home() {
           ease: 'expo.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 85%',
+            start: 'top 92%',
           }
         });
       });
@@ -216,21 +216,6 @@ export default function Home() {
         }
       });
 
-      // --- NATIVE-FEEL SNAP INTEGRATION ---
-      // Adds snap points for each h-screen section using GSAP for high compatibility
-      const sections = gsap.utils.toArray<HTMLElement>('section');
-      sections.forEach((section) => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'top top',
-          snap: {
-            snapTo: 1,
-            duration: { min: 0.5, max: 0.8 },
-            delay: 0.1,
-            ease: 'power2.inOut'
-          }
-        });
-      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -302,10 +287,13 @@ export default function Home() {
 
           <div className="tier-3-container flex flex-wrap gap-8 items-center justify-center">
             <div ref={exploreBtnRef}>
-              <Link to="/services" className="px-10 py-4 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-xl">
-                Explore Our Craft
+              <Link to="/contact" className="px-10 py-4 bg-[#FAF9F6] text-[#2B2B2B] rounded-full text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#FAF9F6]/90 transition-all duration-700 hover:scale-105 active:scale-95 block shadow-xl">
+                Start Your Journey
               </Link>
             </div>
+            <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] text-[#FAF9F6]/60 hover:text-[#FAF9F6] transition-colors font-medium border-b border-transparent hover:border-[#FAF9F6]/30 pb-1">
+               Explore Our Craft
+            </Link>
           </div>
         </div>
 
@@ -375,14 +363,14 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 max-w-4xl">
-           <h2 className="text-5xl md:text-8xl mb-12">
+           <h2 className="section-reveal text-5xl md:text-8xl mb-12">
              Ready to <i>Illuminate</i>?
            </h2>
-           <p className="text-lg md:text-xl text-[#2B2B2B]/60 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
+           <p className="section-reveal text-lg md:text-xl text-[#2B2B2B]/60 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
              Let our engineering precision guide your architectural vision into reality. 
              Sustainable, intelligent, and timeless.
            </p>
-           <Link to="/contact">
+           <Link to="/contact" className="section-reveal block">
              <div ref={journeyBtnRef}>
                <GlassPanel 
                  variant="heavy" 
