@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
@@ -9,15 +9,6 @@ import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const partners = ['WASL', 'TBC Bank', 'Commerz', 'Emaar', 'Hilton', 'Park Hyatt', 'Mandarin Oriental', 'Radisson', 'Marriott', 'Sobha', 'IMG Group'];
-
-const stats = [
-  { value: '300+', label: 'Projects' },
-  { value: '15+', label: 'Sectors' },
-  { value: '$5Bn+', label: 'Project Value' },
-  { value: '50Mn+', label: 'Sq Ft' },
-  { value: '20+', label: 'Countries' },
-];
 
 const philosophies = [
   {
@@ -53,6 +44,44 @@ export default function Home() {
   const journeyBtnRef = useMagnetic();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 1000], [0, 300]);
+
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile and reduced motion preferences
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    
+    setPrefersReducedMotion(motionQuery.matches);
+    setIsMobile(mobileQuery.matches);
+
+    const handleMotionChange = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    const handleMobileChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+
+    motionQuery.addEventListener('change', handleMotionChange);
+    mobileQuery.addEventListener('change', handleMobileChange);
+
+    // Lazy load observer
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) observer.observe(heroRef.current);
+
+    return () => {
+      motionQuery.removeEventListener('change', handleMotionChange);
+      mobileQuery.removeEventListener('change', handleMobileChange);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -218,15 +247,29 @@ export default function Home() {
             style={{ y: yParallax }}
             className="w-full h-full relative"
           >
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
-              className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
-            >
-              <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
-            </video>
+            {(!isMobile && !prefersReducedMotion) ? (
+              <video 
+                autoPlay 
+                muted 
+                loop 
+                playsInline 
+                preload="metadata"
+                poster="/hero_poster.png"
+                className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
+              >
+                {shouldLoadVideo && (
+                  <>
+                    <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
+                  </>
+                )}
+              </video>
+            ) : (
+              <img 
+                src="/hero_poster.png" 
+                alt="Architectural visualization" 
+                className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
+              />
+            )}
             
             {/* Minimal Overlay for subtle depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-[1]" />
@@ -274,39 +317,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PARTNER & STATISTICS: GLOBAL IMPACT --- */}
-      <section className="h-screen flex flex-col justify-center bg-white border-y border-[#E5E2DB]/50 overflow-hidden">
-        <div className="py-12 md:py-20 border-b border-[#E5E2DB]/10">
-          <motion.div
-            animate={{ x: [0, -2000] }}
-            transition={{ duration: 60, repeat: Infinity, ease: 'linear' }}
-            className="flex gap-20 whitespace-nowrap items-center px-10"
-          >
-            {[...partners, ...partners, ...partners].map((partner, i) => (
-              <span key={i} className="text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/30 font-[var(--font-body)]">
-                {partner}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-
-        <div className="flex-grow flex items-center py-12 md:py-24 px-6 md:px-12">
-          <div className="max-w-[1440px] mx-auto w-full">
-            <div className="tier-3-container grid grid-cols-2 md:grid-cols-5 gap-12 sm:gap-16">
-              {stats.map((stat, i) => (
-                <div key={i} className="flex flex-col gap-2 items-center md:items-start">
-                  <span className="text-4xl md:text-5xl font-[var(--font-display)] text-[#2B2B2B]">
-                    {stat.value}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/50 font-[var(--font-body)]">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* --- PHILOSOPHY: STORYTELLING LAYOUT --- */}
       {philosophies.map((item, i) => (
