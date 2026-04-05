@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, MapPin, Phone, ArrowUpRight, Minus } from 'lucide-react';
 import { useMagnetic } from '../hooks/useMagnetic';
+import BrandName from '../components/BrandName';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -316,7 +317,7 @@ export default function Contact() {
         </div>
         {/* Cinematic Subtle Background Text */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none pointer-events-none opacity-[0.03] text-[22vw] font-bold tracking-tighter whitespace-nowrap font-[var(--font-display)]">
-          TRIELEMENT
+          <BrandName />
         </div>
       </section>
     </div>

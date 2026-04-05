@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
 import BrandWordmark from '../../imports/BrandWordmark';
+import BrandName from './BrandName';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -62,7 +63,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-[#E5E2DB]/30 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] uppercase tracking-[0.2em] text-[#2B2B2B]/40">
-            © {currentYear} Trielement Engineering. Crafted for Excellence.
+            © {currentYear} <BrandName /> Engineering. Crafted for Excellence.
           </p>
           <div className="flex gap-10">
             <Link

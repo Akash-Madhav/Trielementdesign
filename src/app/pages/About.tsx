@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GlassPanel } from '../components/GlassPanel';
+import BrandName from '../components/BrandName';
 import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -205,7 +206,7 @@ export default function About() {
           </div>
           <div className="about-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
              <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-               Trielement Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, and plumbing systems that do not just function, but perform with a quiet, enduring conviction.
+               <BrandName /> Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, and plumbing systems that do not just function, but perform with a quiet, enduring conviction.
              </p>
           </div>
         </div>
@@ -218,7 +219,7 @@ export default function About() {
               <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
                 "We believe that the most advanced engineering is the one you never notice — yet always feel."
                 <br />
-                <span className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block mt-6 md:mt-10">— TRIELEMENT DESIGN PHILOSOPHY</span>
+                <span className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block mt-6 md:mt-10">— <BrandName /> DESIGN PHILOSOPHY</span>
               </p>
            </GlassPanel>
         </div>

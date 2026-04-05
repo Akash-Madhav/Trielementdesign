@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GlassPanel } from '../components/GlassPanel';
 import BrandWordmark from '../../imports/BrandWordmark';
+import BrandName from '../components/BrandName';
 import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -21,7 +22,7 @@ const philosophies = [
     title: 'INTEGRATE',
     heading: 'Technology Meets Human Experience.',
     body: 'Promoting a blend of technology, keen observation and human experience enables seamless integration of each service into the system.',
-    image: '/images/home_integrate.png',
+    image: '/images/home_integrate_technical.png',
   },
   {
     title: 'SUSTAIN',
@@ -35,7 +36,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const heroMediaRef = useRef<HTMLDivElement>(null);
-  
+
   // Magnetic refs
   const exploreBtnRef = useMagnetic();
   const journeyBtnRef = useMagnetic();
@@ -50,7 +51,7 @@ export default function Home() {
     // Detect mobile and reduced motion preferences
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const mobileQuery = window.matchMedia('(max-width: 768px)');
-    
+
     setPrefersReducedMotion(motionQuery.matches);
     setIsMobile(mobileQuery.matches);
 
@@ -88,11 +89,11 @@ export default function Home() {
       gsap.fromTo(
         heroMediaRef.current,
         { clipPath: 'inset(15% 15% 15% 15% round 100px)', opacity: 0, scale: 1.2 },
-        { 
-          clipPath: 'inset(0% 0% 0% 0% round 0px)', 
-          opacity: 1, 
-          scale: 1, 
-          duration: 2.5, 
+        {
+          clipPath: 'inset(0% 0% 0% 0% round 0px)',
+          opacity: 1,
+          scale: 1,
+          duration: 2.5,
           ease: 'expo.inOut',
           delay: 0.1
         }
@@ -151,7 +152,7 @@ export default function Home() {
       });
 
       // --- TYPOGRAPHIC STORYTELLING TIERS ---
-      
+
       // Tier 1: 3D Split-Word Reveals
       gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
         gsap.from(el, {
@@ -220,39 +221,34 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
-      
+
       {/* --- PREMIUM HERO SECTION --- */}
       <section ref={heroRef} className="relative h-screen flex items-end p-6 md:p-12 pb-12 md:pb-24 overflow-hidden bg-[#FAF9F6]">
         {/* Cinematic Video Background Layer - Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0">
-          <motion.div 
+          <motion.div
             style={{ y: yParallax }}
             className="w-full h-full relative"
           >
             {(!isMobile && !prefersReducedMotion) ? (
-              <video 
-                autoPlay 
-                muted 
-                loop 
-                playsInline 
-                preload="metadata"
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
                 poster="/hero_poster.png"
                 className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
               >
-                {shouldLoadVideo && (
-                  <>
-                    <source src="/Drone_Video_Loop_Refinement.mp4" type="video/mp4" />
-                  </>
-                )}
+                <source src="/hero_video.mp4" type="video/mp4" />
               </video>
             ) : (
-              <img 
-                src="/hero_poster.png" 
-                alt="Architectural visualization" 
+              <img
+                src="/hero_poster.png"
+                alt="Architectural visualization"
                 className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
               />
             )}
-            
+
             {/* Minimal Overlay for subtle depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-[1]" />
           </motion.div>
@@ -260,7 +256,7 @@ export default function Home() {
 
         {/* Content Overlay - Aligned to bottom, perfectly fitting inside the video area */}
         <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12">
-          
+
           <div className="overflow-hidden mb-8">
             <h1 className="hero-reveal leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
               <span className="block text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
@@ -270,15 +266,14 @@ export default function Home() {
                 Intelligence
               </span>
             </h1>
-            <div className="hero-reveal mt-6 opacity-75 text-[10px] uppercase tracking-[1.6em] font-mono animate-pulse text-[#FAF9F6]">
-              [ DESIGN_INTEGRATE_SUSTAIN ]
+            <div className="hero-reveal mt-6 opacity-90 text-[13px] md:text-[15px] font-semibold uppercase tracking-[0.4em] font-mono text-[#FAF9F6] mb-4 ml-[0.4em]">
+              THE POWER OF THREE
             </div>
           </div>
 
-          <div className="overflow-hidden mb-12 max-w-2xl mx-auto">
-            <p className="hero-reveal text-lg md:text-2xl text-[#FAF9F6] font-medium leading-[1.4] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8">
-              Transforming complex engineering into <br className="hidden md:block"/> seamless architectural poetry. 
-              The future of spatial experience, illuminated.
+          <div className="overflow-hidden mb-12 max-w-3xl mx-auto">
+            <p className="hero-reveal text-lg md:text-2xl text-[#FAF9F6] font-light leading-[1.6] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8 mt-2 text-balance">
+              At <BrandName />, we believe every project reaches its peak through the three pillars of <br className="hidden md:block" /> <i className="font-serif italic font-medium">Hydraulic Precision</i>, <i className="font-serif italic font-medium">Electrical Resilience</i>, and <i className="font-serif italic font-medium">HVAC Innovation</i>.
             </p>
           </div>
 
@@ -289,7 +284,7 @@ export default function Home() {
               </Link>
             </div>
             <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] text-[#FAF9F6]/60 hover:text-[#FAF9F6] transition-colors font-medium border-b border-transparent hover:border-[#FAF9F6]/30 pb-1">
-               Explore Our Craft
+              Explore Our Craft
             </Link>
           </div>
         </div>
@@ -297,43 +292,43 @@ export default function Home() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-12 right-12 hidden md:flex flex-col items-center gap-4">
-           <span className="text-[8px] uppercase tracking-[0.3em] text-[#FAF9F6]/40 rotate-90 mb-8 origin-left">Scroll to Explore</span>
-           <div className="w-[1px] h-20 bg-gradient-to-b from-[#FAF9F6]/40 to-transparent" />
+          <span className="text-[8px] uppercase tracking-[0.3em] text-[#FAF9F6]/40 rotate-90 mb-8 origin-left">Scroll to Explore</span>
+          <div className="w-[1px] h-20 bg-gradient-to-b from-[#FAF9F6]/40 to-transparent" />
         </div>
       </section>
 
 
       {/* --- PHILOSOPHY: STORYTELLING LAYOUT --- */}
       {philosophies.map((item, i) => (
-        <section key={i} className="h-screen flex items-center py-16 md:py-32 px-6 md:px-12 bg-[#F5F1EA]/50 border-b border-[#E5E2DB]/30 overflow-hidden">
+        <section key={i} className="relative py-16 md:py-24 flex items-center px-6 md:px-12 bg-[#F5F1EA]/50 border-b border-[#E5E2DB]/30 overflow-hidden">
           <div className="max-w-[1440px] mx-auto w-full">
             <div className={`flex flex-col ${i % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-12 md:gap-24 items-center`}>
-               {/* Visual Side */}
-               <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
-                 <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group rounded-3xl md:rounded-[3rem]">
-                   <motion.img 
-                     whileHover={{ scale: 1.05 }}
-                     transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-                     src={item.image} 
-                     alt={item.title} 
-                     loading="lazy"
-                     className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
-                   />
-                 </div>
-               </div>
+              {/* Visual Side */}
+              <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
+                <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group rounded-3xl md:rounded-[3rem]">
+                  <motion.img
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
+                  />
+                </div>
+              </div>
 
-               {/* Text Side */}
-               <div className={`w-full md:w-1/2 pt-10 md:pt-0 ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
-                  <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/50 mb-6 block">
-                    {item.title}
-                  </span>
-                  <h2 className="tier-1 text-4xl md:text-6xl mb-8 leading-[1.1]">
-                    {item.heading}
-                  </h2>
-                  <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
-                    {item.body}
-                  </p>
-               </div>
+              {/* Text Side */}
+              <div className={`w-full md:w-1/2 pt-10 md:pt-0 ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
+                <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/50 mb-6 block">
+                  {item.title}
+                </span>
+                <h2 className="tier-1 text-4xl md:text-6xl mb-8 leading-[1.1]">
+                  {item.heading}
+                </h2>
+                <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
+                  {item.body}
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -341,30 +336,30 @@ export default function Home() {
 
 
       {/* --- CTA: AMBIENT BLOOM --- */}
-      <section className="relative py-32 md:py-48 flex items-center justify-center text-center overflow-hidden px-6 md:px-12 bg-[#FAF9F6]">
+      <section className="relative py-20 md:py-32 flex items-center justify-center text-center overflow-hidden px-6 md:px-12 bg-[#FAF9F6]">
         <div className="absolute inset-0 z-0 scale-110">
-           <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
-           <div className="w-full h-full bg-[#E5E2DB]/20 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FAF9F6] via-transparent to-[#FAF9F6]" />
+          <div className="w-full h-full bg-[#E5E2DB]/20 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
         </div>
-        
+
         <div className="relative z-10 max-w-4xl">
-           <h2 className="section-reveal text-5xl md:text-8xl mb-12">
-             Ready to <i>Illuminate</i>?
-           </h2>
-           <p className="section-reveal text-lg md:text-xl text-[#2B2B2B]/60 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
-             Let our engineering precision guide your architectural vision into reality. 
-             Sustainable, intelligent, and timeless.
-           </p>
-           <Link to="/contact" className="section-reveal block">
-             <div ref={journeyBtnRef}>
-               <GlassPanel 
-                 variant="heavy" 
-                 className="inline-block px-16 py-6 bg-[#FAF9F6] text-black border border-black rounded-full text-[12px] hover:bg-black hover:text-[#FAF9F6] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10"
-               >
-                 Start Your Journey
-               </GlassPanel>
-             </div>
-           </Link>
+          <h2 className="section-reveal text-5xl md:text-8xl mb-12">
+            Ready to <i>Illuminate</i>?
+          </h2>
+          <p className="section-reveal text-lg md:text-xl text-[#2B2B2B]/60 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
+            Let our engineering precision guide your architectural vision into reality.
+            Sustainable, intelligent, and timeless.
+          </p>
+          <Link to="/contact" className="section-reveal block">
+            <div ref={journeyBtnRef}>
+              <GlassPanel
+                variant="heavy"
+                className="inline-block px-16 py-6 bg-[#FAF9F6] text-black border border-black rounded-full text-[12px] hover:bg-black hover:text-[#FAF9F6] uppercase tracking-[0.3em] font-medium hover:scale-105 active:scale-95 transition-all duration-700 shadow-2xl shadow-black/10"
+              >
+                Start Your Journey
+              </GlassPanel>
+            </div>
+          </Link>
         </div>
       </section>
 
