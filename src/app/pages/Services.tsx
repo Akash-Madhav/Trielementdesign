@@ -14,7 +14,7 @@ const services = [
     category: 'Precision',
     image: '/images/services_mep.png',
     description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems tailored to highly complex facilities, with dedicated engineering expertise spanning across these critical typologies:',
-    sectors: ['Commercial and Mixed Use', 'Healthcare', 'High-Rise', 'Hospitality', 'Retail', 'Data Centers'],
+    sectors: ['Commercial and Mixed Use', 'Healthcare', 'High-Rise', 'Hospitality', 'Retail'],
   },
   {
     title: 'Sustainability',

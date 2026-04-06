@@ -15,11 +15,13 @@
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Default cursor */
 body {
   cursor: default;
+  overflow-x: hidden;
 }
 
 /* Scroll snap for philosophy sections */

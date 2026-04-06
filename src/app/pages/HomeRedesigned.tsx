@@ -212,10 +212,10 @@ export default function Home() {
 
           <div className="overflow-hidden mb-6 md:mb-8">
             <h1 className="hero-reveal leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-              <span className="block text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2">
+              <span className="block text-[clamp(2rem,8vw,4.8rem)] sm:text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold italic text-[#FAF9F6] font-[var(--font-display)] mb-2 break-words">
                 Bespoke
               </span>
-              <span className="block text-[clamp(3.3rem,11vw,7.6rem)] font-extrabold uppercase text-[#FAF9F6] font-[var(--font-display)]">
+              <span className="block text-[clamp(2rem,11vw,7.6rem)] sm:text-[clamp(3.3rem,11vw,7.6rem)] font-extrabold uppercase text-[#FAF9F6] font-[var(--font-display)] break-words">
                 Intelligence
               </span>
             </h1>
