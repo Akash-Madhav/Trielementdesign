@@ -9,7 +9,7 @@ interface GlassPanelProps {
   className?: string;
   enableHoverPhysics?: boolean;
   enableRefraction?: boolean;
-  as?: keyof JSX.IntrinsicElements;
+  as?: string;
   [key: string]: any;
 }
 
@@ -22,7 +22,7 @@ export function GlassPanel({
   as = 'div',
   ...props
 }: GlassPanelProps) {
-  const Component = motion[as] as any;
+  const Component = (motion as any)[as as string] || motion.div;
   const panelRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
