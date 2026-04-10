@@ -214,7 +214,7 @@ export default function Home() {
         </div>
 
         {/* Content Overlay - Centered inside the video area */}
-        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12 mt-16 md:mt-28">
+        <div className="relative z-10 max-w-[1440px] w-full mx-auto text-center px-6 md:px-12 mt-8 md:mt-12">
 
           <div className="overflow-hidden mb-6 md:mb-8">
             <h1 className="hero-reveal leading-[0.85] tracking-tighter drop-shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
