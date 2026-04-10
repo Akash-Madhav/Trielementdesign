@@ -203,7 +203,7 @@ export default function Home() {
               muted
               loop
               playsInline
-              className="w-full h-full object-cover brightness-[0.70] contrast-[1.1]"
+              className="w-full h-full object-cover brightness-[0.95] contrast-[1.1]"
             >
               <source src="/hero_video.mp4" type="video/mp4" />
             </video>
