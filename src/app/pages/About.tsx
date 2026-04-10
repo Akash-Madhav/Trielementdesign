@@ -207,7 +207,7 @@ export default function About() {
           </div>
           <div className="about-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
              <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-               <BrandName /> Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, and plumbing systems that do not just function, but perform with a quiet, enduring conviction.
+               <BrandName /> Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, plumbing, and fire fighting systems that do not just function, but perform with a quiet, enduring conviction.
              </p>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function About() {
         <div className="w-full md:w-1/2">
            <GlassPanel variant="thin" className="p-8 md:p-14 lg:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
-                "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."
+                "We believe that the most advanced engineering is the one you never notice — yet always feel."
                 <br />
                 <span className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block mt-6 md:mt-10">— <BrandName /> DESIGN PHILOSOPHY</span>
               </p>
@@ -228,7 +228,7 @@ export default function About() {
            <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-4 md:mb-6 block">Philosophy & Ethos</span>
            <h2 className="tier-1 text-3xl md:text-[clamp(2rem,4vw,3.5rem)] mb-6 md:mb-10 leading-[1.1]">Where architectural ambition meets engineering conviction</h2>
            <p className="tier-2 text-[#2B2B2B]/70 text-base md:text-lg leading-relaxed max-w-xl mb-8 md:mb-12">
-             Our engineers arrive at every project not to specify what fits the schedule, but to understand the building — its purpose, its occupants, its long-term obligations — and design mechanical, electrical, and plumbing systems genuinely worthy of that vision.
+             Our engineers arrive at every project not to specify what fits the schedule, but to understand the building — its purpose, its occupants, its long-term obligations — and design mechanical, electrical, plumbing, and fire fighting systems genuinely worthy of that vision.
              <br /><br />
              Shaped by working alongside India's top real estate firms and corporate clients, our team operates at a standard defined not by what is acceptable, but by what is exceptional.
            </p>

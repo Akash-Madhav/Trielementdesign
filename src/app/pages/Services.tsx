@@ -207,6 +207,17 @@ export default function Services() {
         </div>
       </section>
 
+      {/* --- PHILOSOPHY TRANSITION: THE INTENTION --- */}
+      <section className="relative py-20 md:py-32 flex items-center justify-center overflow-hidden bg-white/20 border-y border-[#E5E2DB]/20">
+        <div className="max-w-5xl px-6 text-center">
+          <span className="tier-3 block text-[10px] uppercase tracking-[1.2em] text-[#2B2B2B]/30 mb-8 font-medium">Core Conviction</span>
+          <h2 className="tier-2 text-[clamp(1.2rem,3.5vw,2.5rem)] text-[#2B2B2B] font-[var(--font-display)] leading-[1.3] italic font-light">
+            "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."
+          </h2>
+          <div className="mt-10 h-px w-20 bg-[#2B2B2B]/10 mx-auto" />
+        </div>
+      </section>
+
       {/* --- MAIN SERVICES: FULL-SCREEN GALLERY --- */}
       {services.map((s, i) => (
         <section key={i} className="min-h-[100dvh] md:h-screen flex items-center px-6 md:px-12 border-b border-[#E5E2DB]/30 bg-white/30">
