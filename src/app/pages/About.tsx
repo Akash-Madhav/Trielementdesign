@@ -218,7 +218,7 @@ export default function About() {
         <div className="w-full md:w-1/2">
            <GlassPanel variant="thin" className="p-8 md:p-14 lg:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
-                "We believe that the most advanced engineering is the one you never notice — yet always feel."
+                "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."
                 <br />
                 <span className="text-[9px] uppercase tracking-[0.4em] font-mono opacity-40 block mt-6 md:mt-10">— <BrandName /> DESIGN PHILOSOPHY</span>
               </p>

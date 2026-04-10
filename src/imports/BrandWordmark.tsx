@@ -1,4 +1,8 @@
-export default function BrandWordmark({ className = '' }) {
+interface BrandWordmarkProps {
+  className?: string;
+}
+
+export default function BrandWordmark({ className = '' }: BrandWordmarkProps) {
   return (
     <div className={`flex items-center ${className}`}>
       <img 
@@ -7,5 +11,5 @@ export default function BrandWordmark({ className = '' }) {
         alt="Trielement Studio" 
       />
     </div>
-  )
+  );
 }

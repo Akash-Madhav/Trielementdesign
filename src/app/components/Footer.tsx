@@ -55,9 +55,6 @@ export function Footer() {
           viewport={{ once: true }}
           className="max-w-xl mx-auto mb-20"
         >
-          <p className="font-[var(--font-display)] text-2xl md:text-3xl italic text-[#2B2B2B]/80 leading-relaxed">
-            "Where every pipe, wire, and duct is placed with the same intention as the architecture it serves."
-          </p>
         </motion.div>
 
         {/* Bottom Bar */}
