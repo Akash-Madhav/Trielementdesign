@@ -161,7 +161,13 @@ export default function About() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    const refreshHandler = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', refreshHandler);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', refreshHandler);
+    };
   }, []);
 
   return (
@@ -179,7 +185,7 @@ export default function About() {
                src="/images/about_hero.png" 
                alt="Architectural Texture" 
                loading="eager"
-               decoding="sync"
+               fetchPriority="high"
                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
              />
              {/* Technical Blueprint Grid Overlay */}

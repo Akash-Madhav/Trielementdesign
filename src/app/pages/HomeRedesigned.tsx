@@ -178,7 +178,13 @@ export default function Home() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    const refreshHandler = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', refreshHandler);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', refreshHandler);
+    };
   }, []);
 
   return (
@@ -225,7 +231,7 @@ export default function Home() {
           </div>
 
           <div className="overflow-hidden mb-12 max-w-3xl mx-auto">
-            <p className="hero-reveal text-lg md:text-2xl text-[#FAF9F6] font-light leading-[1.6] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8 mt-2 text-balance">
+            <p className="hero-reveal text-lg md:text-2xl text-[#FAF9F6] font-light leading-[1.6] font-[var(--font-body)] drop-shadow-xl border-t border-[#FAF9F6]/30 pt-8 mt-2 text-balance max-w-2xl mx-auto">
               At <BrandName />, we believe every project reaches its peak through the three pillars of <br className="hidden md:block" /> <i className="font-serif italic font-medium">Hydraulic Precision</i>, <i className="font-serif italic font-medium">Electrical Resilience</i>, and <i className="font-serif italic font-medium">HVAC Innovation</i>.
             </p>
           </div>

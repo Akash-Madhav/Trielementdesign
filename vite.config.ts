@@ -15,11 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
-      'leaflet$': resolve(__dirname, 'node_modules/leaflet/src/Leaflet.js'),
     },
-  },
-  optimizeDeps: {
-    include: ['leaflet', 'react-leaflet'],
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
   build: {
@@ -27,10 +23,9 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('@radix-ui')) return 'vendor-radix';
-            if (id.includes('@mui') || id.includes('@emotion')) return 'vendor-mui';
-            if (id.includes('gsap') || id.includes('motion') || id.includes('framer-motion')) return 'vendor-animation';
+            if (id.includes('gsap') || id.includes('motion') || id.includes('lenis')) return 'vendor-animation';
             if (id.includes('lucide-react')) return 'vendor-icons';
+            if (id.includes('react')) return 'vendor-react';
             return 'vendor';
           }
         },

@@ -157,7 +157,13 @@ export default function Services() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    const refreshHandler = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', refreshHandler);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', refreshHandler);
+    };
   }, []);
 
   return (
@@ -175,7 +181,7 @@ export default function Services() {
               src="/images/services_hero.png"
               alt="Architectural Precision"
               loading="eager"
-              decoding="sync"
+              fetchPriority="high"
               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
             {/* Technical Blueprint Grid Overlay */}

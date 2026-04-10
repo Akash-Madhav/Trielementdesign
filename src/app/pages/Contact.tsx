@@ -133,7 +133,13 @@ export default function Contact() {
 
     }, containerRef);
 
-    return () => ctx.revert();
+    const refreshHandler = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', refreshHandler);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener('resize', refreshHandler);
+    };
   }, []);
 
 
@@ -152,7 +158,8 @@ export default function Contact() {
             <img
               ref={heroImageRef}
               src="/images/contact_hero.png" 
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               className="w-full h-[120%] object-cover grayscale-0 brightness-[0.7] contrast-[1.1] absolute inset-0"
               alt="Architectural Visual"
             />
