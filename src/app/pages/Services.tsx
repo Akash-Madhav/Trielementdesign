@@ -164,7 +164,7 @@ export default function Services() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
 
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-28 md:pt-32">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0 will-change-transform [backface-visibility:hidden]">
           <motion.div

@@ -137,7 +137,7 @@ export default function About() {
             trigger: '.milestone-section',
             pin: true,
             scrub: 1,
-            start: 'top top',
+            start: 'top top+=80px', // Offset for navbar height
             end: () => `+=${milestoneContainer.scrollWidth * 1.25}`,
             invalidateOnRefresh: true,
           }
@@ -168,7 +168,7 @@ export default function About() {
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       
       {/* --- PREMIUM HERO --- */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
+      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-28 md:pt-32">
         {/* Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0 will-change-transform [backface-visibility:hidden]">
            <motion.div 
@@ -214,7 +214,7 @@ export default function About() {
       </section>
 
       {/* --- PHILOSOPHY / MISSION --- */}
-      <section className="section-reveal max-w-[1440px] mx-auto flex flex-col md:flex-row gap-12 md:gap-20 items-center px-6 md:px-12 py-16 md:py-24">
+      <section className="section-reveal max-w-[1440px] mx-auto flex flex-col md:flex-row gap-16 md:gap-24 items-center px-6 md:px-12 py-20 md:py-32">
         <div className="w-full md:w-1/2">
            <GlassPanel variant="thin" className="p-8 md:p-14 lg:p-20 flex items-center justify-center rounded-[3rem]">
               <p className="font-[var(--font-display)] text-2xl md:text-[clamp(1.5rem,3.5vw,3rem)] text-[#2B2B2B]/80 leading-relaxed italic text-center">
@@ -237,17 +237,17 @@ export default function About() {
       </section>
 
       {/* --- MILESTONES: HORIZONTAL TIMELINE --- */}
-      <section className="milestone-section relative w-full flex flex-col pt-20 pb-16 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-10">
-        <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-10 md:mb-16">
-           <h2 className="tier-1 text-2xl md:text-[clamp(1.8rem,4.2vw,3.5rem)] leading-tight">Mastery earned across the most demanding project types</h2>
+      <section className="milestone-section relative w-full flex flex-col pt-20 pb-10 md:pt-28 overflow-hidden border-t border-[#E5E2DB]/50 cursor-drag bg-white z-10">
+        <div className="max-w-[1440px] w-full mx-auto px-6 md:px-12 mb-6 md:mb-10">
+           <h2 className="tier-1 text-2xl md:text-[clamp(1.5rem,3vw,2.8rem)] leading-tight">Mastery earned across the most demanding project types</h2>
         </div>
         
         {/* Adaptive height container */}
-        <div className="milestone-container flex flex-nowrap h-full flex-grow items-stretch w-max pl-6 md:pl-[calc(50vw-720px+3rem)] xl:pl-[calc(50vw-680px)]">
+        <div className="milestone-container flex flex-nowrap flex-grow items-stretch w-max pl-6 md:pl-[calc(50vw-720px+3rem)] xl:pl-[calc(50vw-680px)]">
           {milestones.map((m, i) => (
              <div 
                key={i} 
-               className="milestone-item relative flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] h-full flex flex-col justify-between p-8 md:p-12 border-r border-[#E5E2DB]/30 group overflow-hidden"
+               className="milestone-item relative flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] flex flex-col justify-between p-8 md:p-10 border-r border-[#E5E2DB]/30 group overflow-hidden"
                style={{ backgroundColor: `${m.accent}02` }}
              >
                 {/* Subtle Radial Gradient Background */}
@@ -259,24 +259,24 @@ export default function About() {
                 <div className="relative z-10 w-12 h-[1px] bg-[#2B2B2B]/20 mb-6 transition-all duration-700 group-hover:w-24 group-hover:bg-[#2B2B2B]/60" />
 
                 <div className="relative z-10">
-                  {/* Architectural Background Label */}
-                  <div className="absolute -top-12 -left-4 pointer-events-none select-none overflow-hidden">
-                    <span className="milestone-year text-[12vw] font-[var(--font-display)] leading-none text-[#2B2B2B]/[0.02] uppercase tracking-tighter block transition-all duration-1000 group-hover:text-[#2B2B2B]/[0.05] group-hover:-translate-y-4">
-                      {m.year.split(' ')[0]}
-                    </span>
-                  </div>
-
                   {/* Domain Tag */}
-                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#2B2B2B]/40 mb-2 block uppercase leading-none">
+                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#2B2B2B]/40 mb-3 block uppercase leading-none">
                     {m.tags}
                   </span>
-                  <h3 className="text-2xl md:text-[clamp(1.5rem,3vw,2.5rem)] italic font-serif leading-tight mb-6 text-[#2B2B2B] group-hover:translate-x-2 transition-transform duration-700 max-w-sm">
+                  <h3 className="text-2xl md:text-[clamp(1.5rem,2.8vw,2.2rem)] italic font-serif leading-tight mb-4 text-[#2B2B2B] group-hover:translate-x-2 transition-transform duration-700 max-w-sm">
                     {m.event}
                   </h3>
                 </div>
 
-                <div className="max-w-md border-t border-[#2B2B2B]/10 pt-8 mt-6 relative z-10">
-                  <p className="text-sm md:text-base text-[#2B2B2B]/60 leading-relaxed font-[var(--font-body)] font-light italic">
+                {/* Architectural Background Label - Repositioned to avoid overlap */}
+                <div className="absolute -bottom-10 -right-4 pointer-events-none select-none overflow-hidden z-0">
+                  <span className="milestone-year text-[15vw] font-[var(--font-display)] leading-none text-[#2B2B2B]/[0.015] uppercase tracking-tighter block transition-all duration-1000 group-hover:text-[#2B2B2B]/[0.04] group-hover:-translate-y-4">
+                    {m.year.split(' ')[0]}
+                  </span>
+                </div>
+
+                <div className="max-w-md border-t border-[#2B2B2B]/10 pt-5 mt-4 relative z-10">
+                  <p className="text-sm md:text-base text-[#2B2B2B]/60 leading-snug font-[var(--font-body)] font-light italic">
                     {m.description}
                   </p>
                 </div>
