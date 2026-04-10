@@ -18,7 +18,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > window.innerHeight * 0.8);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -32,11 +32,10 @@ export function Navbar() {
   return (
     <>
       <motion.nav
-        className={`fixed top-4 md:top-6 left-4 right-4 md:left-8 md:right-8 mx-auto z-[100] max-w-[1400px] transition-all duration-700 rounded-[8px] border border-[#E5E2DB]/30 ${
-          scrolled 
-            ? 'py-3 md:py-4 bg-[#FAF9F6]/90 backdrop-blur-md shadow-lg shadow-black/5' 
-            : 'py-5 md:py-6 bg-[#FAF9F6]/40 backdrop-blur-sm'
-        }`}
+        className={`fixed top-4 md:top-6 left-4 right-4 md:left-8 md:right-8 mx-auto z-[100] max-w-[1400px] transition-all duration-700 rounded-[24px] border ${scrolled
+            ? 'py-3 md:py-4 bg-white/40 backdrop-blur-xl border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]'
+            : 'py-5 md:py-6 bg-black/20 backdrop-blur-md border-white/10 shadow-none'
+          }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
@@ -45,28 +44,27 @@ export function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="relative z-[110]">
-              <BrandWordmark className="text-xl md:text-2xl tracking-tighter" />
+              <BrandWordmark className={`text-xl md:text-2xl tracking-tighter transition-colors duration-700 ${scrolled ? 'text-[#2B2B2B]' : 'text-[#FAF9F6]'}`} />
             </Link>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-10">
               {navLinks.map((link) => (
-                <Link 
-                  key={link.path} 
-                  to={link.path} 
+                <Link
+                  key={link.path}
+                  to={link.path}
                   className="relative group py-1"
                 >
                   <span
-                    className={`text-[12px] uppercase tracking-[0.25em] font-[var(--font-body)] transition-all duration-500 ${
-                      location.pathname === link.path
-                        ? 'text-[#2B2B2B]'
-                        : 'text-[#2B2B2B]/40 hover:text-[#2B2B2B]'
-                    }`}
+                    className={`text-[12px] uppercase tracking-[0.25em] font-[var(--font-body)] transition-all duration-700 ${location.pathname === link.path
+                        ? (scrolled ? 'text-[#2B2B2B]' : 'text-[#FAF9F6]')
+                        : (scrolled ? 'text-[#2B2B2B]/40 hover:text-[#2B2B2B]' : 'text-[#FAF9F6]/50 hover:text-[#FAF9F6]')
+                      }`}
                   >
                     {link.name}
                   </span>
                   <motion.div
-                    className="absolute bottom-0 left-0 w-full h-[1px] bg-[#2B2B2B] origin-left"
+                    className={`absolute bottom-0 left-0 w-full h-[1px] origin-left transition-colors duration-700 ${scrolled ? 'bg-[#2B2B2B]' : 'bg-[#FAF9F6]'}`}
                     initial={{ scaleX: location.pathname === link.path ? 1 : 0 }}
                     animate={{ scaleX: location.pathname === link.path ? 1 : 0 }}
                     transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
@@ -78,9 +76,17 @@ export function Navbar() {
             {/* CTA Button - Elegant Minimal */}
             <Link
               to="/contact"
-              className="hidden lg:inline-flex items-center px-10 py-3 rounded-full border border-[#2B2B2B]/10 hover:border-[#2B2B2B] hover:bg-[#2B2B2B] hover:text-[#FAF9F6] transition-all duration-700 group relative overflow-hidden"
+              className={`hidden lg:inline-flex items-center px-10 py-3 rounded-full border transition-all duration-700 group relative overflow-hidden ${
+                scrolled 
+                  ? 'border-black/10 hover:border-[#2B2B2B] hover:bg-[#2B2B2B] hover:text-[#FAF9F6]' 
+                  : 'border-white/10 hover:border-[#FAF9F6] hover:bg-[#FAF9F6] hover:text-[#2B2B2B]'
+              }`}
             >
-              <span className="text-[10px] uppercase tracking-[0.3em] font-[var(--font-body)] font-medium relative z-10 transition-colors duration-700">
+              <span className={`text-[10px] uppercase tracking-[0.3em] font-[var(--font-body)] font-medium relative z-10 transition-colors duration-700 ${
+                scrolled 
+                  ? 'text-[#2B2B2B] group-hover:text-[#FAF9F6]' 
+                  : 'text-[#FAF9F6] group-hover:text-[#2B2B2B]'
+              }`}>
                 Request a Quote
               </span>
             </Link>
@@ -88,7 +94,7 @@ export function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden relative z-[110] text-[#2B2B2B] p-2"
+              className={`lg:hidden relative z-[110] p-2 transition-colors duration-700 ${scrolled ? 'text-[#2B2B2B]' : 'text-[#FAF9F6]'}`}
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X size={22} strokeWidth={1} /> : <Menu size={22} strokeWidth={1} />}
@@ -101,7 +107,7 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[90] lg:hidden bg-[#FAF9F6] flex items-center justify-center"
+            className="fixed inset-0 z-[90] lg:hidden bg-white/70 backdrop-blur-2xl flex items-center justify-center"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}
@@ -121,11 +127,10 @@ export function Navbar() {
                 >
                   <Link
                     to={link.path}
-                    className={`text-5xl md:text-6xl font-[var(--font-display)] transition-all duration-700 italic ${
-                      location.pathname === link.path
+                    className={`text-5xl md:text-6xl font-[var(--font-display)] transition-all duration-700 italic ${location.pathname === link.path
                         ? 'text-[#2B2B2B]'
                         : 'text-[#2B2B2B]/20 hover:text-[#2B2B2B]'
-                    }`}
+                      }`}
                   >
                     {link.name}
                   </Link>
