@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Mail, MapPin, Phone, ArrowUpRight, Minus } from 'lucide-react';
+import { Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react';
 import { useMagnetic } from '../hooks/useMagnetic';
 import BrandName from '../components/BrandName';
 import { useForm } from 'react-hook-form';
@@ -12,9 +12,13 @@ import useWeb3Forms from '@web3forms/react';
 gsap.registerPlugin(ScrollTrigger);
 
 const offices = [
-  { city: 'Dubai', country: 'UAE', address: 'Old Commercial Bank Building, Deira', phone: '+971 42 564 882' },
-  { city: 'Singapore', country: 'SG', address: 'Anson Road, Office #29-10', phone: '+65 9887 9761' },
-  { city: 'India', country: 'IN', address: 'Bangalore & Kochi', phone: '+91 80-41284668' },
+  { 
+    city: 'Bangalore', 
+    country: 'IN', 
+    address: '2nd Floor, 451/80, 5th Cross, Kodandaramareddy Layout, Ramamurthy Nagar Main Road, Bangalore – 560016', 
+    phone: '+91 8951202223',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=2nd+Floor,+451/80,+5th+Cross,+Kodandaramareddy+Layout,+Ramamurthy+Nagar+Main+Road,+Bangalore+–+560016'
+  },
 ];
 
 export default function Contact() {
@@ -41,7 +45,7 @@ export default function Contact() {
       from_name: "Trielement Studio",
       subject: "New Project Inquiry",
     },
-    onSuccess: (msg) => {
+    onSuccess: () => {
       setSuccess(true);
       setError(null);
       reset();
@@ -191,36 +195,54 @@ export default function Contact() {
         {/* LEFT: INFORMATION & OFFICES */}
         <div className="lg:col-span-12 xl:col-span-4 space-y-32 cursor-explore pt-8">
           <div className="reveal-section space-y-12">
-            <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer overflow-hidden">
+            <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer transition-all hover:bg-[#2B2B2B]/[0.02] px-2">
               <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block font-medium">Direct Inquiry</span>
-              <a href="mailto:hello@tri-element.studio" className="tier-2 relative text-2xl md:text-3xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
-                <span className="group-hover:italic transition-all">hello@tri-element.studio</span>
-                <ArrowUpRight size={24} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#2B2B2B] translate-y-[200%] group-hover:translate-y-0 transition-transform duration-700" />
+              <a href="mailto:hello@tri-element.studio" className="tier-2 relative text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
+                <div className="flex items-center gap-4">
+                  <Mail size={18} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
+                  <span className="group-hover:italic transition-all">hello@tri-element.studio</span>
+                </div>
+                <ArrowUpRight size={20} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
               </a>
             </div>
 
-            <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer">
+            <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer transition-all hover:bg-[#2B2B2B]/[0.02] px-2">
               <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block font-medium">Global Connect</span>
-              <a href="tel:+97142564882" className="tier-2 text-2xl font-[var(--font-display)] flex items-center gap-4 hover:italic transition-all">
-                +971 42 564 882
+              <a href="tel:+918951202223" className="tier-2 text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
+                <div className="flex items-center gap-4">
+                  <Phone size={18} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
+                  <span className="group-hover:italic transition-all">+91 89512 02223</span>
+                </div>
+                <ArrowUpRight size={20} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
               </a>
             </div>
           </div>
 
           <div className="reveal-section space-y-16">
-            <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 block border-b border-[#2B2B2B]/10 pb-4 font-medium">Global Presence</span>
+            <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 block border-b border-[#2B2B2B]/10 pb-4 font-medium">Office Headquarters</span>
             <div className="tier-3-container grid grid-cols-1 gap-12">
               {offices.map((o, i) => (
-                <div key={i} className="flex gap-10 items-start group">
-                  <span className="text-[10px] font-medium text-[#2B2B2B]/30 pt-1">0{i + 1}</span>
+                <div key={i} className="flex gap-8 items-start group">
+                  <a href={(o as any).mapUrl} target="_blank" rel="noopener noreferrer" className="pt-1">
+                    <MapPin size={24} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
+                  </a>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-xl italic font-[var(--font-display)]">{o.city}</h3>
                       <span className="text-[10px] text-[#2B2B2B]/40 font-medium tracking-widest">{o.country}</span>
                     </div>
-                    <p className="text-xs text-[#2B2B2B]/50 leading-relaxed max-w-[220px] mb-3 group-hover:text-[#2B2B2B] transition-colors font-light">{o.address}</p>
-                    <p className="text-[10px] text-[#2B2B2B]/70 tracking-[0.3em] font-mono">{o.phone}</p>
+                    <p className="text-xs text-[#2B2B2B]/50 leading-relaxed max-w-[280px] mb-4 group-hover:text-[#2B2B2B] transition-colors font-light">{o.address}</p>
+                    <div className="flex flex-col gap-2">
+                      <p className="text-[10px] text-[#2B2B2B]/70 tracking-[0.3em] font-mono mb-4">{o.phone}</p>
+                      <a 
+                        href={(o as any).mapUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-[9px] uppercase tracking-[0.4em] text-[#B5B0A8] hover:text-[#2B2B2B] flex items-center gap-2 transition-all"
+                      >
+                        View on Map <ArrowUpRight size={10} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -373,20 +395,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* 3. ATMOSPHERIC QUOTE SECTION */}
-      <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-white/30 backdrop-blur-3xl border-t border-[#E5E2DB]">
-        <div className="max-w-5xl px-6 text-center">
-          <span className="tier-3 block text-[10px] uppercase tracking-[1em] text-[#2B2B2B]/20 mb-12 font-medium">Manifesto</span>
-          <h2 className="tier-2 text-[clamp(1.5rem,5vw,3.5rem)] text-[#2B2B2B] font-[var(--font-display)] leading-tight italic font-light">
-            "Structural engineering is the art of molding materials we do not wholly understand into shapes we cannot precisely analyze, so as to withstand forces we cannot really assess."
-          </h2>
-
-        </div>
-        {/* Cinematic Subtle Background Text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 select-none pointer-events-none opacity-[0.03] text-[22vw] font-bold tracking-tighter whitespace-nowrap font-[var(--font-display)]">
-          <BrandName />
-        </div>
-      </section>
     </div>
   );
 }
