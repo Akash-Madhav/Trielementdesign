@@ -178,7 +178,7 @@ export default function Services() {
             className="w-full h-full relative will-change-transform [backface-visibility:hidden]"
           >
             <img
-              src="/images/services_hero.png"
+              src="/images/services_hero_v2.png"
               alt="Architectural Precision"
               loading="eager"
               fetchPriority="high"
