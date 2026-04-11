@@ -28,7 +28,7 @@ const services = [
     category: 'Intelligence',
     image: '/images/services_bim.png',
     description: 'The data-driven ghost of construction. We eliminate spatial conflict through immersive 3D coordination, providing rigorous digital modeling capabilities tailored for the following asset classes:',
-    sectors: ['Government', 'Residential', 'Sports and Events', 'Workplace'],
+    sectors: ['Commercial', 'Residential', 'Sports and Entertainment', 'Hospitality', 'Healthcare', 'Infrastructure'],
   },
 ];
 

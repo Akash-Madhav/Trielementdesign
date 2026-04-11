@@ -27,12 +27,12 @@ const milestones = [
     description: 'Intelligent lighting, solar PV integration, and HV/LV distribution — electrical systems engineered for resilience, efficiency, and the long operational life of every building we touch.' 
   },
   { 
-    year: 'PLUMBING', 
+    year: 'PLUMBING & FIRE', 
     accent: '#005C8E', 
-    tags: 'WATER · DRAINAGE · FIRE',
+    tags: 'WATER · DRAINAGE · FIRE FIGHTING',
     code: 'FLOW_PLMB_09',
-    event: 'Water Systems for Complex Structures', 
-    description: 'Potable water, drainage, and fire suppression systems designed with healthcare-grade compliance — built to serve the building reliably across its entire lifespan, not just handover day.' 
+    event: 'Water & Life Safety Systems', 
+    description: 'Potable water, drainage, and advanced fire suppression systems designed with healthcare-grade compliance — engineered for absolute reliability and life safety across the building lifecycle.' 
   },
   { 
     year: 'BIM · COORDINATION', 
