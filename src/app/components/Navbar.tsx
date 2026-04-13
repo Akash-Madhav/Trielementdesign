@@ -33,8 +33,8 @@ export function Navbar() {
     <>
       <motion.nav
         className={`fixed top-4 md:top-6 left-4 right-4 md:left-8 md:right-8 mx-auto z-[100] max-w-[1400px] transition-all duration-700 rounded-[24px] border ${scrolled
-            ? 'py-3 md:py-4 bg-white/40 backdrop-blur-xl border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]'
-            : 'py-5 md:py-6 bg-black/3 backdrop-blur-md border-white/10 shadow-none'
+            ? 'py-2 md:py-3 bg-white/40 backdrop-blur-xl border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]'
+            : 'py-3 md:py-4 bg-black/3 backdrop-blur-md border-white/10 shadow-none'
           }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -43,8 +43,8 @@ export function Navbar() {
         <div className="w-full px-6 md:px-12">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/" className="relative z-[110]">
-              <BrandWordmark className={`text-xl md:text-2xl tracking-tighter transition-colors duration-700 ${scrolled ? 'text-[#2B2B2B]' : 'text-[#FAF9F6]'}`} />
+            <Link to="/" className="relative z-[110] scale-[1.1] md:scale-[1.25] lg:scale-[1.4] origin-left transition-transform duration-500">
+              <BrandWordmark className={`transition-colors duration-700 ${scrolled ? 'text-[#2B2B2B]' : 'text-[#FAF9F6]'}`} />
             </Link>
 
             {/* Desktop Nav Links */}

@@ -191,7 +191,7 @@ export default function Home() {
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
 
       {/* --- PREMIUM HERO SECTION --- */}
-      <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center px-6 md:px-12 pb-12 md:pb-20 pt-28 md:pt-32 overflow-hidden bg-[#FAF9F6]">
+      <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center px-6 md:px-12 pb-12 md:pb-20 pt-32 md:pt-40 overflow-hidden bg-[#FAF9F6]">
         {/* Cinematic Video Background Layer - Full screen experience behind floating navbar */}
         <div ref={heroMediaRef} className="absolute inset-0 w-full h-full overflow-hidden z-0 will-change-transform [backface-visibility:hidden]">
           <motion.div
