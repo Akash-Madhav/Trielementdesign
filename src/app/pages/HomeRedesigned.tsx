@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GlassPanel } from '../components/GlassPanel';
 import BrandName from '../components/BrandName';
+import { SEO } from '../components/SEO';
 import { useMagnetic } from '../hooks/useMagnetic';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -189,6 +190,11 @@ export default function Home() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
+      <SEO 
+        title="Trielement Studio | Engineering Precision & Architectural Innovation"
+        description="World-class MEP engineering, sustainability, and BIM solutions for global prestige projects."
+        canonical="https://trielementdesign.com/"
+      />
 
       {/* --- PREMIUM HERO SECTION --- */}
       <section ref={heroRef} className="relative min-h-[100dvh] flex flex-col justify-center items-center px-6 md:px-12 pb-12 md:pb-20 pt-20 md:pt-39 overflow-hidden bg-[#FAF9F6]">

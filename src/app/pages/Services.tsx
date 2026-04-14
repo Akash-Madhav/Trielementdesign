@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { useMagnetic } from '../hooks/useMagnetic';
+import { SEO } from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -168,6 +169,11 @@ export default function Services() {
 
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
+      <SEO 
+        title="Our Services | MEP, BIM & Sustainability | Trielement Studio"
+        description="Discover our premium architectural services, including MEP engineering, Building Information Modeling (BIM), and sustainable design solutions."
+        canonical="https://trielementdesign.com/services"
+      />
 
       {/* --- PREMIUM HERO: CINEMATIC MEDIA --- */}
       <section className="relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-28 md:pt-32">

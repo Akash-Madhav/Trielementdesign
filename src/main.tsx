@@ -1,4 +1,5 @@
   import { createRoot } from "react-dom/client";
+  import { HelmetProvider } from "react-helmet-async";
   import App from "./app/App.tsx";
   import "./styles/index.css";
   import Lenis from 'lenis';
@@ -23,5 +24,9 @@
   // Expose Lenis for global control (e.g. Scroll Reset on Route Change)
   (window as any).lenis = lenis;
 
-  createRoot(document.getElementById("root")!).render(<App />);
+  createRoot(document.getElementById("root")!).render(
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  );
   

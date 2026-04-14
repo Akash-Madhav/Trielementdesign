@@ -7,6 +7,7 @@ import { Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react';
 import { useMagnetic } from '../hooks/useMagnetic';
 import BrandName from '../components/BrandName';
 import { useForm } from 'react-hook-form';
+import { SEO } from '../components/SEO';
 import useWeb3Forms from '@web3forms/react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -146,6 +147,11 @@ export default function Contact() {
 
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
+      <SEO 
+        title="Contact Us | Trielement Studio"
+        description="Get in touch with Trielement Studio for your next architectural or engineering prestige project."
+        canonical="https://trielementdesign.com/contact"
+      />
 
       {/* 1. CINEMATIC HERO SECTION */}
       <section className="hero-section relative min-h-[100dvh] md:h-screen flex items-center justify-center overflow-hidden bg-[#FAF9F6] px-6 md:px-12 pt-20">
