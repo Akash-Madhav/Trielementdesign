@@ -204,10 +204,10 @@ export default function Contact() {
           <div className="reveal-section space-y-12">
             <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer transition-all hover:bg-[#2B2B2B]/[0.02] px-2">
               <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block font-medium">Direct Inquiry</span>
-              <a href="mailto:hello@tri-element.studio" className="tier-2 relative text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
+              <a href="mailto:info@trielementdesign.com" className="tier-2 relative text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
                 <div className="flex items-center gap-4">
                   <Mail size={18} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
-                  <span className="group-hover:italic transition-all">hello@tri-element.studio</span>
+                  <span className="group-hover:italic transition-all">info@trielementdesign.com</span>
                 </div>
                 <ArrowUpRight size={20} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
               </a>
