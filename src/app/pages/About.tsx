@@ -213,7 +213,7 @@ export default function About() {
           </div>
           <div className="about-reveal tier-2 md:border-l border-[#FAF9F6]/20 md:pl-8 max-w-2xl mx-auto md:mx-0">
              <p className="text-base md:text-[clamp(1rem,1.4vw,1.35rem)] text-[#FAF9F6]/90 font-medium leading-relaxed font-[var(--font-body)] drop-shadow-lg">
-               <BrandName /> Studio exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, plumbing, and fire fighting systems that do not just function, but perform with a quiet, enduring conviction.
+               <BrandName /> exists at the intersection of architectural intent and engineering precision. Our practice is defined by a decade of mastering MEP complexities across India&apos;s most significant landmarks—delivering mechanical, electrical, plumbing, and fire fighting systems that do not just function, but perform with a quiet, enduring conviction.
              </p>
           </div>
         </div>
