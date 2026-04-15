@@ -42,11 +42,22 @@ body {
   width: 300%;
   height: 300%;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.15;
+  opacity: 0.12;
   pointer-events: none;
   z-index: 9999;
   animation: noise 8s steps(10) infinite;
   mix-blend-mode: overlay;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  #root::after {
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    opacity: 0.08; /* Subtler on mobile to save GPU */
+  }
 }
 
 @keyframes noise {

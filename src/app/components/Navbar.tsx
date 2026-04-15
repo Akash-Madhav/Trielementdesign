@@ -33,8 +33,8 @@ export function Navbar() {
     <>
       <motion.nav
         className={`fixed top-4 md:top-6 left-4 right-4 md:left-8 md:right-8 mx-auto z-[100] max-w-[1400px] transition-all duration-700 rounded-[24px] border ${scrolled
-            ? 'py-2 md:py-3 bg-white/40 backdrop-blur-xl border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]'
-            : 'py-3 md:py-4 bg-black/3 backdrop-blur-md border-white/10 shadow-none'
+            ? 'py-2 md:py-3 bg-white/40 backdrop-blur-md md:backdrop-blur-xl border-black/5 shadow-[0_8px_32px_0_rgba(0,0,0,0.05)]'
+            : 'py-3 md:py-4 bg-black/3 backdrop-blur-sm md:backdrop-blur-md border-white/10 shadow-none'
           }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -107,7 +107,7 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-[90] lg:hidden bg-white/70 backdrop-blur-2xl flex items-center justify-center"
+            className="fixed inset-0 z-[90] lg:hidden bg-white/70 backdrop-blur-xl md:backdrop-blur-2xl flex items-center justify-center"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.05 }}

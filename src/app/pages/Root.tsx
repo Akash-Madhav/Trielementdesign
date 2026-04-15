@@ -18,6 +18,9 @@ export default function Root() {
 
   // Custom Cursor Logic
   useEffect(() => {
+    const isMouse = window.matchMedia('(pointer: fine)').matches;
+    if (!isMouse) return;
+
     const moveCursor = (e: MouseEvent) => {
       gsap.to(cursorRef.current, {
         x: e.clientX,
