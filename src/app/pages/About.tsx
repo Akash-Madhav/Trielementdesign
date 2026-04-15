@@ -174,8 +174,8 @@ export default function About() {
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       <SEO 
-        title="About Us | Trielement Studio"
-        description="Learn about Trielement Studio's legacy of architectural innovation and engineering precision since 2008."
+        title="About Us | Trielement Design"
+        description="Learn about Trielement Design's legacy of architectural innovation and engineering precision since 2008."
         canonical="https://trielementdesign.com/about"
       />
       

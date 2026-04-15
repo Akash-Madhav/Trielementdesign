@@ -1,5 +1,5 @@
-export default function BrandName({ className = '', showStudio = false }) {
-  const fullLabel = showStudio ? 'TRI-ELEMENT DESIGN' : 'TRI-ELEMENT'
+export default function BrandName({ className = '', showDesign = false }) {
+  const fullLabel = showDesign ? 'TRI-ELEMENT DESIGN' : 'TRI-ELEMENT'
 
   return (
     <span
@@ -32,7 +32,7 @@ export default function BrandName({ className = '', showStudio = false }) {
       </span>
 
       {/* Hyphen then ELEMENT (and optionally DESIGN) */}
-      <span aria-hidden="true">{showStudio ? '-ELEMENT DESIGN' : '-ELEMENT'}</span>
+      <span aria-hidden="true">{showDesign ? '-ELEMENT DESIGN' : '-ELEMENT'}</span>
     </span>
   )
 }

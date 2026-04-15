@@ -170,7 +170,7 @@ export default function Services() {
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen selection:bg-[#2B2B2B]/10 overflow-hidden">
       <SEO 
-        title="Our Services | MEP, BIM & Sustainability | Trielement Studio"
+        title="Our Services | MEP, BIM & Sustainability | Trielement Design"
         description="Discover our premium architectural services, including MEP engineering, Building Information Modeling (BIM), and sustainable design solutions."
         canonical="https://trielementdesign.com/services"
       />

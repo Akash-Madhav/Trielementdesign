@@ -43,7 +43,7 @@ export default function Contact() {
   const { submit } = useWeb3Forms({
     access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE",
     settings: {
-      from_name: "Trielement Studio",
+      from_name: "Trielement Design",
       subject: "New Project Inquiry",
     },
     onSuccess: () => {
@@ -148,8 +148,8 @@ export default function Contact() {
   return (
     <div ref={containerRef} className="bg-[#FAF9F6] min-h-screen text-[#2B2B2B] overflow-hidden selection:bg-[#2B2B2B]/10">
       <SEO 
-        title="Contact Us | Trielement Studio"
-        description="Get in touch with Trielement Studio for your next architectural or engineering prestige project."
+        title="Contact Us | Trielement Design"
+        description="Get in touch with Trielement Design for your next architectural or engineering prestige project."
         canonical="https://trielementdesign.com/contact"
       />
 
@@ -183,7 +183,7 @@ export default function Contact() {
 
         <div className="contact-hero-content relative z-10 max-w-[1440px] w-full mx-auto px-6 text-center md:text-left">
           <div className="overflow-hidden mb-6">
-            <span className="tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/80 font-bold"><BrandName /> Studio</span>
+            <span className="tier-3 block text-[9px] uppercase tracking-[0.5em] text-[#FAF9F6]/80 font-bold"><BrandName /> Design</span>
           </div>
           <div className="overflow-hidden mb-10">
             <h1 className="tier-1 text-[clamp(1.8rem,7.5vw,6.3rem)] italic leading-[0.95] text-[#FAF9F6] font-[var(--font-display)] drop-shadow-xl relative">

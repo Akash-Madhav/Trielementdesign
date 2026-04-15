@@ -191,7 +191,7 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative min-h-screen bg-[#FAF9F6] selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
       <SEO 
-        title="Trielement Studio | Engineering Precision & Architectural Innovation"
+        title="Trielement Design | Engineering Precision & Architectural Innovation"
         description="World-class MEP engineering, sustainability, and BIM solutions for global prestige projects."
         canonical="https://trielementdesign.com/"
       />
