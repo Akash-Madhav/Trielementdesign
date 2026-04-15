@@ -25,7 +25,6 @@ export default defineConfig({
           if (id.includes('node_modules')) {
             if (id.includes('gsap') || id.includes('motion') || id.includes('lenis')) return 'vendor-animation';
             if (id.includes('lucide-react')) return 'vendor-icons';
-            if (id.includes('react')) return 'vendor-react';
             return 'vendor';
           }
         },
