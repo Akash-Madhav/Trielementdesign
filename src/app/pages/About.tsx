@@ -191,7 +191,6 @@ export default function About() {
                src="/images/about_hero.png" 
                alt="Architectural Texture" 
                loading="eager"
-               fetchPriority="high"
                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
              />
              {/* Technical Blueprint Grid Overlay */}

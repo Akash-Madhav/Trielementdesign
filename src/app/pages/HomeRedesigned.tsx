@@ -74,7 +74,7 @@ export default function Home() {
       });
 
       // Section Reveals
-      gsap.utils.toArray<HTMLElement>('.section-reveal').forEach((section) => {
+      gsap.utils.toArray<HTMLElement>('.section-reveal').forEach((section: any) => {
         gsap.from(section, {
           y: 60,
           opacity: 0,
@@ -88,7 +88,7 @@ export default function Home() {
       });
 
       // Directional Reveals (Zigzag)
-      gsap.utils.toArray<HTMLElement>('.reveal-left').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>('.reveal-left').forEach((el: any) => {
         gsap.from(el, {
           x: -100,
           opacity: 0,
@@ -101,7 +101,7 @@ export default function Home() {
         });
       });
 
-      gsap.utils.toArray<HTMLElement>('.reveal-right').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>('.reveal-right').forEach((el: any) => {
         gsap.from(el, {
           x: 100,
           opacity: 0,
@@ -117,7 +117,7 @@ export default function Home() {
       // --- TYPOGRAPHIC STORYTELLING TIERS ---
 
       // Tier 1: 3D Split-Word Reveals
-      gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>('.tier-1').forEach((el: any) => {
         gsap.from(el, {
           y: 40,
           rotateX: -30,
@@ -132,7 +132,7 @@ export default function Home() {
       });
 
       // Tier 2: Cinematic Blur-to-Focus
-      gsap.utils.toArray<HTMLElement>('.tier-2').forEach((el) => {
+      gsap.utils.toArray<HTMLElement>('.tier-2').forEach((el: any) => {
         gsap.from(el, {
           filter: 'blur(15px)',
           opacity: 0,
@@ -147,7 +147,7 @@ export default function Home() {
       });
 
       // Tier 3: Float-in Staggers (Only for scrollable sections)
-      gsap.utils.toArray<HTMLElement>('.tier-3-stagger').forEach((container) => {
+      gsap.utils.toArray<HTMLElement>('.tier-3-stagger').forEach((container: any) => {
         gsap.from(container.children, {
           y: 15,
           opacity: 0,
@@ -166,7 +166,7 @@ export default function Home() {
         trigger: containerRef.current,
         start: 'top top',
         end: 'bottom bottom',
-        onUpdate: (self) => {
+        onUpdate: (self: any) => {
           const p = self.progress;
           // Subtle bg shift from #FAF9F6 to a slightly warmer/deeper #F5F1EA
           gsap.to(containerRef.current, {
@@ -209,6 +209,7 @@ export default function Home() {
               muted
               loop
               playsInline
+              poster="/hero_poster.png"
               className="w-full h-full object-cover brightness-[0.95] contrast-[1.1]"
             >
               <source src="/hero_video.mp4" type="video/mp4" />

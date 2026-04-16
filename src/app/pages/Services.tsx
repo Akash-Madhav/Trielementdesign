@@ -187,7 +187,6 @@ export default function Services() {
               src="/images/services_hero_v2.png"
               alt="Architectural Precision"
               loading="eager"
-              fetchPriority="high"
               className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
             />
             {/* Technical Blueprint Grid Overlay */}
