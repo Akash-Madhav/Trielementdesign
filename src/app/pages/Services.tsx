@@ -13,21 +13,21 @@ const services = [
   {
     title: 'MEP Engineering',
     category: 'Precision',
-    image: '/images/services_mep.png',
+    image: '/images/services_mep.avif',
     description: 'The vital organs of architecture. We design electrical, plumbing, and HVAC systems tailored to highly complex facilities, with dedicated engineering expertise spanning across these critical typologies:',
     sectors: ['Commercial and Mixed Use', 'Healthcare', 'High-Rise','Residential', 'Hospitality', 'Retail'],
   },
   {
     title: 'Sustainability',
     category: 'Legacy',
-    image: '/images/services_sustain.png',
+    image: '/images/services_sustain.avif',
     description: 'Engineering for the planet. We implement integrated green solutions and net-zero strategies, providing specialized sustainability expertise specifically for these highly demanding sectors:',
     sectors: ['Education', 'Existing Buildings', 'Heritage', 'Cultural'],
   },
   {
     title: 'BIM & Digital Twin',
     category: 'Intelligence',
-    image: '/images/services_bim.png',
+    image: '/images/services_bim.avif',
     description: 'The data-driven ghost of construction. We eliminate spatial conflict through immersive 3D coordination, providing rigorous digital modeling capabilities tailored for the following asset classes:',
     sectors: ['Commercial', 'Residential', 'Sports and Entertainment', 'Hospitality', 'Healthcare', 'Infrastructure'],
   },
@@ -183,12 +183,16 @@ export default function Services() {
             style={{ y: yParallax }}
             className="w-full h-full relative will-change-transform [backface-visibility:hidden]"
           >
-            <img
-              src="/images/services_hero_v2.png"
-              alt="Architectural Precision"
-              loading="eager"
-              className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
-            />
+            <picture className="w-full h-full relative block">
+              <source srcSet="/images/services_hero_v2.avif" type="image/avif" />
+              <source srcSet="/images/services_hero_v2.webp" type="image/webp" />
+              <img
+                src="/images/services_hero_v2.webp"
+                alt="Architectural Precision"
+                loading="eager"
+                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
+              />
+            </picture>
             {/* Technical Blueprint Grid Overlay */}
             <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none"
               style={{

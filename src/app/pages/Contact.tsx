@@ -161,13 +161,17 @@ export default function Contact() {
             style={{ y: 0 }} // Keeping static y for now as defined, wait original had parallax on image
             className="w-full h-full relative"
           >
-            <img
-              ref={heroImageRef}
-              src="/images/contact_hero.png" 
-              loading="eager"
-              className="w-full h-[120%] object-cover grayscale-0 brightness-[0.7] contrast-[1.1] absolute inset-0"
-              alt="Architectural Visual"
-            />
+            <picture className="absolute inset-0 z-0 w-full h-[120%]">
+              <source srcSet="/images/contact_hero.avif" type="image/avif" />
+              <source srcSet="/images/contact_hero.webp" type="image/webp" />
+              <img
+                ref={heroImageRef}
+                src="/images/contact_hero.webp" 
+                loading="eager"
+                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1] absolute inset-0"
+                alt="Architectural Visual"
+              />
+            </picture>
             {/* Technical Blueprint Grid Overlay */}
             <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
               style={{ 

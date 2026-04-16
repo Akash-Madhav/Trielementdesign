@@ -13,12 +13,21 @@
       <meta name="theme-color" content="#2B2B2B">
 
       <!-- Critical Preloads for LCP Performance -->
-      <link rel="preload" href="/hero_poster.png" as="image" />
+      <link rel="preload" href="/hero_poster.avif" as="image" type="image/avif" fetchpriority="high" />
+
+      <!-- Font loading optimization -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" as="style" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+      <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+      </noscript>
 
       <!-- OpenGraph / Social Preview -->
       <meta property="og:title" content="Trielement Design | Engineering Precision" />
       <meta property="og:description" content="Witness the silent intelligence behind world-class architecture. Engineered for Timelessness." />
-      <meta property="og:image" content="/images/home_design.png" />
+      <meta property="og:image" content="/images/home_design.webp" />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary_large_image" />
 
@@ -28,7 +37,7 @@
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
           "name": "Trielement Design",
-          "image": "https://trielementdesign.com/images/home_design.png",
+          "image": "https://trielementdesign.com/images/home_design.webp",
           "description": "Trielement Design delivers world-class engineering precision and architectural innovation.",
           "address": {
             "@type": "PostalAddress",

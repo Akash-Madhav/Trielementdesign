@@ -11,7 +11,7 @@ export const SEO = ({
   title,
   description,
   canonical = "https://trielementdesign.com",
-  ogImage = "/images/home_design.png"
+  ogImage = "/images/home_design.webp"
 }: SEOProps) => {
   return (
     <Helmet>

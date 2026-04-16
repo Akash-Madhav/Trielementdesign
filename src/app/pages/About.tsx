@@ -187,12 +187,16 @@ export default function About() {
              style={{ y: yParallax }}
              className="w-full h-full relative will-change-transform [backface-visibility:hidden]"
            >
+           <picture className="w-full h-full relative block">
+             <source srcSet="/images/about_hero.avif" type="image/avif" />
+             <source srcSet="/images/about_hero.webp" type="image/webp" />
              <img 
-               src="/images/about_hero.png" 
+               src="/images/about_hero.webp" 
                alt="Architectural Texture" 
                loading="eager"
                className="w-full h-full object-cover grayscale-0 brightness-[0.7] contrast-[1.1]"
              />
+           </picture>
              {/* Technical Blueprint Grid Overlay */}
              <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay pointer-events-none" 
                style={{ 

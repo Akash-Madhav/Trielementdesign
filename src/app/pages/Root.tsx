@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router';
-import { useEffect, useRef, Suspense } from 'react';
+import { useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
@@ -13,53 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Root() {
   const location = useLocation();
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const cursorDotRef = useRef<HTMLDivElement>(null);
-
-  // Custom Cursor Logic
-  useEffect(() => {
-    const isMouse = window.matchMedia('(pointer: fine)').matches;
-    if (!isMouse) return;
-
-    const moveCursor = (e: MouseEvent) => {
-      gsap.to(cursorRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.5,
-        ease: 'power3.out'
-      });
-      gsap.to(cursorDotRef.current, {
-        x: e.clientX,
-        y: e.clientY,
-        duration: 0.1,
-        ease: 'power3.out'
-      });
-    };
-
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('a, button, select, input, textarea')) {
-        gsap.to(cursorRef.current, { scale: 2.5, backgroundColor: 'transparent', borderColor: 'rgba(43, 43, 43, 0.2)', duration: 0.3 });
-      }
-    };
-    
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest('a, button, select, input, textarea')) {
-        gsap.to(cursorRef.current, { scale: 1, backgroundColor: 'rgba(43, 43, 43, 0.1)', borderColor: 'transparent', duration: 0.3 });
-      }
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
-
-    return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
-    };
-  }, []); // Run once, delegation handles dynamic DOM updates
 
 
   // Scroll to top and refresh ScrollTrigger on Route Change
@@ -76,20 +29,7 @@ export default function Root() {
 
 
   return (
-    <div className="relative min-h-screen bg-[#FAF9F6] font-[var(--font-body)] overflow-x-hidden selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">
-      
-      {/* Cinematic Custom Cursor */}
-       <div 
-         ref={cursorRef} 
-         className="fixed top-0 left-0 w-10 h-10 border border-transparent bg-[#2B2B2B]/10 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block" 
-       />
-       <div 
-         ref={cursorDotRef} 
-         className="fixed top-0 left-0 w-1 h-1 bg-[#2B2B2B] rounded-full pointer-events-none z-[10000] -translate-x-1/2 -translate-y-1/2 hidden md:block" 
-       />
-
-
-      
+    <div className="relative min-h-screen bg-[#FAF9F6] font-[var(--font-body)] overflow-x-hidden selection:bg-[#2B2B2B]/10 selection:text-[#2B2B2B]">      
       <ScrollProgress />
       <Navbar />
       <WhatsAppButton />

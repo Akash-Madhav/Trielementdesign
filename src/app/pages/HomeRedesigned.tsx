@@ -16,19 +16,19 @@ const philosophies = [
     title: 'DESIGN',
     heading: 'From Whole to Parts.',
     body: 'Design governs the cost and performance of any project. Every engineer is empowered to consider the smallest of details — and their cascading impact at every level.',
-    image: '/images/home_design.png',
+    image: '/images/home_design.avif',
   },
   {
     title: 'INTEGRATE',
     heading: 'Technology Meets Human Experience.',
     body: 'Promoting a blend of technology, keen observation and human experience enables seamless integration of each service into the system.',
-    image: '/images/home_integrate_technical.png',
+    image: '/images/home_integrate_technical.avif',
   },
   {
     title: 'SUSTAIN',
     heading: 'Built for Tomorrow.',
     body: 'Transcend industry expectations by planning systems and technologies to last the test of time. Our designers foresee tomorrow\'s demands.',
-    image: '/images/home_sustain.png',
+    image: '/images/home_sustain.avif',
   },
 ];
 
@@ -209,10 +209,14 @@ export default function Home() {
               muted
               loop
               playsInline
-              poster="/hero_poster.png"
+              preload="none"
+              poster="/hero_poster.avif"
+              width="1920"
+              height="1080"
               className="w-full h-full object-cover brightness-[0.95] contrast-[1.1]"
             >
               <source src="/hero_video.mp4" type="video/mp4" />
+              <track kind="captions" />
             </video>
 
             {/* Minimal Overlay for subtle depth */}
@@ -249,7 +253,7 @@ export default function Home() {
                 Start Your Journey
               </Link>
             </div>
-            <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] text-[#FAF9F6]/60 hover:text-[#FAF9F6] transition-colors font-medium border-b border-transparent hover:border-[#FAF9F6]/30 pb-1">
+            <Link to="/services" className="text-[10px] uppercase tracking-[0.3em] text-[#FAF9F6]/80 hover:text-[#FAF9F6] transition-colors font-medium border-b border-transparent hover:border-[#FAF9F6]/50 pb-1">
               Explore Our Craft
             </Link>
           </div>
@@ -258,7 +262,7 @@ export default function Home() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-12 right-12 hidden md:flex flex-col items-center gap-4">
-          <span className="text-[8px] uppercase tracking-[0.3em] text-[#FAF9F6]/40 rotate-90 mb-8 origin-left">Scroll to Explore</span>
+          <span className="text-[8px] uppercase tracking-[0.3em] text-[#FAF9F6]/60 rotate-90 mb-8 origin-left">Scroll to Explore</span>
           <div className="w-[1px] h-20 bg-gradient-to-b from-[#FAF9F6]/40 to-transparent" />
         </div>
       </section>
@@ -272,27 +276,33 @@ export default function Home() {
               {/* Visual Side */}
               <div className={`w-full md:w-1/2 ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'} cursor-view`}>
                 <div className="relative aspect-[4/5] md:aspect-video overflow-hidden group rounded-3xl md:rounded-[3rem]">
-                  <motion.img
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
-                    src={item.image}
-                    alt={item.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
-                  />
+                  <picture>
+                    <source srcSet={item.image} type="image/avif" />
+                    <source srcSet={item.image.replace('.avif', '.webp')} type="image/webp" />
+                    <motion.img
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
+                      src={item.image.replace('.avif', '.webp')}
+                      alt={item.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover brightness-[1.02] contrast-[1.05]"
+                      width={800}
+                      height={600}
+                    />
+                  </picture>
                 </div>
               </div>
 
               {/* Text Side */}
               <div className={`w-full md:w-1/2 pt-10 md:pt-0 ${i % 2 === 0 ? 'reveal-right' : 'reveal-left'}`}>
-                <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/50 mb-6 block">
+                <span className="tier-3 text-[10px] uppercase tracking-[0.4em] text-[#2B2B2B]/70 mb-6 block">
                   {item.title}
                 </span>
                 <h2 className="tier-1 text-4xl md:text-6xl mb-8 leading-[1.1]">
                   {item.heading}
                 </h2>
-                <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/70 font-[var(--font-body)] leading-relaxed max-w-xl">
+                <p className="tier-2 text-base md:text-lg text-[#2B2B2B]/80 font-[var(--font-body)] leading-relaxed max-w-xl">
                   {item.body}
                 </p>
               </div>
@@ -313,7 +323,7 @@ export default function Home() {
           <h2 className="section-reveal text-5xl md:text-8xl mb-12">
             Ready to <i>Illuminate</i>?
           </h2>
-          <p className="section-reveal text-lg md:text-xl text-[#2B2B2B]/60 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
+          <p className="section-reveal text-lg md:text-xl text-[#2B2B2B]/80 mb-16 max-w-2xl mx-auto font-[var(--font-body)]">
             Let our engineering precision guide your architectural vision into reality.
             Sustainable, intelligent, and timeless.
           </p>
