@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 
 export function WhatsAppButton() {
-  const whatsappNumber = "+97142564882"; // Dubai number from Contact page
+  const whatsappNumber = "+918867727007"; // Updated contact number
   const message = encodeURIComponent("Hello, I'm interested in learning more about Trielement Design's services.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 

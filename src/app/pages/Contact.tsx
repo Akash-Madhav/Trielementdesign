@@ -17,7 +17,7 @@ const offices = [
     city: 'Bangalore', 
     country: 'IN', 
     address: '2nd Floor, 451/80, 5th Cross, Kodandaramareddy Layout, Ramamurthy Nagar Main Road, Bangalore – 560016', 
-    phone: '+91 8951202223',
+    phone: '+91 88677 27007',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=2nd+Floor,+451/80,+5th+Cross,+Kodandaramareddy+Layout,+Ramamurthy+Nagar+Main+Road,+Bangalore+–+560016'
   },
 ];
@@ -224,10 +224,10 @@ export default function Contact() {
 
             <div className="group border-b border-[#2B2B2B]/10 pb-12 cursor-pointer transition-all hover:bg-[#2B2B2B]/[0.02] px-2">
               <span className="tier-3 text-[10px] uppercase tracking-[0.3em] text-[#2B2B2B]/40 mb-6 block font-medium">Global Connect</span>
-              <a href="tel:+918951202223" className="tier-2 text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
+              <a href="tel:+918867727007" className="tier-2 text-xl md:text-2xl font-[var(--font-display)] flex items-center justify-between group transition-all duration-700">
                 <div className="flex items-center gap-4">
                   <Phone size={18} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
-                  <span className="group-hover:italic transition-all">+91 89512 02223</span>
+                  <span className="group-hover:italic transition-all">+91 88677 27007</span>
                 </div>
                 <ArrowUpRight size={20} className="text-[#B5B0A8] group-hover:text-[#2B2B2B] transition-colors" />
               </a>
